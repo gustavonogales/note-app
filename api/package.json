@@ -5,12 +5,16 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "start": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/index.ts",
+    "start": "ts-node-dev -r tsconfig-paths/register --inspect --ignore-watch node_modules src/web/server.ts",
     "test": "jest"
   },
   "dependencies": {
+    "class-transformer": "^0.3.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
