@@ -1,7 +1,6 @@
 import User from '@entity/User';
-import UserDTO from '@dto/UserDTO';
 import { injectable, inject } from 'tsyringe';
-import UserRepository from '@repository/adapter/UserRepository';
+import UserRepository from '@repository/user/UserRepository';
 
 @injectable()
 export default class UserServiceImpl {
@@ -12,13 +11,9 @@ export default class UserServiceImpl {
     // empty
   }
 
-  public async create({ name, email, password }: UserDTO): Promise<User> {
-    const user = await this.userRepository.create({
-      name,
-      email,
-      password,
-    });
+  public async create(user: User): Promise<User> {
+    const userCreated = await this.userRepository.create(user);
 
-    return user;
+    return userCreated;
   }
 }
