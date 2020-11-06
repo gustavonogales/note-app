@@ -10,8 +10,8 @@ import {
 
 @Entity('users')
 class UserDAO {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;

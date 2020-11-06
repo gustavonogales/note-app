@@ -1,11 +1,11 @@
 import User from '@entity/User';
 
 export default class UserResponseDTO {
-  id: number;
+  id: string;
 
   name: string;
 
-  constructor(id: number, name: string) {
+  constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
   }
