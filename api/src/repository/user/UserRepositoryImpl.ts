@@ -1,5 +1,5 @@
 import User from '@entity/User';
-import UserRepository from './adapter/UserRepository';
+import UserRepository from './UserRepository';
 
 export default class UserRepositoryImpl implements UserRepository {
   async create(user: User): Promise<User> {
