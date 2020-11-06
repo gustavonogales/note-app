@@ -5,6 +5,7 @@ import middlewares from './middlewares';
 import routes from './routes';
 import 'express-async-errors';
 import '@shared/container';
+import '@shared/database';
 
 const app = express();
 
