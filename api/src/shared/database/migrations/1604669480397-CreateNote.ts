@@ -8,9 +8,10 @@ export default class CreateNote1604669480397 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'integer',
+            type: 'uuid',
             isPrimary: true,
-            generationStrategy: 'increment',
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'title',
