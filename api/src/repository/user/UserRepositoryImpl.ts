@@ -1,4 +1,5 @@
 import User from '@entity/User';
+import UserRegisterDTO from '@web/dto/UserRegisterDTO';
 import { getRepository, Repository } from 'typeorm';
 import UserDAO from './UserDAO';
 import UserRepository from './UserRepository';
@@ -10,21 +11,26 @@ export default class UserRepositoryImpl implements UserRepository {
     this.ormRepository = getRepository(UserDAO);
   }
 
-  findById(id: string): Promise<User | undefined> {
-    throw new Error('Method not implemented.');
+  public async findById(id: string): Promise<User | undefined> {
+    const userDAO = await this.ormRepository.findOne(id);
+
+    return userDAO?.toUser();
   }
 
-  findByEmail(email: string): Promise<User | undefined> {
-    throw new Error('Method not implemented.');
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const userDAO = await this.ormRepository.findOne({ where: { email } });
+
+    return userDAO?.toUser();
   }
 
-  save(user: User): Promise<User> {
-    throw new Error('Method not implemented.');
+  public async save(user: User): Promise<User> {
+    await this.ormRepository.save(user);
+
+    return user;
   }
 
-  public async create(user: User): Promise<User> {
-    const { name, email, password } = user;
-    const userCreated = this.ormRepository.create({ name, email, password });
+  public async create(userRegister: UserRegisterDTO): Promise<User> {
+    const userCreated = this.ormRepository.create(userRegister);
 
     await this.ormRepository.save(userCreated);
 

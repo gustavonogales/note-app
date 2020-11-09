@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '../exception/AppError';
+import AppError from './AppError';
 
 export default async function appError(
   error: Error,

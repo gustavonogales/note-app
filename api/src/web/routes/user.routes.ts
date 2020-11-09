@@ -1,14 +1,15 @@
-import UserControllerImpl from '@controller/UserControllerImpl';
-import { Router, Request, Response } from 'express';
+import UserController from '@controller/UserController';
+import { Router } from 'express';
+import validateToken from '../middleware/validateToken.routes';
 
 const userRouter = Router();
 
-const userController = new UserControllerImpl();
+const userController = new UserController();
 
-userRouter.get('/', (request: Request, response: Response) => {
-  return response.json({ status: 'ok' });
-});
+userRouter.get('/', validateToken, userController.show);
 
 userRouter.post('/', userController.create);
+
+userRouter.put('/', validateToken, userController.update);
 
 export default userRouter;

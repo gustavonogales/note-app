@@ -1,5 +1,9 @@
 import User from '@entity/User';
+import UserRegisterDTO from '@web/dto/UserRegisterDTO';
+import UserUpdateDTO from '@web/dto/UserUpdateDTO';
 
 export default interface UserService {
-  create(user: User): Promise<User>;
+  create(userRegister: UserRegisterDTO): Promise<User>;
+  update(userUpdate: UserUpdateDTO): Promise<User>;
+  findById(id: string): Promise<User | undefined>;
 }

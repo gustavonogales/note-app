@@ -5,13 +5,22 @@ export default class User {
 
   private _email: string;
 
-  private _password: string;
+  private _password?: string;
 
-  constructor(id: string, name: string, email: string, password: string) {
+  private _oldPassword?: string;
+
+  constructor(
+    id: string,
+    name: string,
+    email: string,
+    password?: string,
+    oldPassword?: string,
+  ) {
     this._id = id;
     this._name = name;
     this._email = email;
     this._password = password;
+    this._oldPassword = oldPassword;
   }
 
   get id(): string {
@@ -26,7 +35,11 @@ export default class User {
     return this._email;
   }
 
-  get password(): string {
+  get password(): string | undefined {
     return this._password;
+  }
+
+  get oldPassword(): string | undefined {
+    return this._oldPassword;
   }
 }
