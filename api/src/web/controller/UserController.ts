@@ -32,7 +32,7 @@ export default class UserController {
       name,
       email,
       password,
-      old_password,
+      oldPassword: old_password,
     } as UserUpdateDTO;
 
     const userService = container.resolve(UserServiceImpl);

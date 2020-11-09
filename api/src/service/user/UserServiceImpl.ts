@@ -40,7 +40,7 @@ export default class UserServiceImpl implements UserService {
     if (user.password && user.oldPassword) {
       const checkPasswords = await this.hashProvider.compareHash(
         user.oldPassword,
-        user.password,
+        userFound.password ? userFound.password : '',
       );
 
       if (!checkPasswords) {
@@ -54,7 +54,7 @@ export default class UserServiceImpl implements UserService {
       user.id,
       user.name,
       user.email,
-      hashedPassword,
+      hashedPassword || userFound.password,
     );
 
     const userSaved = await this.userRepository.save(userUpdated);
