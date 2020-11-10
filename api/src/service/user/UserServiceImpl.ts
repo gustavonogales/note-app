@@ -40,7 +40,7 @@ export default class UserServiceImpl implements UserService {
     if (user.password && user.oldPassword) {
       const checkPasswords = await this.hashProvider.compareHash(
         user.oldPassword,
-        userFound.password ? userFound.password : '',
+        userFound.password,
       );
 
       if (!checkPasswords) {
