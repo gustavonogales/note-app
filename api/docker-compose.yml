@@ -4,7 +4,7 @@ services:
   note-postgres:
     image: postgres:latest
     container_name: note-postgres
-    restart: always
+    # restart: always
     ports:
       - '5433:5432'
     environment:
