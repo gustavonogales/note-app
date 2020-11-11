@@ -3,11 +3,13 @@
 Aplicação web e mobile para anotações rápidas.
 
 ![Homepage web](.github/web_home.png)
-
+---
 ![Homepage app](.github/mobile_home.png)
+---
 ![Homepage app](.github/mobile_note.png)
+---
 ![Homepage app](.github/mobile_profile.png)
-
+---
 
 ## Requisitos
 
