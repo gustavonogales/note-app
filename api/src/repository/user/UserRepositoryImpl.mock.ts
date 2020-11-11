@@ -1,9 +1,10 @@
 import User from '@entity/User';
 import UserRegisterDTO from '@web/dto/UserRegisterDTO';
+import { v4 as uuidv4 } from 'uuid';
 import UserRepository from './UserRepository';
 
 export default class UserRepositoryImpl implements UserRepository {
-  private users: User[];
+  private users: User[] = [];
 
   public async findById(id: string): Promise<User | undefined> {
     const userFound = this.users.find(user => user.id === id);
@@ -18,17 +19,18 @@ export default class UserRepositoryImpl implements UserRepository {
   }
 
   public async save(user: User): Promise<User> {
-    const { id, name, email, password } = user;
-    await this.ormRepository.save({ id, name, email, password });
+    const findIndex = this.users.findIndex(findUser => findUser.id === user.id);
+
+    this.users[findIndex] = user;
 
     return user;
   }
 
   public async create(userRegister: UserRegisterDTO): Promise<User> {
-    const userCreated = this.ormRepository.create(userRegister);
+    const { name, email, password } = userRegister;
+    const user = new User(uuidv4(), name, email, password);
+    this.users.push(user);
 
-    await this.ormRepository.save(userCreated);
-
-    return userCreated.toUser();
+    return user;
   }
 }

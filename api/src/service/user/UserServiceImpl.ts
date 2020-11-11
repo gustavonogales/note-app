@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import User from '@entity/User';
 import { injectable, inject } from 'tsyringe';
 import UserRepository from '@repository/user/UserRepository';
