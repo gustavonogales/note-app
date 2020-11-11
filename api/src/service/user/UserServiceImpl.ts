@@ -63,7 +63,7 @@ export default class UserServiceImpl implements UserService {
     return userSaved;
   }
 
-  public async findById(id: string): Promise<User | undefined> {
+  public async show(id: string): Promise<User | undefined> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {
@@ -80,10 +80,6 @@ export default class UserServiceImpl implements UserService {
 
     if (userExists) {
       throw new AppError('User already exists', 400);
-    }
-
-    if (!userRegister.password) {
-      throw new AppError('Password is required', 400);
     }
 
     const hashedPassword = await this.hashProvider.generateHash(

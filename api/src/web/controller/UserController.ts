@@ -46,7 +46,7 @@ export default class UserController {
 
     const userService = container.resolve(UserServiceImpl);
 
-    const user = await userService.findById(userId);
+    const user = await userService.show(userId);
 
     return response.json(user);
   }
