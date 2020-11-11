@@ -60,8 +60,8 @@ yarn start
 
 Obs: Está disponível nesse repositório o arquivo json para importação no [Insomnia](https://insomnia.rest/download/).
 
-## Endpoints Web
+<!-- ## Endpoints Web
 
 - URL: http://localhost:3000/
 - Session: http://localhost:3000/session
-- User: http://localhost:3000/user
+- User: http://localhost:3000/user -->
