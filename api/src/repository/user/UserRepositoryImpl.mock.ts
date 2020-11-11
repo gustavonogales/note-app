@@ -1,31 +1,25 @@
 import User from '@entity/User';
 import UserRegisterDTO from '@web/dto/UserRegisterDTO';
-import { getRepository, Repository } from 'typeorm';
-import UserDAO from './UserDAO';
 import UserRepository from './UserRepository';
 
 export default class UserRepositoryImpl implements UserRepository {
-  private ormRepository: Repository<UserDAO>;
-
-  constructor() {
-    this.ormRepository = getRepository(UserDAO);
-  }
+  private users: User[];
 
   public async findById(id: string): Promise<User | undefined> {
-    const userDAO = await this.ormRepository.findOne(id);
+    const userFound = this.users.find(user => user.id === id);
 
-    return userDAO?.toUser();
+    return userFound;
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const userDAO = await this.ormRepository.findOne({ where: { email } });
+    const userFound = this.users.find(user => user.email === email);
 
-    return userDAO?.toUser();
+    return userFound;
   }
 
   public async save(user: User): Promise<User> {
-    // const { id, name, email, password } = user;
-    await this.ormRepository.save(user);
+    const { id, name, email, password } = user;
+    await this.ormRepository.save({ id, name, email, password });
 
     return user;
   }
