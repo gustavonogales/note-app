@@ -6,6 +6,6 @@ import UserUpdateDTO from '@web/dto/UserUpdateDTO';
 export default interface UserService {
   create(userRegister: UserRegisterDTO): Promise<User>;
   update(userUpdate: UserUpdateDTO): Promise<User>;
-  show(id: string): Promise<User | undefined>;
+  show(id: string): Promise<User>;
   updateAvatar(userUpdateAvatar: UserUpdateAvatarDTO): Promise<User>;
 }

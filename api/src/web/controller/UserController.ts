@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import UserRegisterDTO from '@dto/UserRegisterDTO';
 import { Request, Response } from 'express';
-import UserResponseDTO from '@web/dto/UserResponseDTO';
 import UserUpdateDTO from '@web/dto/UserUpdateDTO';
 import UserServiceImpl from '@service/user/UserServiceImpl';
 import { container } from 'tsyringe';
@@ -21,7 +20,7 @@ export default class UserController {
 
     const user = await userService.create(userRegister);
 
-    return response.json(classToClass(UserResponseDTO.fromUser(user)));
+    return response.json(classToClass(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -39,7 +38,7 @@ export default class UserController {
     const userService = container.resolve(UserServiceImpl);
     const user = await userService.update(userUpdate);
 
-    return response.json(classToClass(UserResponseDTO.fromUser(user)));
+    return response.json(classToClass(user));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -49,7 +48,7 @@ export default class UserController {
 
     const user = await userService.show(userId);
 
-    return response.json(classToClass(UserResponseDTO.fromUser(user)));
+    return response.json(classToClass(user));
   }
 
   public async updateAvatar(
@@ -63,6 +62,6 @@ export default class UserController {
       avatarFilename: request.file.filename,
     });
 
-    return response.json(classToClass(UserResponseDTO.fromUser(user)));
+    return response.json(classToClass(user));
   }
 }

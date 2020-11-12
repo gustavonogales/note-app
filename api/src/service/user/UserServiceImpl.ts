@@ -61,7 +61,7 @@ export default class UserServiceImpl implements UserService {
       user.name,
       user.email,
       hashedPassword || userFound.password,
-      '',
+      userFound.avatar,
     );
 
     const userSaved = await this.userRepository.save(userUpdated);
@@ -69,7 +69,7 @@ export default class UserServiceImpl implements UserService {
     return userSaved;
   }
 
-  public async show(id: string): Promise<User | undefined> {
+  public async show(id: string): Promise<User> {
     const user = await this.userRepository.findById(id);
 
     if (!user) {

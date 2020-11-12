@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import SessionServiceImpl from '@service/session/SessionServiceImpl';
 import { container } from 'tsyringe';
-import UserResponseDTO from '@web/dto/UserResponseDTO';
+import { classToClass } from 'class-transformer';
 
 export default class SessionController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -12,6 +12,9 @@ export default class SessionController {
 
     const { user, token } = await sessionService.create(email, password);
 
-    return response.json({ user: UserResponseDTO.fromUser(user), token });
+    return response.json({
+      user: classToClass(user),
+      token,
+    });
   }
 }
