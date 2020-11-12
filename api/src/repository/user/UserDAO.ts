@@ -22,6 +22,9 @@ class UserDAO {
   @Column()
   password: string;
 
+  @Column()
+  avatar: string;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -29,7 +32,7 @@ class UserDAO {
   updated_at: Date;
 
   toUser(): User {
-    return new User(this.id, this.name, this.email, this.password);
+    return new User(this.id, this.name, this.email, this.password, this.avatar);
   }
 }
 

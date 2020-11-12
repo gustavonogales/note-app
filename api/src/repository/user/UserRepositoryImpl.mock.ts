@@ -28,7 +28,7 @@ export default class UserRepositoryImpl implements UserRepository {
 
   public async create(userRegister: UserRegisterDTO): Promise<User> {
     const { name, email, password } = userRegister;
-    const user = new User(uuidv4(), name, email, password);
+    const user = new User(uuidv4(), name, email, password, '');
     this.users.push(user);
 
     return user;

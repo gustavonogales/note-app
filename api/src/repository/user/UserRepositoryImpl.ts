@@ -24,7 +24,6 @@ export default class UserRepositoryImpl implements UserRepository {
   }
 
   public async save(user: User): Promise<User> {
-    // const { id, name, email, password } = user;
     await this.ormRepository.save(user);
 
     return user;

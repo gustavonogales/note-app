@@ -5,3 +5,10 @@ node_modules/
 build/
 dist/
 coverage/
+tmp/*.jpg
+tmp/*.png
+tmp/*.jpeg
+tmp/uploads/*.jpg
+tmp/uploads/*.png
+tmp/uploads/*.jpeg
+!tmp/.gitkeep

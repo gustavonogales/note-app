@@ -5,6 +5,7 @@ import UserResponseDTO from '@web/dto/UserResponseDTO';
 import UserUpdateDTO from '@web/dto/UserUpdateDTO';
 import UserServiceImpl from '@service/user/UserServiceImpl';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 export default class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -20,7 +21,7 @@ export default class UserController {
 
     const user = await userService.create(userRegister);
 
-    return response.json(UserResponseDTO.fromUser(user));
+    return response.json(classToClass(UserResponseDTO.fromUser(user)));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -38,7 +39,7 @@ export default class UserController {
     const userService = container.resolve(UserServiceImpl);
     const user = await userService.update(userUpdate);
 
-    return response.json(UserResponseDTO.fromUser(user));
+    return response.json(classToClass(UserResponseDTO.fromUser(user)));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -48,6 +49,20 @@ export default class UserController {
 
     const user = await userService.show(userId);
 
-    return response.json(user);
+    return response.json(classToClass(UserResponseDTO.fromUser(user)));
+  }
+
+  public async updateAvatar(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const userService = container.resolve(UserServiceImpl);
+
+    const user = await userService.updateAvatar({
+      userId: request.user.id,
+      avatarFilename: request.file.filename,
+    });
+
+    return response.json(classToClass(UserResponseDTO.fromUser(user)));
   }
 }

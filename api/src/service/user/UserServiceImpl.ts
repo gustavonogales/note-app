@@ -6,6 +6,8 @@ import AppError from '@web/exception/AppError';
 import HashProvider from '@shared/provider/HashProvider/adapter/HashProvider';
 import UserRegisterDTO from '@web/dto/UserRegisterDTO';
 import UserUpdateDTO from '@web/dto/UserUpdateDTO';
+import UserUpdateAvatarDTO from '@web/dto/UserUpdateAvatarDTO';
+import StorageProvider from '@shared/provider/StorageProvider/adapter/StorageProvider';
 import UserService from './UserService';
 
 @injectable()
@@ -16,6 +18,9 @@ export default class UserServiceImpl implements UserService {
 
     @inject('HashProvider')
     private hashProvider: HashProvider,
+
+    @inject('StorageProvider')
+    private storageProvider: StorageProvider,
   ) {
     // empty
   }
@@ -56,6 +61,7 @@ export default class UserServiceImpl implements UserService {
       user.name,
       user.email,
       hashedPassword || userFound.password,
+      '',
     );
 
     const userSaved = await this.userRepository.save(userUpdated);
@@ -95,5 +101,34 @@ export default class UserServiceImpl implements UserService {
     const userCreated = await this.userRepository.create(userHashed);
 
     return userCreated;
+  }
+
+  public async updateAvatar({
+    userId,
+    avatarFilename,
+  }: UserUpdateAvatarDTO): Promise<User> {
+    const user = await this.userRepository.findById(userId);
+
+    if (!user) {
+      throw new AppError('Only authenticated users can change the avatar', 401);
+    }
+
+    if (user.avatar) {
+      await this.storageProvider.deleteFile(avatarFilename);
+    }
+
+    const filename = await this.storageProvider.saveFile(avatarFilename);
+
+    const userWithAvatar = new User(
+      userId,
+      user.name,
+      user.email,
+      user.password,
+      filename,
+    );
+
+    await this.userRepository.save(userWithAvatar);
+
+    return userWithAvatar;
   }
 }
