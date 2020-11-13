@@ -20,7 +20,6 @@ export default class CreateNote1604669480397 implements MigrationInterface {
           {
             name: 'text',
             type: 'varchar',
-            isUnique: true,
           },
           {
             name: 'created_at',
