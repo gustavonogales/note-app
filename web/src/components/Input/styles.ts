@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 interface ContainerProps {
   isFocused: boolean;
   isFilled: boolean;
+  isErrored: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -37,6 +38,10 @@ export const Container = styled.div<ContainerProps>`
     color: ${shade(0.4, '#fff')};
   }
 
+  ${props => props.isErrored && css`
+    border-color: #c53030;
+  `}
+
   ${props => props.isFilled && css`
     svg {
       color: #fff;
@@ -49,4 +54,6 @@ export const Container = styled.div<ContainerProps>`
       color: #fff;
     }
   `}
+
+
 `;
