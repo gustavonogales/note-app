@@ -1,16 +1,12 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable object-curly-newline */
 import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import {
-  FiMail, FiLock, FiUser, FiChevronLeft,
-} from 'react-icons/fi';
-import getValidationErrors from '../../utils/getValidationError';
+import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
 import signupBackground from '../../assets/signup.svg';
-import {
-  Background, Container, Content, Links,
-} from './styles';
+import { Background, Container, Content, Links } from './styles';
+import getValidationErrors from '../../utils/getValidationError';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -20,20 +16,20 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
+      formRef.current?.setErrors({});
+
       const schema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         email: Yup.string()
           .email('Type a valid email')
           .required('E-mail is required'),
-        password: Yup.string().min(6, 'Password must have at least 6 digits'),
+        password: Yup.string().min(6, 'At least 6 digits'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
     } catch (error) {
-      console.log(error);
-
       const errors = getValidationErrors(error);
       formRef.current?.setErrors(errors);
     }
