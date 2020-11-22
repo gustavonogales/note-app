@@ -1,26 +1,42 @@
 /* eslint-disable prettier/prettier */
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
 import {
-  FiMail,
-  FiLock,
-  FiUser,
-  FiChevronLeft,
+  FiMail, FiLock, FiUser, FiChevronLeft,
 } from 'react-icons/fi';
+import getValidationErrors from '../../utils/getValidationError';
 import signupBackground from '../../assets/signup.svg';
 import {
-  Background,
-  Container,
-  Content,
-  Links,
+  Background, Container, Content, Links,
 } from './styles';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignUp: React.FC = () => {
-  const handleSubmit = useCallback((data: object): void => {
-    console.log(data);
+  const formRef = useRef<FormHandles>(null);
+
+  const handleSubmit = useCallback(async (data: object) => {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string()
+          .email('Type a valid email')
+          .required('E-mail is required'),
+        password: Yup.string().min(6, 'Password must have at least 6 digits'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (error) {
+      console.log(error);
+
+      const errors = getValidationErrors(error);
+      formRef.current?.setErrors(errors);
+    }
   }, []);
 
   return (
@@ -30,12 +46,22 @@ const SignUp: React.FC = () => {
         <p>Sign up now and never miss a word</p>
       </Background>
       <Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} ref={formRef}>
           <h1>Sign Up</h1>
           <Input name="name" icon={FiUser} type="text" placeholder="Name" />
           <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
-          <Input name="password" icon={FiLock} type="password" placeholder="Password" />
-          <Input name="confirmPassword" icon={FiLock} type="password" placeholder="Confirm Password" />
+          <Input
+            name="password"
+            icon={FiLock}
+            type="password"
+            placeholder="Password"
+          />
+          <Input
+            name="confirmPassword"
+            icon={FiLock}
+            type="password"
+            placeholder="Confirm Password"
+          />
           <Button type="submit">Sign up</Button>
           <Links>
             <a href="/">
