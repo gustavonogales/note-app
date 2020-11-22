@@ -1,7 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { shade } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  isFocused: boolean;
+  isFilled: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   background: #3b3b3b;
   border: 2px solid #3b3b3b;
   border-radius: 10px;
@@ -30,4 +36,17 @@ export const Container = styled.div`
     margin-right: 16px;
     color: ${shade(0.4, '#fff')};
   }
+
+  ${props => props.isFilled && css`
+    svg {
+      color: #fff;
+    }
+  `}
+
+  ${props => props.isFocused && css`
+    border-color: #fff;
+    svg {
+      color: #fff;
+    }
+  `}
 `;

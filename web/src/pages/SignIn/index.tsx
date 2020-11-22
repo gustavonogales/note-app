@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
-import homeBackground from '../../assets/home_bg.svg';
+import signInBackground from '../../assets/signin.svg';
 import {
   Background,
   Container,
@@ -27,7 +27,7 @@ const SignIn: React.FC = () => (
       </form>
     </Content>
     <Background>
-      <img src={homeBackground} alt="bg" />
+      <img src={signInBackground} alt="bg" />
       <p>Sign up now and never miss a word</p>
     </Background>
   </Container>

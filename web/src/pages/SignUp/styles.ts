@@ -30,6 +30,12 @@ export const Content = styled.div`
       text-decoration: none;
       color: ${shade(0.5, '#fff')};
       transition: 0.3s color;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 16px;
+      }
 
       &:hover {
         color: ${shade(0.1, '#fff')};
