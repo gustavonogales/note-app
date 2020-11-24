@@ -3,6 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
 import signupBackground from '../../assets/signup.svg';
 import { Background, Container, Content, Links } from './styles';
@@ -60,10 +61,10 @@ const SignUp: React.FC = () => {
           />
           <Button type="submit">Sign up</Button>
           <Links>
-            <a href="/">
+            <Link to="/">
               <FiChevronLeft />
               SignIn page
-            </a>
+            </Link>
           </Links>
         </Form>
       </Content>
