@@ -191,4 +191,39 @@ describe('UserService - Show', () => {
   it('should not be able to show info of nonexistent user', async () => {
     await expect(userService.show('wrong')).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should be able to update user avatar', async () => {
+    const user = await userService.create({
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: '123456',
+    });
+
+    const userWithAvatar = await userService.updateAvatar({
+      userId: user.id,
+      avatarFilename: 'new_pic.jpg',
+    });
+
+    expect(userWithAvatar.avatar).toBe('new_pic.jpg');
+  });
+
+  it('should be able to change user avatar', async () => {
+    const user = await userService.create({
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: '123456',
+    });
+
+    await userService.updateAvatar({
+      userId: user.id,
+      avatarFilename: 'avatar.jpg',
+    });
+
+    const userWithAvatar = await userService.updateAvatar({
+      userId: user.id,
+      avatarFilename: 'new_pic.jpg',
+    });
+
+    expect(userWithAvatar.avatar).toBe('new_pic.jpg');
+  });
 });
