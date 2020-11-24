@@ -52,7 +52,7 @@ yarn start
 
 **URL**: http://localhost:3333
 
-### User [All with berear token except POST]
+### User [All with bearer token except POST]
 - **[Create] Post:** /user
 - **[Update Info] Put:** /user
 - **[Update Avatar] Patch:** /user
@@ -60,7 +60,7 @@ yarn start
 ### Session [SignIn]
 - **[Create] Post:** /session
 
-### Note  [All with berear token]
+### Note  [All with bearer token]
 - **[Create] Post:** /note
 - **[Show] Get:** /note
 - **[Show] Get ID:** /note/{id}
