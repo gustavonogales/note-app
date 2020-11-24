@@ -50,9 +50,23 @@ yarn start
 
 ## Endpoints API
 
-- URL: http://localhost:3333/
-- Points: http://localhost:3333/user
-- Items: http://localhost:3333/items
+**URL**: http://localhost:3333
+
+### User [All with berear token except POST]
+- **[Create] Post:** /user
+- **[Update Info] Put:** /user
+- **[Update Avatar] Patch:** /user
+
+### Session [SignIn]
+- **[Create] Post:** /session
+
+### Note  [All with berear token]
+- **[Create] Post:** /note
+- **[Show] Get:** /note
+- **[Show] Get ID:** /note/{id}
+- **[Delete] Delete:** /note/{id}
+- **[Update Note] Put:** /note
+
 
 Obs: Está disponível nesse repositório o arquivo json para importação no [Insomnia](https://insomnia.rest/download/).
 
