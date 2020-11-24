@@ -65,7 +65,7 @@ yarn start
 - **[Show] Get:** /note
 - **[Show] Get ID:** /note/{id}
 - **[Delete] Delete:** /note/{id}
-- **[Update Note] Put:** /note
+- **[Update] Put:** /note
 
 
 Obs: Está disponível nesse repositório o arquivo json para importação no [Insomnia](https://insomnia.rest/download/).
