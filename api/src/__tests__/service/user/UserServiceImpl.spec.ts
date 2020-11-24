@@ -1,18 +1,25 @@
 import HashProvider from '@shared/provider/HashProvider/implementation/HashProviderImpl.mock';
 import UserRepositoryImpl from '@repository/user/UserRepositoryImpl.mock';
 import UserServiceImpl from '@service/user/UserServiceImpl';
+import StorageProviderImpl from '@shared/provider/StorageProvider/implementation/StorageProviderImpl.mock';
 import AppError from '@web/exception/AppError';
 
 let userRepository: UserRepositoryImpl;
 let hashProvider: HashProvider;
+let storageProvider: StorageProviderImpl;
 let userService: UserServiceImpl;
 
 describe('UserService - Create', () => {
   beforeEach(() => {
     userRepository = new UserRepositoryImpl();
     hashProvider = new HashProvider();
+    storageProvider = new StorageProviderImpl();
 
-    userService = new UserServiceImpl(userRepository, hashProvider);
+    userService = new UserServiceImpl(
+      userRepository,
+      hashProvider,
+      storageProvider,
+    );
   });
 
   it('should be able to create a new user', async () => {
@@ -47,7 +54,11 @@ describe('UserService - Update', () => {
     userRepository = new UserRepositoryImpl();
     hashProvider = new HashProvider();
 
-    userService = new UserServiceImpl(userRepository, hashProvider);
+    userService = new UserServiceImpl(
+      userRepository,
+      hashProvider,
+      storageProvider,
+    );
   });
 
   it('should be able to update user info', async () => {
@@ -158,7 +169,11 @@ describe('UserService - Show', () => {
     userRepository = new UserRepositoryImpl();
     hashProvider = new HashProvider();
 
-    userService = new UserServiceImpl(userRepository, hashProvider);
+    userService = new UserServiceImpl(
+      userRepository,
+      hashProvider,
+      storageProvider,
+    );
   });
 
   it('should be able to show user info', async () => {

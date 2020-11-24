@@ -41,7 +41,13 @@ export default class NoteServiceImpl implements NoteService {
 
     const updatedAt = new Date();
 
-    const noteUpdated = new Note(note.id, note.title, note.text, updatedAt);
+    const noteUpdated = new Note(
+      note.id,
+      note.user_id,
+      note.title,
+      note.text,
+      updatedAt,
+    );
 
     const noteSaved = await this.noteRepository.save(noteUpdated);
 

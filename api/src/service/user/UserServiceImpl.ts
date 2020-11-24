@@ -61,7 +61,7 @@ export default class UserServiceImpl implements UserService {
       user.name,
       user.email,
       hashedPassword || userFound.password,
-      userFound.avatar,
+      userFound.avatar || '',
     );
 
     const userSaved = await this.userRepository.save(userUpdated);

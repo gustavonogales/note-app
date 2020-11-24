@@ -37,7 +37,13 @@ class NoteDAO {
   updated_at: Date;
 
   toNote(): Note {
-    return new Note(this.id, this.title, this.text, this.updated_at);
+    return new Note(
+      this.id,
+      this.user_id,
+      this.title,
+      this.text,
+      this.updated_at,
+    );
   }
 }
 

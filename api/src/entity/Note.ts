@@ -3,6 +3,8 @@ import { Exclude, Expose } from 'class-transformer';
 export default class Note {
   public readonly id: string;
 
+  public readonly user_id: string;
+
   public readonly title: string;
 
   public readonly text: string;
@@ -15,8 +17,15 @@ export default class Note {
     return this.updatedAt;
   }
 
-  constructor(id: string, title: string, text: string, updatedAt: Date) {
+  constructor(
+    id: string,
+    user_id: string,
+    title: string,
+    text: string,
+    updatedAt: Date,
+  ) {
     this.id = id;
+    this.user_id = user_id;
     this.title = title;
     this.text = text;
     this.updatedAt = updatedAt;

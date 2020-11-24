@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import signInBackground from '../../assets/signin.svg';
 import {
@@ -22,8 +22,7 @@ import UserSignInCredentials from '../../models/UserSignInCredentials';
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { user, signIn } = useAuth();
-
-  console.log(user);
+  const history = useHistory();
 
   const handleSubmit = useCallback(async (credentials: UserSignInCredentials) => {
     try {
@@ -44,13 +43,15 @@ const SignIn: React.FC = () => {
         email: credentials.email,
         password: credentials.password,
       });
+
+      history.push('/home');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errors = getValidationErrors(error);
         formRef.current?.setErrors(errors);
       }
     }
-  }, [signIn]);
+  }, [signIn, history]);
 
   return (
     <Container>
