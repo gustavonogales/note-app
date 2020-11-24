@@ -4,6 +4,7 @@ import AppError from '@web/exception/AppError';
 import HashProvider from '@shared/provider/HashProvider/adapter/HashProvider';
 import TokenProvider from '@shared/provider/TokenProvider/adapter/TokenProvider';
 import SessionResponseDTO from '@web/dto/SessionResponseDTO';
+import UserCredentialsDTO from '@web/dto/UserCredentialsDTO';
 import SessionService from './SessionService';
 
 @injectable()
@@ -21,10 +22,10 @@ export default class SessionServiceImpl implements SessionService {
     // empty
   }
 
-  public async create(
-    email: string,
-    password: string,
-  ): Promise<SessionResponseDTO> {
+  public async create({
+    email,
+    password,
+  }: UserCredentialsDTO): Promise<SessionResponseDTO> {
     const userExists = await this.userRepository.findByEmail(email);
 
     if (!userExists) {
