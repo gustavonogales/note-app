@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
 import signupBackground from '../../assets/signup.svg';
 import { Background, Container, Content, Links } from './styles';
@@ -11,11 +11,14 @@ import getValidationErrors from '../../utils/getValidationError';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import api from '../../utils/api';
+import UserSignUp from '../../models/UserSignUp';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async (data: UserSignUp) => {
     try {
       formRef.current?.setErrors({});
 
@@ -30,7 +33,19 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      // console.log('passou');
+      const { name, email, password } = data;
+
+      await api.post('/user', {
+        name,
+        email,
+        password,
+      });
+
+      history.push('/');
     } catch (error) {
+      console.log('passou');
       const errors = getValidationErrors(error);
       formRef.current?.setErrors(errors);
     }

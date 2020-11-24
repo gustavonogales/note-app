@@ -10,7 +10,7 @@ export default class SessionController {
 
     const sessionService = container.resolve(SessionServiceImpl);
 
-    const { user, token } = await sessionService.create(email, password);
+    const { user, token } = await sessionService.create({ email, password });
 
     return response.json({
       user: classToClass(user),

@@ -21,7 +21,7 @@ import UserSignInCredentials from '../../models/UserSignInCredentials';
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
   const history = useHistory();
 
   const handleSubmit = useCallback(async (credentials: UserSignInCredentials) => {
