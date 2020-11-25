@@ -54,6 +54,10 @@ export const Content = styled.div`
       }
     }
   }
+
+  @media (max-width: 1100px) {
+    max-width: 100%;
+  }
 `;
 
 export const Links = styled.div`
@@ -69,6 +73,7 @@ export const Background = styled.div`
   justify-content: center;
   text-align: center;
   border-right: 1px solid #3b3b3b;
+  padding: 24px;
 
   img {
     max-width: 100%;
@@ -80,5 +85,9 @@ export const Background = styled.div`
 
   p {
     font-size: 32px;
+  }
+
+  @media (max-width: 1100px) {
+    display: none;
   }
 `;
