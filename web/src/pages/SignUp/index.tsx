@@ -23,12 +23,18 @@ const SignUp: React.FC = () => {
       try {
         formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
+        const schema = Yup.object({
           name: Yup.string().required('Name is required'),
           email: Yup.string()
             .email('Type a valid email')
             .required('E-mail is required'),
-          password: Yup.string().min(6, 'At least 6 digits'),
+          password: Yup.string()
+            .required('Senha obrigatória')
+            .min(6, 'At least 6 digits'),
+          confirmPassword: Yup.string().oneOf(
+            [Yup.ref('password'), undefined],
+            'Senhas devem ser iguais',
+          ),
         });
 
         await schema.validate(data, {

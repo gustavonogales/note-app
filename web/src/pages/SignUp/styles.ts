@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
@@ -7,15 +7,27 @@ export const Container = styled.div`
   align-items: stretch;
 `;
 
+const appearFromRight = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  max-width: 700px;
+  max-width: 550px;
   align-items: center;
 
   form {
+    animation: ${appearFromRight} 0.7s;
     margin: 80px 0;
     width: 340px;
     text-align: center;
@@ -59,10 +71,14 @@ export const Background = styled.div`
   border-right: 1px solid #3b3b3b;
 
   img {
+    max-width: 100%;
+    width: 40rem;
+    margin: 0 auto;
+    height: auto;
     margin-bottom: 24px;
   }
 
   p {
-    font-size: 50px;
+    font-size: 32px;
   }
 `;
