@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { HashProviderImpl } from 'src/shared/provider/HashProvider';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import User from '../model/user.model';
-import { UserRepository } from '../repository/user.repository';
+import { UserRepositoryImpl } from '../repository/user.repository.impl';
 import UserService from './user.service';
 
 @Injectable()
 export class UserServiceImpl implements UserService {
   constructor(
-    private userRepository: UserRepository,
+    private userRepository: UserRepositoryImpl,
     private hashProvider: HashProviderImpl,
   ) {}
 
