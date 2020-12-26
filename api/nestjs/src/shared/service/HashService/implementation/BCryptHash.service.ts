@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { hash, compare } from 'bcryptjs';
-import HashProvider from '../adapter/HashProvider';
+import HashService from '../adapter/HashService.interface';
 
 @Injectable()
-export default class BCryptHashProvider implements HashProvider {
+export default class BCryptHashService implements HashService {
   public async generateHash(payload: string): Promise<string> {
     return hash(payload, 8);
   }

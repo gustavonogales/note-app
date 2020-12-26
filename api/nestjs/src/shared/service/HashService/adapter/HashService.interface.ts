@@ -1,4 +1,4 @@
-export default interface HashProvider {
+export default interface HashService {
   generateHash(payload: string): Promise<string>;
   compareHash(payload: string, hashed: string): Promise<boolean>;
 }

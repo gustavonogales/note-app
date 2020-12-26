@@ -1,6 +1,6 @@
-import HashProvider from '../adapter/HashProvider';
+import HashService from '../adapter/HashService.interface';
 
-export default class HashProviderImpl implements HashProvider {
+export default class HashServiceImpl implements HashService {
   public async generateHash(payload: string): Promise<string> {
     return payload;
   }
