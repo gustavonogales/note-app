@@ -9,8 +9,11 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  async create(@Body() createUser: CreateUserDTO): Promise<User> {
-    const user = await this.userService.create(createUser);
-    return classToClass(user);
+  async create(@Body() user: User): Promise<User> {
+    const { id, name, email, avatar, password } = await this.userService.create(
+      user,
+    );
+    const userCreated = new User(id, name, email, password, avatar);
+    return classToClass(userCreated);
   }
 }

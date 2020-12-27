@@ -12,13 +12,14 @@ export class UserService implements UserServiceInterface {
     private hashService: HashServiceImpl,
   ) {}
 
-  public async create({ name, email, password }: CreateUserDTO): Promise<User> {
+  public async create({ name, email, password, avatar }: User): Promise<User> {
     const encryptedPassword = await this.hashService.generateHash(password);
     const userWithPassword = {
       name,
       email,
+      avatar,
       password: encryptedPassword,
-    };
+    } as User;
     const user = await this.userRepository.create(userWithPassword);
     return user;
   }

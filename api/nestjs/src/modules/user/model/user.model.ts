@@ -1,7 +1,7 @@
 import { Exclude, Expose } from 'class-transformer';
 
 export default class User {
-  public readonly id: string;
+  public readonly id?: string;
 
   public readonly name: string;
 
