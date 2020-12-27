@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import User from '../model/user.model';
 
 @Entity('user')
 export class UserDAO {
@@ -18,4 +19,8 @@ export class UserDAO {
     nullable: true,
   })
   avatar?: string;
+
+  toUser(): User {
+    return new User(this.id, this.name, this.email, this.password, this.avatar);
+  }
 }

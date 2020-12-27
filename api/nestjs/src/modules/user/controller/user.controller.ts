@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { classToClass } from 'class-transformer';
 import { CreateUserDTO } from '../dto/create-user.dto';
 import User from '../model/user.model';

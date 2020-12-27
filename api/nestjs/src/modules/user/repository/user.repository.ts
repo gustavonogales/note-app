@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import User from '../model/user.model';
-import { v4 as uuidv4 } from 'uuid';
-import { CreateUserDTO } from '../dto/create-user.dto';
 import UserRepositoryInterface from './user.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,34 +7,39 @@ import { UserDAO } from '../entity/user.entity';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
-  // private users: User[] = [];
-
   constructor(
     @InjectRepository(UserDAO)
     private repository: Repository<UserDAO>,
   ) {}
 
-  public async create({ name, email, password, avatar }: User): Promise<User> {
-    // const id = uuidv4();
-    // const { name, email, password } = createUser;
-    // const user = new User(id, name, email, password, '');
+  public async findById(id: string): Promise<User | undefined> {
+    const userDAO = await this.repository.findOne(id);
 
-    // this.users.push(user);
-    const userDAO = await this.repository.save({
+    return userDAO?.toUser();
+  }
+
+  public async findByEmail(email: string): Promise<User | undefined> {
+    const userDAO = await this.repository.findOne({ where: { email } });
+
+    return userDAO?.toUser();
+  }
+
+  public async save(user: User): Promise<User> {
+    await this.repository.save(user);
+
+    return user;
+  }
+
+  public async create({ name, email, password, avatar }: User): Promise<User> {
+    const userCreated = this.repository.create({
       name,
       email,
       password,
       avatar,
     });
 
-    const user = new User(
-      userDAO.id,
-      userDAO.name,
-      userDAO.email,
-      userDAO.password,
-      userDAO.avatar,
-    );
+    await this.repository.save(userCreated);
 
-    return user;
+    return userCreated.toUser();
   }
 }
