@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { HashServiceImpl } from 'src/shared/service/HashService';
+import { HashServiceImpl } from 'src/shared/modules/hash';
 import { AppError } from 'src/shared/utils/AppError';
 import UpdateUserDTO from '../dto/update-user.dto';
 import User from '../model/user.model';

@@ -1,5 +1,5 @@
-import hashConfig from './hash.config';
-import BCryptHashService from './implementation/BCryptHash.service';
+import BCryptHashService from './service/BCryptHash.service';
+import hashConfig from './util/hash.config';
 
 const services = {
   bcrypt: BCryptHashService,

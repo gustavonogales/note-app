@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HashServiceImpl } from 'src/shared/service/HashService';
+import { AuthModule } from 'src/shared/modules/auth/auth.module';
+import { HashModule } from 'src/shared/modules/hash/hash.module';
 import { UserController } from './controller/user.controller';
 import { UserDAO } from './entity/user.entity';
 import { UserRepository } from './repository/user.repository';
 import { UserService } from './service/user.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserDAO])],
+  imports: [TypeOrmModule.forFeature([UserDAO]), AuthModule, HashModule],
   controllers: [UserController],
-  providers: [UserService, UserRepository, HashServiceImpl],
+  providers: [UserService, UserRepository],
 })
 export class UserModule {}
