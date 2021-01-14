@@ -15,9 +15,6 @@ export class UserDAO {
   @Column({ length: 100 })
   password: string;
 
-  @Column('timestamp', { default: 'now()' })
-  created_at: Date;
-
   @Column('text', {
     nullable: true,
   })

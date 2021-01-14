@@ -1,4 +1,11 @@
-import { Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
+  Param,
+} from '@nestjs/common';
 import { classToClass } from 'class-transformer';
 import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
 import Note from '../model/note.model';
@@ -10,10 +17,20 @@ export class NoteController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async index(@Request request: any): Promise<Note[]> {
+  async index(@Request() request: any): Promise<Note[]> {
     const user_id = request.user.id;
 
     const notes = this.noteService.index(user_id);
+
+    return classToClass(notes);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async show(@Param() id: string) {
+    const note = this.noteService.show(id);
+
+    return classToClass(note);
   }
 
   @UseGuards(JwtAuthGuard)

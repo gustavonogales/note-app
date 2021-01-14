@@ -21,17 +21,26 @@ export class NoteRepository implements NoteRepositoryInterface {
     return note.toNote();
   }
 
-  async index(user_id: string): Promise<Note[]> {
-    const notes = this.repository.find({ user_id });
+  async findByUserId(user_id: string): Promise<Note[]> {
+    const notes = await this.repository.find({ where: { user_id } });
+
+    const response = notes.map((note) => note.toNote());
+    return response;
   }
 
-  // findById(id: string): Promise<Note> {
-  //   throw new Error('Method not implemented.');
-  // }
-  // save(note: noteModel): Promise<Note> {
-  //   throw new Error('Method not implemented.');
-  // }
-  // remove(note: noteModel): Promise<void> {
-  //   throw new Error('Method not implemented.');
-  // }
+  public async findById(id: string): Promise<Note | undefined> {
+    const note = await this.repository.findOne(id);
+
+    return note?.toNote();
+  }
+
+  public async save(note: Note): Promise<Note> {
+    await this.repository.save(note);
+
+    return note;
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.repository.delete(id);
+  }
 }

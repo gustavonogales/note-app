@@ -13,6 +13,10 @@ export class NoteService implements NoteServiceInterface {
   }
 
   async index(user_id: string): Promise<Note[]> {
-    return this.noteRepository.index(user_id);
+    return this.noteRepository.findByUserId(user_id);
+  }
+
+  async show(id: string): Promise<Note | undefined> {
+    return this.noteRepository.findById(id);
   }
 }

@@ -3,8 +3,8 @@ import Note from '../model/note.model';
 
 export default interface NoteRepositoryInterface {
   create(createNote: CreateNoteDTO): Promise<Note>;
-  index(user_id: string): Promise<Note[]>;
-  // findById(id: string): Promise<Note | undefined>;
-  // save(note: Note): Promise<Note>;
-  // remove(note: Note): Promise<void>;
+  findByUserId(user_id: string): Promise<Note[]>;
+  findById(id: string): Promise<Note | undefined>;
+  delete(id: string): Promise<void>;
+  save(note: Note): Promise<Note>;
 }
