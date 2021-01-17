@@ -5,6 +5,8 @@ import NoteRepository from '@repository/note/NoteRepository';
 import AppError from '@web/exception/AppError';
 import NoteRegisterDTO from '@web/dto/NoteRegisterDTO';
 import NoteUpdateDTO from '@web/dto/NoteUpdateDTO';
+import CacheProvider from '@shared/provider/CacheProvider/adapter/CacheProvider';
+import { classToClass } from 'class-transformer';
 import NoteService from './NoteService';
 
 @injectable()
@@ -12,12 +14,23 @@ export default class NoteServiceImpl implements NoteService {
   constructor(
     @inject('NoteRepository')
     private noteRepository: NoteRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: CacheProvider,
   ) {
     // empty
   }
 
   public async index(userId: string): Promise<Note[]> {
-    const notes = await this.noteRepository.findByUserId(userId);
+    const cacheKey = `notes:${userId}`;
+
+    let notes = await this.cacheProvider.recover<Note[]>(cacheKey);
+
+    if (!notes) {
+      notes = await this.noteRepository.findByUserId(userId);
+
+      await this.cacheProvider.save(cacheKey, classToClass(notes));
+    }
 
     return notes;
   }
@@ -30,6 +43,8 @@ export default class NoteServiceImpl implements NoteService {
     }
 
     await this.noteRepository.delete(id);
+
+    await this.cacheProvider.invalidate(`notes:${noteFound.user_id}`);
   }
 
   public async update(note: NoteUpdateDTO): Promise<Note> {
@@ -49,6 +64,8 @@ export default class NoteServiceImpl implements NoteService {
       updatedAt,
     );
 
+    await this.cacheProvider.invalidate(`notes:${note.user_id}`);
+
     const noteSaved = await this.noteRepository.save(noteUpdated);
 
     return noteSaved;
@@ -66,6 +83,8 @@ export default class NoteServiceImpl implements NoteService {
 
   public async create(noteRegister: NoteRegisterDTO): Promise<Note> {
     const note = await this.noteRepository.create(noteRegister);
+
+    await this.cacheProvider.invalidate(`notes:${noteRegister.user_id}`);
 
     return note;
   }

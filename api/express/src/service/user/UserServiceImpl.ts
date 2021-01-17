@@ -8,6 +8,8 @@ import UserRegisterDTO from '@web/dto/UserRegisterDTO';
 import UserUpdateDTO from '@web/dto/UserUpdateDTO';
 import UserUpdateAvatarDTO from '@web/dto/UserUpdateAvatarDTO';
 import StorageProvider from '@shared/provider/StorageProvider/adapter/StorageProvider';
+import CacheProvider from '@shared/provider/CacheProvider/adapter/CacheProvider';
+import { classToClass } from 'class-transformer';
 import UserService from './UserService';
 
 @injectable()
@@ -21,11 +23,16 @@ export default class UserServiceImpl implements UserService {
 
     @inject('StorageProvider')
     private storageProvider: StorageProvider,
+
+    @inject('CacheProvider')
+    private cacheProvider: CacheProvider,
   ) {
     // empty
   }
 
   public async update(user: UserUpdateDTO): Promise<User> {
+    const cacheKey = `users:${user.id}`;
+
     const userFound = await this.userRepository.findById(user.id);
     let hashedPassword = '';
 
@@ -66,11 +73,21 @@ export default class UserServiceImpl implements UserService {
 
     const userSaved = await this.userRepository.save(userUpdated);
 
+    await this.cacheProvider.invalidate(cacheKey);
+
+    await this.cacheProvider.save(cacheKey, classToClass(userSaved));
+
     return userSaved;
   }
 
   public async show(id: string): Promise<User> {
-    const user = await this.userRepository.findById(id);
+    const cacheKey = `users:${id}`;
+
+    let user = await this.cacheProvider.recover<User | undefined>(cacheKey);
+
+    if (!user) {
+      user = await this.userRepository.findById(id);
+    }
 
     if (!user) {
       throw new AppError('User not found');
@@ -100,6 +117,11 @@ export default class UserServiceImpl implements UserService {
 
     const userCreated = await this.userRepository.create(userHashed);
 
+    await this.cacheProvider.save(
+      `users:${userCreated.id}`,
+      classToClass(userCreated),
+    );
+
     return userCreated;
   }
 
@@ -128,6 +150,12 @@ export default class UserServiceImpl implements UserService {
     );
 
     await this.userRepository.save(userWithAvatar);
+
+    const cacheKey = `users:${userId}`;
+
+    await this.cacheProvider.invalidate(cacheKey);
+
+    await this.cacheProvider.save(cacheKey, classToClass(userWithAvatar));
 
     return userWithAvatar;
   }
