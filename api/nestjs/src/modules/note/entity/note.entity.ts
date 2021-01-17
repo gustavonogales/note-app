@@ -1,15 +1,26 @@
-import { Exclude, Expose } from 'class-transformer';
-import { UserDAO } from 'src/modules/user/entity/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/modules/user/entity/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import Note from '../model/note.model';
 
-@Entity('user')
+@Entity('note')
 export class NoteEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => UserDAO, (u) => u)
-  user: UserDAO;
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
 
   @Column({ nullable: true })
   title: string;
@@ -17,25 +28,19 @@ export class NoteEntity {
   @Column('text', { nullable: true })
   text: string;
 
-  @Column('timestamp', { default: 'now()' })
-  createdAt: Date;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Exclude()
-  @Column('timestamp', { default: 'now()' })
-  updatedAt: Date;
-
-  @Expose({ name: 'updated_at' })
-  getUpdatedAt(): Date {
-    return this.updatedAt;
-  }
+  @UpdateDateColumn()
+  updated_at: Date;
 
   toNote(): Note {
     return new Note(
       this.id,
-      this.user.id,
+      this.user_id,
       this.title,
       this.text,
-      this.updatedAt,
+      this.updated_at,
     );
   }
 }

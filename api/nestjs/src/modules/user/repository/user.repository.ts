@@ -3,25 +3,25 @@ import User from '../model/user.model';
 import UserRepositoryInterface from './user.repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserDAO } from '../entity/user.entity';
+import { UserEntity } from '../entity/user.entity';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
   constructor(
-    @InjectRepository(UserDAO)
-    private repository: Repository<UserDAO>,
+    @InjectRepository(UserEntity)
+    private repository: Repository<UserEntity>,
   ) {}
 
   public async findById(id: string): Promise<User | undefined> {
-    const userDAO = await this.repository.findOne(id);
+    const userEntity = await this.repository.findOne(id);
 
-    return userDAO?.toUser();
+    return userEntity?.toUser();
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const userDAO = await this.repository.findOne({ where: { email } });
+    const userEntity = await this.repository.findOne({ where: { email } });
 
-    return userDAO?.toUser();
+    return userEntity?.toUser();
   }
 
   public async save(user: User): Promise<User> {

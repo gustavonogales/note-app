@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserDAO } from 'src/modules/user/entity/user.entity';
+import { UserEntity } from 'src/modules/user/entity/user.entity';
 import { UserRepository } from 'src/modules/user/repository/user.repository';
 import { HashModule } from '../hash/hash.module';
 import { AuthController } from './controller/auth.controller';
@@ -13,7 +13,7 @@ import { JwtStrategy } from './util/jwt.strategy';
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([UserDAO]),
+    TypeOrmModule.forFeature([UserEntity]),
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
