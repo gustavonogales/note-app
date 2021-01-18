@@ -9,12 +9,12 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    loadChildren: './user/user.module#UserModule'
+    loadChildren: './user/user.module#UserModule',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
