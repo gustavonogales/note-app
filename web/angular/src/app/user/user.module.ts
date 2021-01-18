@@ -8,6 +8,13 @@ import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [SignUpComponent],
-  imports: [CommonModule, RouterModule, UserRoutingModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    UserRoutingModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class UserModule {}

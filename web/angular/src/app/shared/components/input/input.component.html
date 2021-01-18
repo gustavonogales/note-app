@@ -1,0 +1,4 @@
+<div class="input-container" [ngClass]="focus">
+  <i-feather [name]="icon" class="icon"></i-feather>
+  <input [name]="name" [type]="type" [placeholder]="placeholder" (focus)="onFocus($event)"/>
+</div>
