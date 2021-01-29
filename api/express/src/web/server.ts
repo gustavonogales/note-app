@@ -8,8 +8,10 @@ import StorageConfig from '@shared/provider/StorageProvider/StorageConfig';
 import routes from './routes';
 import '@shared/container';
 import '@shared/database';
-import appError from './middleware/AppError.routes';
+// import appError from './middleware/AppError.routes';
 import corsConfig from './config/CorsConfig';
+// import NewAppError from './middleware/AppError.routes';
+import appError from './middleware/AppError.routes';
 
 const app = express();
 

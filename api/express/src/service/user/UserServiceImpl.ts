@@ -10,6 +10,7 @@ import UserUpdateAvatarDTO from '@web/dto/UserUpdateAvatarDTO';
 import StorageProvider from '@shared/provider/StorageProvider/adapter/StorageProvider';
 import CacheProvider from '@shared/provider/CacheProvider/adapter/CacheProvider';
 import { classToClass } from 'class-transformer';
+// import LogProvider from '@shared/provider/LogProvider/adapter/LogProvider';
 import UserService from './UserService';
 
 @injectable()
