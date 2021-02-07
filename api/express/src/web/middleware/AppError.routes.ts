@@ -13,6 +13,7 @@ export default async function appError(
 
   logger.error('SOMETHING WENT WRONG', error);
 
+  console.log('>>>>>>', error);
   if (error instanceof AppError) {
     return response.status(error.statusCode).json({
       status: 'error',
