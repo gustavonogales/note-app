@@ -4,29 +4,15 @@ import { shade } from 'polished';
 export const Container = styled.aside`
   display: flex;
   flex-direction: column;
-  /* background: red; */
   padding: 20px;
   width: 100px;
   border-right: 1px solid #3b3b3b;
   align-items: center;
+  height: 100vh;
+  position: fixed;
 
   svg {
     color: #fff;
-  }
-`;
-
-export const ProfileButton = styled.img`
-  cursor: pointer;
-  border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  object-fit: cover;
-  object-position: 0 -10px;
-  margin-bottom: 24px;
-  transition: 0.2s filter;
-
-  &:hover {
-    filter: brightness(80%);
   }
 `;
 

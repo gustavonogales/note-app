@@ -1,13 +1,12 @@
-import { shade } from 'polished';
 import styled from 'styled-components';
 import bg from '../../assets/bg.svg';
 
 export const Container = styled.div`
   display: flex;
-  height: 100vh;
 `;
 
 export const Content = styled.div`
+  margin-left: 100px;
   background-image: url(${bg});
   background-repeat: no-repeat;
   background-position: bottom;
@@ -18,15 +17,24 @@ export const Content = styled.div`
 `;
 
 export const FormContent = styled.section`
-  margin-top: 5em;
+  padding: 5em 0;
   display: flex;
   flex-direction: column;
-  width: 370px;
+  width: 400px;
+  justify-content: center;
+  align-items: center;
+
+  input[type='file'] {
+    display: hidden;
+  }
+
+  form: {
+    width: 100%;
+  }
 
   h1 {
     font-size: 42px;
     margin-bottom: 24px;
-    text-align: center;
   }
 
   button {
@@ -34,46 +42,20 @@ export const FormContent = styled.section`
   }
 `;
 
-export const AvatarInput = styled.div`
-  margin-bottom: 32px;
-  position: relative;
-  align-self: center;
+export const InputLabel = styled.label`
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-  img {
-    width: 186px;
-    height: 186px;
-    object-fit: cover;
-    object-position: 0 -25px;
-    border-radius: 50%;
-  }
-
-  label {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    background: #3b3b3b;
-    border-radius: 50%;
-    right: 0;
-    bottom: 0;
-    border: 0;
-    transition: background-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    input {
-      display: none;
-    }
-
-    svg {
-      width: 20px;
-      height: 20px;
-      color: #fff;
-    }
-
-    &:hover {
-      background: ${shade(0.2, '#3b3b3b')};
-    }
+  input {
+    display: none;
   }
 `;

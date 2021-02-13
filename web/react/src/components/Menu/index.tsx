@@ -3,13 +3,13 @@ import React, { useCallback } from 'react';
 import { FiChevronLeft, FiLogOut, FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/Auth';
+import ProfilePic from '../ProfilePic';
 import {
   AddButton,
   BackButton,
   Container,
   Flex1,
   LogoutButton,
-  ProfileButton,
 } from './styles';
 
 type MenuProps = {
@@ -38,7 +38,7 @@ const Menu: React.FC<MenuProps> = ({
   return (
     <Container>
       {hasProfileButton && (
-        <ProfileButton src={user.avatar_url} onClick={handleNavigate} />
+        <ProfilePic user={user} onClick={handleNavigate} size={24} />
       )}
       {hasBackButton && (
         <BackButton onClick={() => history.goBack()}>

@@ -3,14 +3,15 @@ import React, { ChangeEvent, useCallback, useRef } from 'react';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { FiEdit3, FiLock, FiMail, FiUser } from 'react-icons/fi';
+import { FiLock, FiMail, FiUser } from 'react-icons/fi';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import Menu from '../../components/Menu';
 import { useAuth } from '../../hooks/Auth';
 import api from '../../utils/api';
-import { AvatarInput, Container, Content, FormContent } from './styles';
+import { Container, Content, FormContent, InputLabel } from './styles';
 import UserUpdate from '../../models/UserUpdate';
+import ProfilePic from '../../components/ProfilePic';
 
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuth();
@@ -87,13 +88,11 @@ const Profile: React.FC = () => {
       <Menu hasProfileButton={false} hasBackButton hasAddButton={false} />
       <Content>
         <FormContent>
-          <AvatarInput>
-            <img src={user.avatar_url} alt={user.name} />
-            <label htmlFor="avatar">
-              <FiEdit3 />
+          <ProfilePic user={user} size={64}>
+            <InputLabel htmlFor="avatar">
               <input type="file" id="avatar" onChange={handleAvatarChange} />
-            </label>
-          </AvatarInput>
+            </InputLabel>
+          </ProfilePic>
           <h1>{user.name}</h1>
           <Form
             onSubmit={handleSubmit}
