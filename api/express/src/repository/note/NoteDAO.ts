@@ -30,6 +30,9 @@ class NoteDAO {
   @Column()
   text: string;
 
+  @Column()
+  color: string;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -42,6 +45,7 @@ class NoteDAO {
       this.user_id,
       this.title,
       this.text,
+      this.color,
       this.updated_at,
     );
   }

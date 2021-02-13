@@ -9,6 +9,8 @@ export default class Note {
 
   public readonly text: string;
 
+  public readonly color: string;
+
   @Exclude()
   public readonly updatedAt: Date;
 
@@ -22,12 +24,14 @@ export default class Note {
     user_id: string,
     title: string,
     text: string,
+    color: string,
     updatedAt: Date,
   ) {
     this.id = id;
     this.user_id = user_id;
     this.title = title;
     this.text = text;
+    this.color = color;
     this.updatedAt = updatedAt;
   }
 }

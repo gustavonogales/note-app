@@ -3,4 +3,5 @@ export default interface NoteUpdateDTO {
   id: string;
   title: string;
   text: string;
+  color: string;
 }

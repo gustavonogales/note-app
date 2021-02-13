@@ -31,8 +31,8 @@ export default class NoteRepositoryImpl implements NoteRepository {
   }
 
   public async create(noteRegister: NoteRegisterDTO): Promise<Note> {
-    const { user_id, title, text } = noteRegister;
-    const note = new Note(uuidv4(), user_id, title, text, new Date());
+    const { user_id, title, text, color } = noteRegister;
+    const note = new Note(uuidv4(), user_id, title, text, color, new Date());
 
     this.notes.push(note);
 

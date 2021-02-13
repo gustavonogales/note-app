@@ -9,12 +9,13 @@ import NoteRegisterDTO from '@web/dto/NoteRegisterDTO';
 export default class NoteController {
   public async create(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
-    const { title, text } = request.body;
+    const { title, text, color } = request.body;
 
     const noteRegister = {
       user_id,
       title,
       text,
+      color,
     } as NoteRegisterDTO;
 
     const noteService = container.resolve(NoteServiceImpl);
@@ -26,13 +27,14 @@ export default class NoteController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const user_id = request.user.id;
-    const { id, title, text } = request.body;
+    const { id, title, text, color } = request.body;
 
     const noteUpdate = {
       user_id,
       id,
       title,
       text,
+      color,
     } as NoteUpdateDTO;
 
     const noteService = container.resolve(NoteServiceImpl);

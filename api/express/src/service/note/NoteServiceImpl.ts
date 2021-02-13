@@ -61,6 +61,7 @@ export default class NoteServiceImpl implements NoteService {
       note.user_id,
       note.title,
       note.text,
+      note.color,
       updatedAt,
     );
 

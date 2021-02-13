@@ -26,6 +26,7 @@ noteRouter.post(
     [Segments.BODY]: {
       title: Joi.string().required().min(1).max(255),
       text: Joi.string().required(),
+      color: Joi.string().max(7),
     },
   }),
   noteController.create,
@@ -38,6 +39,7 @@ noteRouter.put(
       id: Joi.string().required(),
       title: Joi.string().required().min(1).max(255),
       text: Joi.string().required(),
+      color: Joi.string().max(7),
     },
   }),
   noteController.update,
