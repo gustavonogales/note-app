@@ -7,15 +7,11 @@ type NoteProps = {
 };
 
 const Note: React.FC<NoteProps> = ({ note }) => {
-  const test = 1;
+  const sample = `${note.title}${note.text}`.substr(0, 70);
 
   return (
-    <Container>
-      <p>
-        {`${note.title}
-        \n
-      ${note.text}`}
-      </p>
+    <Container color={note.color}>
+      <p>{`${sample}...`}</p>
       <span>{note.formatted_updated_at}</span>
     </Container>
   );

@@ -8,7 +8,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   margin-left: 100px;
-  padding: 20px 80px;
+  padding: 20px 80px 0px;
   background-image: url(${bg});
   background-repeat: no-repeat;
   background-position: bottom;
@@ -16,6 +16,7 @@ export const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  position: relative;
   /* justify-content: center; */
   /* flex: 1; */
 `;
