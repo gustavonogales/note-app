@@ -41,7 +41,8 @@ export const Content = styled.div`
   margin: 16px 0;
 `;
 
-export const Text = styled.div`
-  background: green;
-  width: 100%;
+export const ColorPickerContainer = styled.div`
+  position: absolute;
+  top: 55px;
+  right: -1px;
 `;

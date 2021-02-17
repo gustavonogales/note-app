@@ -3,13 +3,24 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiPenTool } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
+import { ColorResult, TwitterPicker } from 'react-color';
 import Note from '../../models/Note';
 import NoteButton from '../NoteButton';
 import Colors from '../../utils/colors';
-import { Container, Header, Layer, Content, Text } from './styles';
+import {
+  Container,
+  Header,
+  Layer,
+  Content,
+  ColorPickerContainer,
+} from './styles';
 import NoteInput from '../NoteInput';
 import NoteAction from '../../utils/noteAction';
 import { Action } from '../../reducers/noteReducer';
+import NoteTextArea from '../NoteTextArea';
+import { create, update } from '../../services/noteService';
+import NoteUpdate from '../../models/NoteUpdate';
+import NoteCreate from '../../models/NoteCreate';
 
 type EditNoteProps = {
   dispatch: React.Dispatch<Action>;
@@ -17,30 +28,66 @@ type EditNoteProps = {
 };
 
 const EditNote: React.FC<EditNoteProps> = ({ dispatch, note }) => {
-  const [color, setColor] = useState('');
   const formRef = useRef<FormHandles>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [color, setColor] = useState('');
+  const [colors, setColors] = useState([] as string[]);
+  const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
+    const keys: string[] = Object.values(Colors);
+    setColors(keys);
+
     if (Object.keys(note).length !== 0) {
       setColor(note.color);
     } else {
-      const keys = Object.values(Colors);
       const randomColor = Math.floor(Math.random() * keys.length);
       setColor(keys[randomColor]);
     }
   }, [note]);
 
-  const handleSubmit = useCallback(() => {
-    // dispatch({ type: NoteAction.UPDATE, payload: {} });
-    console.log(textRef);
-    console.log(textAreaRef.current?.value);
-  }, []);
+  const handleSubmit = useCallback(
+    async ({ title, text }) => {
+      if (note.id) {
+        const updateNote = {
+          id: note.id,
+          title,
+          text,
+          color,
+        } as NoteUpdate;
+
+        try {
+          update(updateNote).then(response => {
+            dispatch({ type: NoteAction.UPDATE, payload: { note: response } });
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        const createNote = {
+          title,
+          text,
+          color,
+        } as NoteCreate;
+
+        try {
+          create(createNote).then(response => {
+            dispatch({ type: NoteAction.ADD, payload: { note: response } });
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    },
+    [note, color, dispatch],
+  );
 
   const handleRevert = useCallback(() => {
     dispatch({ type: NoteAction.CLOSE_NOTE });
-  }, []);
+  }, [dispatch]);
+
+  function handleColorChange(colorResult: ColorResult) {
+    setColor(colorResult.hex);
+  }
 
   return (
     <>
@@ -59,8 +106,21 @@ const EditNote: React.FC<EditNoteProps> = ({ dispatch, note }) => {
               <FiChevronLeft size={24} />
             </NoteButton>
             <div style={{ flex: 1 }} />
-            <NoteButton customStyle={{ marginLeft: 6, marginRight: 6 }}>
+            <NoteButton
+              type="button"
+              onClick={() => setShowPicker(!showPicker)}
+              customStyle={{ marginLeft: 6, marginRight: 6 }}
+            >
               <FiPenTool size={20} />
+              {showPicker && (
+                <ColorPickerContainer>
+                  <TwitterPicker
+                    triangle="top-right"
+                    colors={colors}
+                    onChange={handleColorChange}
+                  />
+                </ColorPickerContainer>
+              )}
             </NoteButton>
             <NoteButton
               type="submit"
@@ -70,16 +130,8 @@ const EditNote: React.FC<EditNoteProps> = ({ dispatch, note }) => {
             </NoteButton>
           </Header>
           <Content>
-            <NoteInput name="title" type="text" styleType="title" />
-            {/* <NoteInput name="text" type="text" styleType="text" /> */}
-            <Text ref={textRef} contentEditable="true">
-              {note?.text || 'Type something...'}
-            </Text>
-            <textarea ref={textAreaRef}>
-              {
-                // empty
-              }
-            </textarea>
+            <NoteInput name="title" type="text" />
+            <NoteTextArea name="text" type="text" />
           </Content>
         </Form>
       </Container>

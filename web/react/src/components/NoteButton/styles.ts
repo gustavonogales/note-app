@@ -12,4 +12,5 @@ export const Button = styled.button`
   min-width: 40px;
   font-size: 16px;
   line-height: 0;
+  position: relative;
 `;

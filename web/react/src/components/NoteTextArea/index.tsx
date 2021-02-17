@@ -7,38 +7,36 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import { InputTitle } from './styles';
+import { InputText } from './styles';
 
-interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface NoteTextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   customStyle?: object;
 }
 
-function NoteInput({
+function NoteTextArea({
   name,
   customStyle = {},
-  ...props
-}: NoteInputProps): ReactElement {
-  const inputRef = useRef<HTMLInputElement>(null);
+}: NoteTextAreaProps): ReactElement {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { fieldName, defaultValue, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
+      ref: textAreaRef.current,
       path: 'value',
     });
   }, [fieldName, registerField]);
 
   return (
-    <InputTitle
+    <InputText
       style={customStyle}
       defaultValue={defaultValue}
       name={name}
-      ref={inputRef}
-      {...props}
+      ref={textAreaRef}
     />
   );
 }
 
-export default NoteInput;
+export default NoteTextArea;

@@ -45,6 +45,7 @@
     "yup": "^0.30.0"
   },
   "devDependencies": {
+    "@types/react-color": "^3.0.4",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
     "@types/yup": "^0.29.9",

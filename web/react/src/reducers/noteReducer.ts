@@ -50,6 +50,31 @@ const noteReducer = (state: NoteState, action: Action): any => {
         currentNote: {},
         isNoteOpen: false,
       };
+    case NoteAction.ADD:
+      const notes = [...state.notes, action.payload?.note];
+      return {
+        notes,
+        filteredNotes: notes,
+        currentNote: {},
+        isNoteOpen: false,
+        error: '',
+      };
+    case NoteAction.UPDATE:
+      if (action.payload?.note) {
+        const noteToUpdate = action.payload?.note;
+        const updatedNotes = state.notes.map(note => (
+          note.id === noteToUpdate.id
+            ? noteToUpdate
+            : note));
+        return {
+          notes: updatedNotes,
+          filteredNotes: updatedNotes,
+          currentNote: {},
+          isNoteOpen: false,
+          error: '',
+        };
+      }
+      return state;
     default:
       return state;
   }
