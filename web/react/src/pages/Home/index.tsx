@@ -13,14 +13,14 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import Menu from '../../components/Menu';
 import NoteModel from '../../models/Note';
+import Card from '../../components/Card';
 import Note from '../../components/Note';
-import EditNote from '../../components/EditNote';
 import Input from '../../components/Input';
-import { Container, Content, NotesContainer, Toolbar } from './styles';
 import noteReducer from '../../reducers/noteReducer';
 import NoteAction from '../../utils/noteAction';
-import { getAll } from '../../services/noteService';
 import NoteState from '../../models/NoteState';
+import { getAll } from '../../services/noteService';
+import { Container, Content, NotesContainer, Toolbar } from './styles';
 
 function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);
@@ -64,7 +64,7 @@ function Home(): ReactElement {
         <h1>Notes</h1>
         <NotesContainer>
           {state.filteredNotes && state.filteredNotes.map((note: NoteModel) => (
-            <Note
+            <Card
               key={note.id}
               note={note}
               onClick={() => handleOpenNote(note)}
@@ -72,7 +72,7 @@ function Home(): ReactElement {
           ))}
         </NotesContainer>
         {state.isNoteOpen && (
-          <EditNote note={state.currentNote} dispatch={dispatch} />
+          <Note note={state.currentNote} dispatch={dispatch} />
         )}
       </Content>
     </Container>

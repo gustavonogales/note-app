@@ -1,25 +1,48 @@
 import styled from 'styled-components';
 
 type NoteProps = {
-  color: string;
+  backgroundColor: string;
 };
 
 export const Container = styled.div<NoteProps>`
-  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 50px);
+  transform: translateX(-50%) translateY(-50%);
+  background: ${props => props.backgroundColor};
+  width: 500px;
+  height: 500px;
+  padding: 24px;
+  border-radius: 8px;
+  color: #252525;
+`;
+
+export const Layer = styled.div`
+  background: #000;
+  opacity: 0.5;
+  top: 0;
+  left: -100px;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  & + button {
+    margin: 0 8px;
+  }
+`;
+
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  width: 180px;
-  background: ${props => props.color};
-  color: #252525;
-  border-radius: 8px;
+  margin: 16px 0;
+`;
 
-  p {
-    flex: 1;
-  }
-
-  span {
-    color: #000;
-    opacity: 0.5;
-  }
+export const ColorPickerContainer = styled.div`
+  position: absolute;
+  top: 55px;
+  right: -1px;
 `;

@@ -45,4 +45,5 @@ function formatDate(note: Note): Note {
   };
 }
 
+// eslint-disable-next-line object-curly-newline
 export { getAll, create, update, remove };
