@@ -30,7 +30,7 @@ export const Toolbar = styled.div`
 `;
 
 export const NotesContainer = styled.div`
-  background: red;
+  /* background: red; */
   /* width: 85vw; */
   margin-top: 24px;
   display: grid;

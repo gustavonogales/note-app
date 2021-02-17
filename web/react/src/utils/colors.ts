@@ -9,4 +9,4 @@ enum Colors {
   VERDIGRIS = '#80CBC4',
 }
 
-export { Colors };
+export default Colors;

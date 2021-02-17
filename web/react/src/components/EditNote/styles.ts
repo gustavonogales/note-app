@@ -26,3 +26,22 @@ export const Layer = styled.div`
   height: 100vh;
   position: absolute;
 `;
+
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  & + button {
+    margin: 0 8px;
+  }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+`;
+
+export const Text = styled.div`
+  background: green;
+  width: 100%;
+`;

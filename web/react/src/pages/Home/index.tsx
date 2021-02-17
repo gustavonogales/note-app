@@ -1,62 +1,82 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react';
+import { FiSearch } from 'react-icons/fi';
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 import Menu from '../../components/Menu';
-import { Container, Content, NotesContainer, Toolbar } from './styles';
-import api from '../../utils/api';
 import NoteModel from '../../models/Note';
-import SearchBar from '../../components/SearchBar';
 import Note from '../../components/Note';
-import { useNotes } from '../../hooks/Notes';
 import EditNote from '../../components/EditNote';
+import Input from '../../components/Input';
+import { Container, Content, NotesContainer, Toolbar } from './styles';
+import noteReducer from '../../reducers/noteReducer';
+import NoteAction from '../../utils/noteAction';
+import { getAll } from '../../services/noteService';
+import NoteState from '../../models/NoteState';
 
-const Home: React.FC = () => {
-  // const { notes } = useNotes();
-  const [notes, setNotes] = useState<NoteModel[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+function Home(): ReactElement {
+  const searchFormRef = useRef<FormHandles>(null);
+  const [state, dispatch] = useReducer(noteReducer, {} as NoteState);
 
   useEffect(() => {
-    api.get('/note').then(response => {
-      const formattedNotes = response.data.map((note: NoteModel) => ({
-        ...note,
-        formatted_updated_at: new Date(note.updated_at).toLocaleDateString(
-          'en-US',
-          {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-          },
-        ),
-      }));
-
-      setNotes(formattedNotes);
+    getAll().then(notes => {
+      dispatch({ type: NoteAction.FETCH_ALL, payload: { notes } });
     });
   }, []);
 
   const handleAddAction = useCallback(() => {
-    setIsOpen(true);
+    dispatch({ type: NoteAction.OPEN_NOTE });
   }, []);
 
-  const handleCloseNote = useCallback(() => {
-    setIsOpen(false);
+  const handleOpenNote = useCallback((note: NoteModel) => {
+    dispatch({ type: NoteAction.OPEN_NOTE, payload: { note } });
   }, []);
+
+  const handleSearch = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch({ type: NoteAction.FILTER, payload: { pattern: e.target.value } });
+    }, [],
+  );
 
   return (
     <Container>
       <Menu addAction={handleAddAction} />
       <Content>
         <Toolbar>
-          <SearchBar />
+          <Form ref={searchFormRef} onSubmit={handleSearch}>
+            <Input
+              name="search"
+              icon={FiSearch}
+              type="text"
+              placeholder="Search..."
+              onChange={handleSearch}
+            />
+          </Form>
         </Toolbar>
         <h1>Notes</h1>
         <NotesContainer>
-          {notes.map(note => (
-            <Note key={note.id} note={note} />
+          {state.filteredNotes && state.filteredNotes.map((note: NoteModel) => (
+            <Note
+              key={note.id}
+              note={note}
+              onClick={() => handleOpenNote(note)}
+            />
           ))}
         </NotesContainer>
-        {isOpen && <EditNote closeCallback={handleCloseNote} />}
+        {state.isNoteOpen && (
+          <EditNote note={state.currentNote} dispatch={dispatch} />
+        )}
       </Content>
     </Container>
   );
-};
+}
 
 export default Home;

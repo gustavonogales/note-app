@@ -10,7 +10,6 @@ export const Container = styled.div<NoteProps>`
   flex-direction: column;
   padding: 20px;
   width: 180px;
-  background: #ffab91;
   background: ${props => props.color};
   color: #252525;
   border-radius: 8px;

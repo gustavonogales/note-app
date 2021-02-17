@@ -1,9 +1,8 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { FiChevronLeft, FiLogOut, FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/Auth';
-import EditNote from '../EditNote';
 import ProfilePic from '../ProfilePic';
 import {
   AddButton,

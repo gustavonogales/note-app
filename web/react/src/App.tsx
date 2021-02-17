@@ -3,14 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 import { AuthProvider } from './hooks/Auth';
 import Routes from './routes';
-import { NotesProvider } from './hooks/Notes';
 
 const App: React.FC = () => (
   <BrowserRouter>
     <AuthProvider>
-      <NotesProvider>
-        <Routes />
-      </NotesProvider>
+      <Routes />
     </AuthProvider>
     <GlobalStyle />
   </BrowserRouter>
