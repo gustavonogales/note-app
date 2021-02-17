@@ -3,7 +3,6 @@
 import React, {
   ChangeEvent,
   ReactElement,
-  useCallback,
   useEffect,
   useReducer,
   useRef,
@@ -32,19 +31,17 @@ function Home(): ReactElement {
     });
   }, []);
 
-  const handleAddAction = useCallback(() => {
+  function handleAddAction() {
     dispatch({ type: NoteAction.OPEN_NOTE });
-  }, []);
+  }
 
-  const handleOpenNote = useCallback((note: NoteModel) => {
+  function handleOpenNote(note: NoteModel) {
     dispatch({ type: NoteAction.OPEN_NOTE, payload: { note } });
-  }, []);
+  }
 
-  const handleSearch = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch({ type: NoteAction.FILTER, payload: { pattern: e.target.value } });
-    }, [],
-  );
+  function handleSearch(e: ChangeEvent<HTMLInputElement>) {
+    dispatch({ type: NoteAction.FILTER, payload: { pattern: e.target.value } });
+  }
 
   return (
     <Container>
