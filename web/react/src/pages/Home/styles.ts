@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import bg from '../../assets/bg.svg';
+import emptyImg from '../../assets/empty.svg';
 
 export const Container = styled.div`
   display: flex;
@@ -39,4 +40,25 @@ export const NotesContainer = styled.div`
   grid-auto-rows: minmax(180px, auto);
   grid-auto-flow: dense;
   padding: 10px;
+`;
+
+export const EmptyContainer = styled.div`
+  align-self: center;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  /* background: red; */
+  align-items: center;
+
+  p {
+    font-size: 24px;
+  }
+`;
+
+export const Empty = styled.div`
+  background: url(${emptyImg}) no-repeat center center;
+  background-size: contain;
+  height: 100vh;
+  width: 100%;
 `;

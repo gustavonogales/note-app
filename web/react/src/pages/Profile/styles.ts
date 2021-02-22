@@ -21,6 +21,7 @@ export const FormContent = styled.section`
   display: flex;
   flex-direction: column;
   width: 400px;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 

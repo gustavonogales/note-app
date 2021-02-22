@@ -5,6 +5,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { useAuth } from '../hooks/Auth';
+import api from '../utils/api';
 
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;
@@ -16,7 +17,16 @@ const Route: React.FC<RouteProps> = ({
   component: Component,
   ...props
 }) => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+
+  api.interceptors.response.use(undefined, err => {
+    const { status } = err.response;
+
+    if (status === 401) {
+      signOut();
+    }
+    // return null;
+  });
 
   const handleRender = useCallback(() => {
     if (isPrivate === !!user) {

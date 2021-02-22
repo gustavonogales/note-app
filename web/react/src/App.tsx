@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 import { AuthProvider } from './hooks/Auth';
 import Routes from './routes';
+import './interceptors/addTokenRequest';
 
 const App: React.FC = () => (
   <BrowserRouter>

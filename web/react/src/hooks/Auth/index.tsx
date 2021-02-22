@@ -39,7 +39,7 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@Notes:token', token);
     localStorage.setItem('@Notes:user', JSON.stringify(user));
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+    // api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ user, token });
   }, []);

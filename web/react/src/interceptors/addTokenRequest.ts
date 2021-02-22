@@ -11,5 +11,7 @@ api.interceptors.request.use(
 
     return request;
   },
-  err => Promise.reject(err),
+  err => {
+    Promise.reject(err);
+  },
 );

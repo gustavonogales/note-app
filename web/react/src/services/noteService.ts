@@ -4,11 +4,16 @@ import NoteUpdate from '../models/NoteUpdate';
 import api from '../utils/api';
 
 async function getAll(): Promise<Note[]> {
-  const response = await api.get('/note');
+  try {
+    const response = await api.get('/note');
 
-  const formattedNotes = response.data.map((note: Note) => formatDate(note));
+    const formattedNotes = response.data.map((note: Note) => formatDate(note));
 
-  return formattedNotes;
+    return formattedNotes;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
 
 async function create(note: NoteCreate): Promise<Note> {

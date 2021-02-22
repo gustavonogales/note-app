@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable prettier/prettier */
 /* eslint-disable object-curly-newline */
 import React, {
@@ -19,11 +20,20 @@ import noteReducer from '../../reducers/noteReducer';
 import NoteAction from '../../utils/noteAction';
 import NoteState from '../../models/NoteState';
 import { getAll } from '../../services/noteService';
-import { Container, Content, NotesContainer, Toolbar } from './styles';
+import { Container, Content, Empty, EmptyContainer, NotesContainer, Toolbar } from './styles';
+
+const initialState = {
+  notes: [],
+  currentNote: {} as NoteModel,
+  filteredNotes: [],
+  error: '',
+  isNoteOpen: false,
+};
 
 function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);
-  const [state, dispatch] = useReducer(noteReducer, {} as NoteState);
+  const [state, dispatch] = useReducer(noteReducer, initialState as NoteState);
+  const hasNotes = state.filteredNotes.length !== 0;
 
   useEffect(() => {
     getAll().then(notes => {
@@ -59,8 +69,14 @@ function Home(): ReactElement {
           </Form>
         </Toolbar>
         <h1>Notes</h1>
+        { !hasNotes && (
+        <EmptyContainer>
+          <Empty />
+          <p>You don't have notes yet.</p>
+        </EmptyContainer>
+        )}
         <NotesContainer>
-          {state.filteredNotes && state.filteredNotes.map((note: NoteModel) => (
+          {hasNotes && state.filteredNotes.map((note: NoteModel) => (
             <Card
               key={note.id}
               note={note}
