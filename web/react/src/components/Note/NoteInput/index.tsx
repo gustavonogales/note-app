@@ -14,7 +14,7 @@ interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
   customStyle?: object;
 }
 
-function NoteInput({
+export function NoteInput({
   name,
   customStyle = {},
   ...props
@@ -40,5 +40,3 @@ function NoteInput({
     />
   );
 }
-
-export default NoteInput;

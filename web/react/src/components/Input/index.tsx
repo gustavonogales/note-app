@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {
-  InputHTMLAttributes, useCallback, useEffect, useRef, useState,
+  InputHTMLAttributes, ReactElement, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
@@ -13,9 +13,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<InputProps> = ({
-  containerStyle = {}, name, icon: Icon, ...props
-}) => {
+export function Input({
+  containerStyle = {},
+  name,
+  icon: Icon,
+  ...props
+}: InputProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null);
   const {
     fieldName, defaultValue, registerField, error,
@@ -63,6 +66,4 @@ const Input: React.FC<InputProps> = ({
       )}
     </Container>
   );
-};
-
-export default Input;
+}

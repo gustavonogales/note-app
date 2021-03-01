@@ -1,20 +1,19 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useRef } from 'react';
+import React, { ReactElement, useCallback, useRef } from 'react';
+import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
-import signupBackground from '../../assets/signup.svg';
-import { Background, Container, Content, Links } from './styles';
-import getValidationErrors from '../../utils/getValidationError';
-
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import api from '../../utils/api';
 import UserSignUp from '../../models/UserSignUp';
+import api from '../../utils/api';
+import { Input } from '../../components/Input';
+import { Button } from '../../components/Button';
+import signupBackground from '../../assets/signup.svg';
+import getValidationErrors from '../../utils/getValidationError';
+import { Background, Container, Content, Links } from './styles';
 
-const SignUp: React.FC = () => {
+export function SignUp(): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
@@ -92,6 +91,4 @@ const SignUp: React.FC = () => {
       </Content>
     </Container>
   );
-};
-
-export default SignUp;
+}

@@ -1,10 +1,10 @@
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import React, { useCallback, useRef } from 'react';
+import React, { ReactElement, useCallback, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import Input from '../Input';
+import { Input } from '../Input';
 
-const SearchBar: React.FC = () => {
+export function SearchBar(): ReactElement {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(() => {
@@ -21,6 +21,4 @@ const SearchBar: React.FC = () => {
       />
     </Form>
   );
-};
-
-export default SearchBar;
+}

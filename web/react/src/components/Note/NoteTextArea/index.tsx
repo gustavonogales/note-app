@@ -14,7 +14,7 @@ interface NoteTextAreaProps extends InputHTMLAttributes<HTMLInputElement> {
   customStyle?: object;
 }
 
-function NoteTextArea({
+export function NoteTextArea({
   name,
   customStyle = {},
 }: NoteTextAreaProps): ReactElement {
@@ -38,5 +38,3 @@ function NoteTextArea({
     />
   );
 }
-
-export default NoteTextArea;

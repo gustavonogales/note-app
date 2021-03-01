@@ -1,14 +1,20 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { FiChevronLeft, FiPenTool } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { ColorResult, TwitterPicker } from 'react-color';
 import NoteModel from '../../models/Note';
 import Colors from '../../utils/colors';
-import NoteButton from './NoteButton';
-import NoteInput from './NoteInput';
-import NoteTextArea from './NoteTextArea';
+import { NoteButton } from './NoteButton';
+import { NoteInput } from './NoteInput';
+import { NoteTextArea } from './NoteTextArea';
 import {
   Container,
   Header,
@@ -27,7 +33,7 @@ type NoteProps = {
   note: NoteModel;
 };
 
-const Note: React.FC<NoteProps> = ({ dispatch, note }) => {
+export function Note({ dispatch, note }: NoteProps): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const [color, setColor] = useState('');
   const [colors, setColors] = useState([] as string[]);
@@ -137,6 +143,4 @@ const Note: React.FC<NoteProps> = ({ dispatch, note }) => {
       </Container>
     </>
   );
-};
-
-export default Note;
+}

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable object-curly-newline */
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Container } from './styles';
 import User from '../../models/User';
 
@@ -6,14 +7,15 @@ type ProfilePicProps = {
   user: User;
   onClick?(): void;
   size?: number;
+  children?: ReactNode;
 };
 
-const ProfilePic: React.FC<ProfilePicProps> = ({
+export function ProfilePic({
   onClick,
   user,
   size = 32,
   children,
-}) => {
+}: ProfilePicProps): ReactElement {
   const [initials, setInitials] = useState('');
   useEffect(() => {
     const fullName = user.name.split(' ');
@@ -26,6 +28,4 @@ const ProfilePic: React.FC<ProfilePicProps> = ({
       {children}
     </Container>
   );
-};
-
-export default ProfilePic;
+}

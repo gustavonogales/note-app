@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-newline */
-import React, { useCallback } from 'react';
+import React, { ReactElement, ReactNode, useCallback } from 'react';
 import { FiChevronLeft, FiLogOut, FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/Auth';
-import ProfilePic from '../ProfilePic';
+import { ProfilePic } from '../ProfilePic';
 import {
   AddButton,
   BackButton,
@@ -17,15 +17,16 @@ type MenuProps = {
   hasBackButton?: boolean;
   hasAddButton?: boolean;
   addAction?: () => void;
+  children?: ReactNode;
 };
 
-const Menu: React.FC<MenuProps> = ({
+export function Menu({
   hasProfileButton = true,
   hasBackButton = false,
   hasAddButton = true,
   addAction = () => ({}),
   children,
-}) => {
+}: MenuProps): ReactElement {
   const { user, signOut } = useAuth();
   const history = useHistory();
 
@@ -59,6 +60,4 @@ const Menu: React.FC<MenuProps> = ({
       </LogoutButton>
     </Container>
   );
-};
-
-export default Menu;
+}

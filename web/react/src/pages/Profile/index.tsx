@@ -1,19 +1,19 @@
 /* eslint-disable object-curly-newline */
-import React, { ChangeEvent, useCallback, useRef } from 'react';
+import React, { ChangeEvent, ReactElement, useCallback, useRef } from 'react';
+import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
 import { FiLock, FiMail, FiUser } from 'react-icons/fi';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Menu from '../../components/Menu';
+import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
+import { Menu } from '../../components/Menu';
 import { useAuth } from '../../hooks/Auth';
+import { ProfilePic } from '../../components/ProfilePic';
 import api from '../../utils/api';
-import { Container, Content, FormContent, InputLabel } from './styles';
 import UserUpdate from '../../models/UserUpdate';
-import ProfilePic from '../../components/ProfilePic';
+import { Container, Content, FormContent, InputLabel } from './styles';
 
-const Profile: React.FC = () => {
+export function Profile(): ReactElement {
   const { user, updateUser } = useAuth();
   const formRef = useRef<FormHandles>(null);
 
@@ -134,6 +134,4 @@ const Profile: React.FC = () => {
       </Content>
     </Container>
   );
-};
-
-export default Profile;
+}

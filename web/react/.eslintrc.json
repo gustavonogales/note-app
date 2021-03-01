@@ -30,6 +30,7 @@
   ],
   "rules": {
     "prettier/prettier": "error",
+    "react/require-default-props": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-use-before-define": "off",
     "arrow-parens": "off",

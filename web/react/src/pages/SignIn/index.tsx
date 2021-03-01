@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
-import React, { useCallback, useRef } from 'react';
+import React, { ReactElement, useCallback, useRef } from 'react';
+import * as Yup from 'yup';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
-import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
+import { useAuth } from '../../hooks/Auth';
+import { Input } from '../../components/Input';
+import { Button } from '../../components/Button';
+import getValidationErrors from '../../utils/getValidationError';
+import UserSignInCredentials from '../../models/UserSignInCredentials';
 import signInBackground from '../../assets/signin.svg';
 import {
   Background,
@@ -13,13 +18,7 @@ import {
   Links,
 } from './styles';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import getValidationErrors from '../../utils/getValidationError';
-import { useAuth } from '../../hooks/Auth';
-import UserSignInCredentials from '../../models/UserSignInCredentials';
-
-const SignIn: React.FC = () => {
+export function SignIn(): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
   const history = useHistory();
@@ -73,6 +72,4 @@ const SignIn: React.FC = () => {
       </Background>
     </Container>
   );
-};
-
-export default SignIn;
+}
