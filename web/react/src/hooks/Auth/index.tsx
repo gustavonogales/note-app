@@ -1,9 +1,20 @@
 /* eslint-disable object-curly-newline */
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 import Auth from './Auth';
 import UserAuth from '../../models/UserAuth';
 import api from '../../utils/api';
 import User from '../../models/User';
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
 const AuthContext = createContext<Auth>({} as Auth);
 
@@ -17,7 +28,7 @@ function useAuth(): Auth {
   return context;
 }
 
-const AuthProvider: React.FC = ({ children }) => {
+function AuthProvider({ children }: AuthProviderProps): ReactElement {
   const [data, setData] = useState<UserAuth>(() => {
     const token = localStorage.getItem('@Notes:token');
     const user = localStorage.getItem('@Notes:user');
@@ -74,6 +85,6 @@ const AuthProvider: React.FC = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export { AuthProvider, useAuth };
