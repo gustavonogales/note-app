@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-case-declarations */
 import Note from '../models/Note';
@@ -19,6 +20,7 @@ const noteReducer = (state: NoteState, action: Action): any => {
     case NoteAction.FETCH_ALL:
       return {
         ...state,
+        isLoading: false,
         notes: action.payload?.notes,
         filteredNotes: action.payload?.notes,
       };
@@ -30,7 +32,7 @@ const noteReducer = (state: NoteState, action: Action): any => {
 
         const filteredNotes = state.notes.filter(
           (note: Note) => note.text.toLocaleLowerCase().includes(pattern)
-          || note.title.toLocaleLowerCase().includes(pattern),
+            || note.title.toLocaleLowerCase().includes(pattern),
         );
         return {
           ...state,
@@ -62,10 +64,7 @@ const noteReducer = (state: NoteState, action: Action): any => {
     case NoteAction.UPDATE:
       if (action.payload?.note) {
         const noteToUpdate = action.payload?.note;
-        const updatedNotes = state.notes.map(note => (
-          note.id === noteToUpdate.id
-            ? noteToUpdate
-            : note));
+        const updatedNotes = state.notes.map(note => (note.id === noteToUpdate.id ? noteToUpdate : note));
         return {
           notes: updatedNotes,
           filteredNotes: updatedNotes,

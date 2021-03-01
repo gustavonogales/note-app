@@ -6,6 +6,7 @@ interface NoteState {
   filteredNotes: Note[];
   error: string;
   isNoteOpen: boolean;
+  isLoading: boolean;
 }
 
 export default NoteState;

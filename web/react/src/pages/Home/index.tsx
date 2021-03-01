@@ -28,6 +28,7 @@ const initialState = {
   filteredNotes: [],
   error: '',
   isNoteOpen: false,
+  isLoading: true,
 };
 
 function Home(): ReactElement {
@@ -69,11 +70,11 @@ function Home(): ReactElement {
           </Form>
         </Toolbar>
         <h1>Notes</h1>
-        { !hasNotes && (
-        <EmptyContainer>
-          <Empty />
-          <p>You don't have notes yet.</p>
-        </EmptyContainer>
+        {(!state.isLoading && !hasNotes) && (
+          <EmptyContainer>
+            <Empty />
+            <p>Nothing here...</p>
+          </EmptyContainer>
         )}
         <NotesContainer>
           {hasNotes && state.filteredNotes.map((note: NoteModel) => (
