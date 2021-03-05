@@ -16,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
   margin-bottom: 24px;
   transition: 0.2s filter;
   font-size: ${props => props.size}px;
-  background: #ffcc80;
+  background: ${props => props.theme.colors.accent};
   ${props =>
     props.avatar_url
     && css`

@@ -6,13 +6,13 @@ export const Container = styled.aside`
   flex-direction: column;
   padding: 20px;
   width: 100px;
-  border-right: 1px solid #3b3b3b;
+  border-right: 1px solid ${props => props.theme.colors.divider};
   align-items: center;
   height: 100vh;
   position: fixed;
 
   svg {
-    color: #fff;
+    color: ${props => props.theme.colors.default_text};
   }
 `;
 
@@ -29,11 +29,11 @@ export const AddButton = styled.button`
   border: none;
   padding: 6px 8px;
   border-radius: 50%;
-  background: #3b3b3b;
+  background: ${props => props.theme.colors.divider};
   transition: 0.2s background;
 
   &:hover {
-    background: ${shade(0.2, '#3b3b3b')};
+    background: ${props => shade(0.2, props.theme.colors.divider)};
   }
 `;
 
@@ -46,10 +46,10 @@ export const LogoutButton = styled.button`
   border: none;
   padding: 6px 8px;
   border-radius: 50%;
-  background: #3b3b3b;
+  background: ${props => props.theme.colors.divider};
   transition: 0.2s background;
 
   &:hover {
-    background: ${shade(0.2, '#3b3b3b')};
+    background: ${props => shade(0.2, props.theme.colors.divider)};
   }
 `;

@@ -5,8 +5,8 @@ export const Container = styled.div`
 
   span {
     width: 160px;
-    background: #ffcc80;
-    color: #252525;
+    background: ${props => props.theme.colors.accent};
+    color: ${props => props.theme.colors.note_text};
     padding: 8px;
     border-radius: 4px;
     font-size: 14px;
@@ -20,7 +20,7 @@ export const Container = styled.div`
 
     &::before {
       border-style: solid;
-      border-color: #ffcc80 transparent;
+      border-color: ${props => props.theme.colors.accent} transparent;
       border-width: 6px 6px 0 6px;
       content: '';
       position: absolute;

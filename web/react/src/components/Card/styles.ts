@@ -11,7 +11,7 @@ export const Container = styled.div<NoteProps>`
   padding: 20px;
   width: 180px;
   background: ${props => props.color};
-  color: #252525;
+  color: ${props => props.theme.colors.note_text};
   border-radius: 8px;
 
   p {
@@ -19,7 +19,7 @@ export const Container = styled.div<NoteProps>`
   }
 
   span {
-    color: #000;
+    color: ${props => props.theme.colors.dark};
     opacity: 0.5;
   }
 `;

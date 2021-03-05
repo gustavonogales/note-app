@@ -9,14 +9,14 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #252525;
-    color: #fff;
+    background: ${props => props.theme.colors.note_text};
+    color: ${props => props.theme.colors.default_text};
     -webkit-font-smoothing: antialiased;
   }
 
   body, input, button, textarea {
-    font-family: 'Roboto Slab', serif;
-    font-size: 16px;
+    font-family: ${props => props.theme.fonts.font_family}, serif;
+    font-size: ${props => props.theme.fonts.font_size}px;
   }
 
   h1, h2, h3, h4, h5, h6 strong {

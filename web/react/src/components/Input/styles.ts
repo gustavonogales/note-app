@@ -10,8 +10,8 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #3b3b3b;
-  border: 2px solid #3b3b3b;
+  background: ${props => props.theme.colors.divider};
+  border: 2px solid ${props => props.theme.colors.divider};
   border-radius: 10px;
   padding: 8px 16px;
   width: 100%;
@@ -26,33 +26,33 @@ export const Container = styled.div<ContainerProps>`
   input {
     flex: 1;
     border: 0;
-    color: #fff;
+    color: ${props => props.theme.colors.default_text};
     background: transparent;
 
     &::placeholder {
-      color: ${shade(0.4, '#fff')};
+      color: ${props => shade(0.4, props.theme.colors.default_text)};
     }
   }
 
   svg {
     margin-right: 16px;
-    color: ${shade(0.4, '#fff')};
+    color: ${props => shade(0.4, props.theme.colors.default_text)};
   }
 
   ${props => props.isErrored && css`
-    border-color: #c53030;
+    border-color: ${props.theme.colors.error};
   `}
 
   ${props => props.isFilled && css`
     svg {
-      color: #fff;
+      color: ${props.theme.colors.default_text};
     }
   `}
 
   ${props => props.isFocused && css`
-    border-color: #fff;
+    border-color: ${props.theme.colors.default_text};
     svg {
-      color: #fff;
+      color: ${props.theme.colors.default_text};
     }
   `}
 `;
@@ -63,14 +63,15 @@ export const Error = styled(Tooltip)`
 
   svg {
     margin: 0;
+    color: ${props => props.theme.colors.error};
   }
 
   span {
-    background: #c53030;
-    color: #fff;
+    background: ${props => props.theme.colors.error};
+    color: ${props => props.theme.colors.default_text};
 
     &::before {
-      border-color: #c53030 transparent;
+      border-color: ${props => props.theme.colors.error} transparent;
     }
   }
 `;

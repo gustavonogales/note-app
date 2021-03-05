@@ -40,11 +40,11 @@ export const Content = styled.div`
 
     a {
       text-decoration: none;
-      color: ${shade(0.5, '#fff')};
+      color: ${props => shade(0.5, props.theme.colors.default_text)};
       transition: 0.3s color;
 
       &:hover {
-        color: ${shade(0.1, '#fff')};
+        color: ${props => shade(0.1, props.theme.colors.default_text)};
       }
     }
   }
@@ -66,7 +66,7 @@ export const Background = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  border-left: 1px solid #3b3b3b;
+  border-left: 1px solid ${props => props.theme.colors.divider};
   padding: 24px;
 
   img {

@@ -61,7 +61,7 @@ export function Input({
 
       {error && (
         <Error title={error}>
-          <FiAlertCircle color="#c53030" size={20} />
+          <FiAlertCircle size={20} />
         </Error>
       )}
     </Container>

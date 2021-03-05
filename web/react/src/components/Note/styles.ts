@@ -14,11 +14,11 @@ export const Container = styled.div<NoteProps>`
   height: 500px;
   padding: 24px;
   border-radius: 8px;
-  color: #252525;
+  color: ${props => props.theme.colors.note_text};
 `;
 
 export const Layer = styled.div`
-  background: #000;
+  background: ${props => props.theme.colors.dark};
   opacity: 0.5;
   top: 0;
   left: -100px;
