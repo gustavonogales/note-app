@@ -5,6 +5,7 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
+import { Helmet } from 'react-helmet';
 import { useAuth } from '../../hooks/Auth';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
@@ -53,23 +54,28 @@ export function SignIn(): ReactElement {
   }, [signIn, history]);
 
   return (
-    <Container>
-      <Content>
-        <Form onSubmit={handleSubmit} ref={formRef}>
-          <h1>Sign In</h1>
-          <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
-          <Input name="password" icon={FiLock} type="password" placeholder="Password" />
-          <Button type="submit">Sign in</Button>
-          <Links>
-            <Link to="/signup">create an account</Link>
-            <Link to="/forgot">forgot password</Link>
-          </Links>
-        </Form>
-      </Content>
-      <Background>
-        <img src={signInBackground} alt="bg" />
-        <p>Sign up now and never miss a word</p>
-      </Background>
-    </Container>
+    <>
+      <Helmet>
+        <title>Note App | SignIn</title>
+      </Helmet>
+      <Container>
+        <Content>
+          <Form onSubmit={handleSubmit} ref={formRef}>
+            <h1>Sign In</h1>
+            <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
+            <Input name="password" icon={FiLock} type="password" placeholder="Password" />
+            <Button type="submit">Sign in</Button>
+            <Links>
+              <Link to="/signup">create an account</Link>
+              <Link to="/forgot">forgot password</Link>
+            </Links>
+          </Form>
+        </Content>
+        <Background>
+          <img src={signInBackground} alt="bg" />
+          <p>Sign up now and never miss a word</p>
+        </Background>
+      </Container>
+    </>
   );
 }
