@@ -87,7 +87,11 @@ export function Profile(): ReactElement {
     <Container>
       <Menu hasProfileButton={false} hasBackButton hasAddButton={false} />
       <Content>
-        <FormContent>
+        <FormContent
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <ProfilePic user={user} size={64}>
             <InputLabel htmlFor="avatar">
               <input type="file" id="avatar" onChange={handleAvatarChange} />

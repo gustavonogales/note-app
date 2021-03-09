@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import bg from '../../assets/bg.svg';
 
@@ -16,7 +17,7 @@ export const Content = styled.div`
   flex: 1;
 `;
 
-export const FormContent = styled.section`
+export const FormContent = styled(motion.section)`
   padding: 5em 0;
   display: flex;
   flex-direction: column;
