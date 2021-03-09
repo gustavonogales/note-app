@@ -1,29 +1,34 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 type NoteProps = {
   backgroundColor: string;
 };
 
-export const Container = styled.div<NoteProps>`
-  position: absolute;
-  top: 50%;
-  left: calc(50% - 50px);
-  transform: translateX(-50%) translateY(-50%);
+export const Container = styled(motion.div)<NoteProps>`
   background: ${props => props.backgroundColor};
   width: 500px;
   height: 500px;
   padding: 24px;
   border-radius: 8px;
   color: #252525;
+  z-index: 2;
+`;
+
+export const CenterContainer = styled.div`
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Layer = styled.div`
   background: #000;
   opacity: 0.5;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: -100px;
-  width: 100vw;
-  height: 100vh;
   position: absolute;
 `;
 

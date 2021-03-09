@@ -1,10 +1,11 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 type NoteProps = {
   color: string;
 };
 
-export const Container = styled.div<NoteProps>`
+export const Container = styled(motion.div)<NoteProps>`
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -13,9 +14,26 @@ export const Container = styled.div<NoteProps>`
   background: ${props => props.color};
   color: #252525;
   border-radius: 8px;
+  height: auto;
 
-  p {
-    flex: 1;
+  input:disabled,
+  textarea:disabled {
+    background: transparent;
+    color: #252525;
+    border: none;
+  }
+
+  input {
+    margin-bottom: 4px;
+    /* font-weight: 500; */
+  }
+
+  input,
+  textarea {
+    overflow: hidden;
+    resize: none;
+    height: auto;
+    width: auto;
   }
 
   span {

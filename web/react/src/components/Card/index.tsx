@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { HTMLAttributes, ReactElement } from 'react';
 import NoteModel from '../../models/Note';
 import { Container } from './styles';
@@ -7,12 +8,11 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function Card({ note, onClick }: CardProps): ReactElement {
-  const sample = `${note.title}${note.text}`.substr(0, 70);
-
   return (
-    <Container color={note.color} onClick={onClick}>
-      <p>{`${sample}...`}</p>
-      <span>{note.formatted_updated_at}</span>
+    <Container layoutId={note.id} color={note.color} onClick={onClick}>
+      <motion.input value={note.title} disabled />
+      <motion.textarea value={note.text} disabled />
+      {/* <motion.span>{note.formatted_updated_at}</motion.span> */}
     </Container>
   );
 }

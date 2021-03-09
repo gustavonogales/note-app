@@ -17,7 +17,6 @@ interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
 export function NoteInput({
   name,
   customStyle = {},
-  ...props
 }: NoteInputProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldName, defaultValue, registerField } = useField(name);
@@ -36,7 +35,6 @@ export function NoteInput({
       defaultValue={defaultValue}
       name={name}
       ref={inputRef}
-      {...props}
     />
   );
 }

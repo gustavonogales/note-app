@@ -21,6 +21,7 @@ import {
   Layer,
   Content,
   ColorPickerContainer,
+  CenterContainer,
 } from './styles';
 import NoteAction from '../../utils/noteAction';
 import { Action } from '../../reducers/noteReducer';
@@ -98,49 +99,51 @@ export function Note({ dispatch, note }: NoteProps): ReactElement {
   return (
     <>
       <Layer onClick={handleRevert} />
-      <Container backgroundColor={color}>
-        <Form
-          onSubmit={handleSubmit}
-          ref={formRef}
-          initialData={{
-            title: note?.title || 'Title',
-            text: note?.text || 'Type something...',
-          }}
-        >
-          <Header>
-            <NoteButton onClick={handleRevert}>
-              <FiChevronLeft size={24} />
-            </NoteButton>
-            <div style={{ flex: 1 }} />
-            <NoteButton
-              type="button"
-              onClick={() => setShowPicker(!showPicker)}
-              customStyle={{ marginLeft: 6, marginRight: 6 }}
-            >
-              <FiPenTool size={20} />
-              {showPicker && (
-                <ColorPickerContainer>
-                  <TwitterPicker
-                    triangle="top-right"
-                    colors={colors}
-                    onChange={handleColorChange}
-                  />
-                </ColorPickerContainer>
-              )}
-            </NoteButton>
-            <NoteButton
-              type="submit"
-              customStyle={{ paddingLeft: 16, paddingRight: 16 }}
-            >
-              Save
-            </NoteButton>
-          </Header>
-          <Content>
-            <NoteInput name="title" type="text" />
-            <NoteTextArea name="text" type="text" />
-          </Content>
-        </Form>
-      </Container>
+      <CenterContainer>
+        <Container backgroundColor={color} layoutId={note?.id}>
+          <Form
+            onSubmit={handleSubmit}
+            ref={formRef}
+            initialData={{
+              title: note?.title || 'Title',
+              text: note?.text || 'Type something...',
+            }}
+          >
+            <Header>
+              <NoteButton onClick={handleRevert}>
+                <FiChevronLeft size={24} />
+              </NoteButton>
+              <div style={{ flex: 1 }} />
+              <NoteButton
+                type="button"
+                onClick={() => setShowPicker(!showPicker)}
+                customStyle={{ marginLeft: 6, marginRight: 6 }}
+              >
+                <FiPenTool size={20} />
+                {showPicker && (
+                  <ColorPickerContainer>
+                    <TwitterPicker
+                      triangle="top-right"
+                      colors={colors}
+                      onChange={handleColorChange}
+                    />
+                  </ColorPickerContainer>
+                )}
+              </NoteButton>
+              <NoteButton
+                type="submit"
+                customStyle={{ paddingLeft: 16, paddingRight: 16 }}
+              >
+                Save
+              </NoteButton>
+            </Header>
+            <Content>
+              <NoteInput name="title" type="text" />
+              <NoteTextArea name="text" type="text" />
+            </Content>
+          </Form>
+        </Container>
+      </CenterContainer>
     </>
   );
 }
