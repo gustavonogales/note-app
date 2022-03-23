@@ -11,7 +11,6 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { ColorResult, TwitterPicker } from 'react-color';
 import NoteModel from '../../models/Note';
-import Colors from '../../utils/colors';
 import { NoteButton } from './NoteButton';
 import { NoteInput } from './NoteInput';
 import { NoteTextArea } from './NoteTextArea';
@@ -28,6 +27,7 @@ import { Action } from '../../reducers/noteReducer';
 import { create, update } from '../../services/noteService';
 import NoteUpdate from '../../models/NoteUpdate';
 import NoteCreate from '../../models/NoteCreate';
+import { COLORS } from '../../constants';
 
 type NoteProps = {
   dispatch: React.Dispatch<Action>;
@@ -41,7 +41,7 @@ export function Note({ dispatch, note }: NoteProps): ReactElement {
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
-    const keys: string[] = Object.values(Colors);
+    const keys: string[] = Object.values(COLORS);
     setColors(keys);
 
     if (Object.keys(note).length !== 0) {

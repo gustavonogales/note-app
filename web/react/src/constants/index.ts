@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-enum Colors {
+export enum COLORS {
   WISTERIA = '#CF93D9',
   CRAYOLA = '#FFCC80',
   TANGERIGE = '#FFAB91',
@@ -8,5 +8,3 @@ enum Colors {
   TICKLE = '#F48FB1',
   VERDIGRIS = '#80CBC4',
 }
-
-export default Colors;

@@ -4,6 +4,7 @@ import {
   Route as ReactDOMRoute,
   Redirect,
 } from 'react-router-dom';
+import { ROUTES } from '../constants/routes';
 import { useStore } from '../store/useStore';
 import api from '../utils/api';
 
@@ -22,18 +23,17 @@ const Route: React.FC<RouteProps> = ({
   api.interceptors.response.use(undefined, err => {
     const { status } = err.response;
 
-    // if (status === 401) {
-    //   signOut();
-    // }
+    if (status === 401) {
+      signOut();
+    }
     return Promise.reject(err);
   });
 
   const handleRender = useCallback(() => {
-    console.log('handleRender', user);
     if (isPrivate === !!user) {
       return <Component />;
     }
-    return <Redirect to={{ pathname: isPrivate ? '/' : '/home' }} />;
+    return <Redirect to={{ pathname: isPrivate ? '/' : ROUTES.HOME }} />;
   }, [user, isPrivate, Component]);
 
   return <ReactDOMRoute {...props} render={handleRender} />;
