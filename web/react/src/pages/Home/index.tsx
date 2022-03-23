@@ -20,7 +20,7 @@ import NoteModel from '../../models/Note';
 import noteReducer from '../../reducers/noteReducer';
 import NoteAction from '../../utils/noteAction';
 import NoteState from '../../models/NoteState';
-import { getAll } from '../../services/noteService';
+import { NoteService } from '../../services/noteService';
 import {
   Container,
   Content,
@@ -45,7 +45,7 @@ export function Home(): ReactElement {
   const hasNotes = state.filteredNotes.length !== 0;
 
   useEffect(() => {
-    getAll().then(notes => {
+    NoteService.getAll().then(notes => {
       dispatch({ type: NoteAction.FETCH_ALL, payload: { notes } });
     });
   }, []);

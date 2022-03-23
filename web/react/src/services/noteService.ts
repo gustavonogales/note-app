@@ -1,54 +1,51 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable prettier/prettier */
+import produce from 'immer';
 import Note from '../models/Note';
 import NoteCreate from '../models/NoteCreate';
 import NoteUpdate from '../models/NoteUpdate';
 import api from '../utils/api';
+import { formatDate } from '../utils/formatDate';
 
-async function getAll(): Promise<Note[]> {
-  try {
-    const response = await api.get('/note');
+export class NoteService {
+  private static resource = '/note';
 
-    const formattedNotes = response.data.map((note: Note) => formatDate(note));
+  static async getAll(): Promise<Note[]> {
+    try {
+      const response = await api.get(this.resource);
 
-    return formattedNotes;
-  } catch (error) {
-    console.log(error);
-    return [];
+      const formattedNotes = response.data.map((note: Note) => produce(note, draft => {
+        draft.formatted_updated_at = formatDate(draft.updated_at);
+      }));
+
+      return formattedNotes;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+
+  static async create(note: NoteCreate): Promise<Note> {
+    const response = await api.post<Note>('/note', note);
+
+    const formattedNote = produce(response.data, draft => {
+      draft.formatted_updated_at = formatDate(draft.updated_at);
+    });
+
+    return formattedNote;
+  }
+
+  static async update(note: NoteUpdate): Promise<Note> {
+    const response = await api.put<Note>('/note', note);
+
+    const formattedNote = produce(response.data, draft => {
+      draft.formatted_updated_at = formatDate(draft.updated_at);
+    });
+
+    return formattedNote;
+  }
+
+  static async remove(id: string): Promise<void> {
+    await api.delete(`/note/${id}`);
   }
 }
-
-async function create(note: NoteCreate): Promise<Note> {
-  const response = await api.post<Note>('/note', note);
-
-  const formattedNote = formatDate(response.data);
-
-  return formattedNote;
-}
-
-async function update(note: NoteUpdate): Promise<Note> {
-  const response = await api.put<Note>('/note', note);
-
-  const formattedNote = formatDate(response.data);
-
-  return formattedNote;
-}
-
-async function remove(id: string): Promise<void> {
-  await api.delete(`/note/${id}`);
-}
-
-function formatDate(note: Note): Note {
-  return {
-    ...note,
-    formatted_updated_at: new Date(note.updated_at).toLocaleDateString(
-      'en-US',
-      {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      },
-    ),
-  };
-}
-
-// eslint-disable-next-line object-curly-newline
-export { getAll, create, update, remove };

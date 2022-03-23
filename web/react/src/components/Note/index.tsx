@@ -24,7 +24,7 @@ import {
 } from './styles';
 import NoteAction from '../../utils/noteAction';
 import { Action } from '../../reducers/noteReducer';
-import { create, update } from '../../services/noteService';
+import { NoteService } from '../../services/noteService';
 import NoteUpdate from '../../models/NoteUpdate';
 import NoteCreate from '../../models/NoteCreate';
 import { COLORS } from '../../constants';
@@ -63,7 +63,7 @@ export function Note({ dispatch, note }: NoteProps): ReactElement {
         } as NoteUpdate;
 
         try {
-          update(updateNote).then(response => {
+          NoteService.update(updateNote).then(response => {
             dispatch({ type: NoteAction.UPDATE, payload: { note: response } });
           });
         } catch (err) {
@@ -77,7 +77,7 @@ export function Note({ dispatch, note }: NoteProps): ReactElement {
         } as NoteCreate;
 
         try {
-          create(createNote).then(response => {
+          NoteService.create(createNote).then(response => {
             dispatch({ type: NoteAction.ADD, payload: { note: response } });
           });
         } catch (err) {
