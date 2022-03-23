@@ -7,11 +7,7 @@ interface TooltipProps {
   children?: ReactNode;
 }
 
-export function Tooltip({
-  title,
-  className,
-  children,
-}: TooltipProps): ReactElement {
+export function Tooltip({ title, className, children }: TooltipProps): ReactElement {
   return (
     <Container className={className}>
       {children}

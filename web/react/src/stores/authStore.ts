@@ -1,9 +1,5 @@
-import { StoreSlice } from '../models/StoreSlice';
-import User from '../models/User';
-import UserSignInCredentials from '../models/UserSignInCredentials';
-import UserUpdateCredentials from '../models/UserUpdateCredentials';
-import { AuthService } from '../services/authService';
-import { UserService } from '../services/userService';
+import { User, UserSignInCredentials, UserUpdateCredentials, StoreSlice } from '../types';
+import { AuthService, UserService } from '../services';
 
 export interface AuthStoreSlice {
   user?: User;
@@ -13,7 +9,7 @@ export interface AuthStoreSlice {
   updateUser: (userUpdate: UserUpdateCredentials) => void;
 }
 
-export const createAuthSlice: StoreSlice<AuthStoreSlice> = set => ({
+export const createAuthSlice: StoreSlice<AuthStoreSlice> = (set) => ({
   user: undefined,
   token: undefined,
   signIn: async ({ email, password }) => {
@@ -22,7 +18,7 @@ export const createAuthSlice: StoreSlice<AuthStoreSlice> = set => ({
     set({ user, token });
   },
   signOut: () => set({ user: undefined }),
-  updateUser: async user => {
+  updateUser: async (user) => {
     const { data } = await UserService.updateUser(user);
     set({ user: data });
   },

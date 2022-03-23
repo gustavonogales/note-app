@@ -1,12 +1,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable object-curly-newline */
 import { useField } from '@unform/core';
-import React, {
-  InputHTMLAttributes,
-  ReactElement,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { InputHTMLAttributes, ReactElement, useEffect, useRef } from 'react';
 import { InputTitle } from './styles';
 
 interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -14,10 +9,7 @@ interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
   customStyle?: object;
 }
 
-export function NoteInput({
-  name,
-  customStyle = {},
-}: NoteInputProps): ReactElement {
+export function NoteInput({ name, customStyle = {} }: NoteInputProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldName, defaultValue, registerField } = useField(name);
 
@@ -29,12 +21,5 @@ export function NoteInput({
     });
   }, [fieldName, registerField]);
 
-  return (
-    <InputTitle
-      style={customStyle}
-      defaultValue={defaultValue}
-      name={name}
-      ref={inputRef}
-    />
-  );
+  return <InputTitle style={customStyle} defaultValue={defaultValue} name={name} ref={inputRef} />;
 }

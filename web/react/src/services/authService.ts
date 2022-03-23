@@ -1,14 +1,12 @@
 import { AxiosResponse } from 'axios';
-import UserAuth from '../models/UserAuth';
-import UserSignInCredentials from '../models/UserSignInCredentials';
-import api from '../utils/api';
+import { UserAuth, UserSignInCredentials } from '../types';
+import { api } from '../utils';
 
 export class AuthService {
-  static signIn({
-    email,
-    password,
-  }: UserSignInCredentials): Promise<AxiosResponse<UserAuth>> {
-    return api.post('session', {
+  private static resource = '/session';
+
+  static signIn({ email, password }: UserSignInCredentials): Promise<AxiosResponse<UserAuth>> {
+    return api.post(this.resource, {
       email,
       password,
     });

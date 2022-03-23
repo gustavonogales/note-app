@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
-import { useStore } from '../store/useStore';
-import api from '../utils/api';
+import { useStore } from '../stores';
+import { api } from '../utils';
 
 api.interceptors.request.use(
   (request: AxiosRequestConfig) => {
@@ -12,7 +12,7 @@ api.interceptors.request.use(
 
     return request;
   },
-  err => {
+  (err) => {
     Promise.reject(err);
   },
 );

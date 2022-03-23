@@ -9,13 +9,13 @@ import { Input } from '../../components/Input';
 import { Menu } from '../../components/Menu';
 import { ProfilePic } from '../../components/ProfilePic';
 import api from '../../utils/api';
-import UserUpdate from '../../models/UserUpdate';
+import UserUpdate from '../../types/UserUpdate';
 import { Container, Content, FormContent, InputLabel } from './styles';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../../stores/useStore';
 
 export function Profile(): ReactElement {
-  const user = useStore(state => state.user);
-  const updateUser = useStore(state => state.updateUser);
+  const user = useStore((state) => state.user);
+  const updateUser = useStore((state) => state.updateUser);
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
@@ -23,24 +23,15 @@ export function Profile(): ReactElement {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
-          email: Yup.string()
-            .required('Email is required')
-            .email('Must be a valid email'),
-          name: Yup.string()
-            .required('Name is required')
-            .min(3, 'Name must have 3 characters'),
+          email: Yup.string().required('Email is required').email('Must be a valid email'),
+          name: Yup.string().required('Name is required').min(3, 'Name must have 3 characters'),
           old_password: Yup.string(),
           password: Yup.string().when('old_password', {
-            is: val => !!val.length,
-            then: Yup.string()
-              .required('New password is required')
-              .min(6, 'Must have at least 6 characters'),
+            is: (val) => !!val.length,
+            then: Yup.string().required('New password is required').min(6, 'Must have at least 6 characters'),
             otherwise: Yup.string(),
           }),
-          password_confirmation: Yup.string().oneOf(
-            [Yup.ref('password'), undefined],
-            'Senhas devem ser iguais',
-          ),
+          password_confirmation: Yup.string().oneOf([Yup.ref('password'), undefined], 'Senhas devem ser iguais'),
         });
 
         await schema.validate(data, {
@@ -73,9 +64,7 @@ export function Profile(): ReactElement {
 
         data.append('avatar', e.target.files[0]);
 
-        api
-          .patch('/user/avatar', data)
-          .then(response => updateUser(response.data));
+        api.patch('/user/avatar', data).then((response) => updateUser(response.data));
       }
     },
     [updateUser],
@@ -85,14 +74,10 @@ export function Profile(): ReactElement {
     <Container>
       <Menu hasProfileButton={false} hasBackButton hasAddButton={false} />
       <Content>
-        <FormContent
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <FormContent initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
           <ProfilePic user={user} size={64}>
-            <InputLabel htmlFor="avatar">
-              <input type="file" id="avatar" onChange={handleAvatarChange} />
+            <InputLabel htmlFor='avatar'>
+              <input type='file' id='avatar' onChange={handleAvatarChange} />
             </InputLabel>
           </ProfilePic>
           <h1>{user?.name}</h1>
@@ -104,33 +89,18 @@ export function Profile(): ReactElement {
               name: user?.name,
             }}
           >
-            <Input
-              name="email"
-              icon={FiMail}
-              type="email"
-              placeholder="E-mail"
-            />
-            <Input name="name" icon={FiUser} type="text" placeholder="Name" />
+            <Input name='email' icon={FiMail} type='email' placeholder='E-mail' />
+            <Input name='name' icon={FiUser} type='text' placeholder='Name' />
             <Input
               containerStyle={{ marginTop: 40 }}
-              name="old_password"
+              name='old_password'
               icon={FiLock}
-              type="password"
-              placeholder="Current password"
+              type='password'
+              placeholder='Current password'
             />
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="New password"
-            />
-            <Input
-              name="password_confirmation"
-              icon={FiLock}
-              type="password"
-              placeholder="Confirm new password"
-            />
-            <Button type="submit">Save changes</Button>
+            <Input name='password' icon={FiLock} type='password' placeholder='New password' />
+            <Input name='password_confirmation' icon={FiLock} type='password' placeholder='Confirm new password' />
+            <Button type='submit'>Save changes</Button>
           </Form>
         </FormContent>
       </Content>

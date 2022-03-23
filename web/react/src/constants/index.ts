@@ -1,4 +1,5 @@
-/* eslint-disable no-shadow */
+export * from './routes';
+
 export enum COLORS {
   WISTERIA = '#CF93D9',
   CRAYOLA = '#FFCC80',

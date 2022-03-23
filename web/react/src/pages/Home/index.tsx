@@ -9,14 +9,7 @@ import { Card } from '../../components/Card';
 import { Note } from '../../components/Note';
 import { Input } from '../../components/Input';
 import NoteModel from '../../models/Note';
-import {
-  Container,
-  Content,
-  Empty,
-  EmptyContainer,
-  NotesContainer,
-  Toolbar,
-} from './styles';
+import { Container, Content, Empty, EmptyContainer, NotesContainer, Toolbar } from './styles';
 import { useStore } from '../../store/useStore';
 
 const initialState = {
@@ -30,15 +23,8 @@ const initialState = {
 
 export function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);
-  const {
-    fetchNotes,
-    filteredNotes,
-    searchNotes,
-    openNote,
-    isNoteOpen,
-    currentNote,
-  } = useStore(
-    state => ({
+  const { fetchNotes, filteredNotes, searchNotes, openNote, isNoteOpen, currentNote } = useStore(
+    (state) => ({
       fetchNotes: state.fetchNotes,
       filteredNotes: state.filteredNotes,
       searchNotes: state.searchNotes,
@@ -68,19 +54,13 @@ export function Home(): ReactElement {
   }
 
   return (
-    <AnimateSharedLayout type="crossfade">
+    <AnimateSharedLayout type='crossfade'>
       <Container>
         <Menu addAction={handleAddAction} />
         <Content>
           <Toolbar>
             <Form ref={searchFormRef} onSubmit={handleSearch}>
-              <Input
-                name="search"
-                icon={FiSearch}
-                type="text"
-                placeholder="Search..."
-                onChange={handleSearch}
-              />
+              <Input name='search' icon={FiSearch} type='text' placeholder='Search...' onChange={handleSearch} />
             </Form>
           </Toolbar>
           <h1>Notes</h1>
@@ -92,11 +72,7 @@ export function Home(): ReactElement {
           ) : (
             <NotesContainer>
               {filteredNotes.map((note: NoteModel) => (
-                <Card
-                  key={note.id}
-                  note={note}
-                  onClick={() => handleOpenNote(note)}
-                />
+                <Card key={note.id} note={note} onClick={() => handleOpenNote(note)} />
               ))}
             </NotesContainer>
           )}

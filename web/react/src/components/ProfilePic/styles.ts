@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable implicit-arrow-linebreak */
 import styled, { css } from 'styled-components';
 
 type ContainerProps = {
@@ -11,15 +9,15 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   cursor: pointer;
   border-radius: 50%;
-  height: ${props => props.size * 2}px;
-  width: ${props => props.size * 2}px;
+  height: ${(props) => props.size * 2}px;
+  width: ${(props) => props.size * 2}px;
   margin-bottom: 24px;
   transition: 0.2s filter;
-  font-size: ${props => props.size}px;
+  font-size: ${(props) => props.size}px;
   background: #ffcc80;
-  ${props =>
-    props.avatar_url
-    && css`
+  ${(props) =>
+    props.avatar_url &&
+    css`
       background-image: url(${props.avatar_url});
       background-position: 0 -10px;
       background-size: cover;

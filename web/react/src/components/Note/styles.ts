@@ -6,7 +6,7 @@ type NoteProps = {
 };
 
 export const Container = styled(motion.div)<NoteProps>`
-  background: ${props => props.backgroundColor};
+  background: ${(props) => props.backgroundColor};
   width: 500px;
   height: 500px;
   padding: 24px;

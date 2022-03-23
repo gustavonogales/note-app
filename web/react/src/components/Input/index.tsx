@@ -1,7 +1,4 @@
-/* eslint-disable prettier/prettier */
-import React, {
-  InputHTMLAttributes, ReactElement, useCallback, useEffect, useRef, useState,
-} from 'react';
+import React, { InputHTMLAttributes, ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useField } from '@unform/core';
@@ -9,20 +6,13 @@ import { Container, Error } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  containerStyle?: object;
+  containerStyle?: React.CSSProperties;
   icon?: React.ComponentType<IconBaseProps>;
 }
 
-export function Input({
-  containerStyle = {},
-  name,
-  icon: Icon,
-  ...props
-}: InputProps): ReactElement {
+export function Input({ containerStyle = {}, name, icon: Icon, ...props }: InputProps): ReactElement {
   const inputRef = useRef<HTMLInputElement>(null);
-  const {
-    fieldName, defaultValue, registerField, error,
-  } = useField(name);
+  const { fieldName, defaultValue, registerField, error } = useField(name);
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -44,12 +34,7 @@ export function Input({
   }, [fieldName, registerField]);
 
   return (
-    <Container
-      style={containerStyle}
-      isErrored={!!error}
-      isFilled={isFilled}
-      isFocused={isFocused}
-    >
+    <Container style={containerStyle} isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
       {Icon && <Icon size={20} />}
       <input
         onFocus={handleInputFocus}
@@ -61,7 +46,7 @@ export function Input({
 
       {error && (
         <Error title={error}>
-          <FiAlertCircle color="#c53030" size={20} />
+          <FiAlertCircle color='#c53030' size={20} />
         </Error>
       )}
     </Container>

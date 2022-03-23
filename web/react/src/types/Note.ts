@@ -1,4 +1,4 @@
-interface Note {
+export interface Note {
   id: string;
   title: string;
   text: string;
@@ -6,5 +6,3 @@ interface Note {
   updated_at: Date;
   formatted_updated_at: string;
 }
-
-export default Note;

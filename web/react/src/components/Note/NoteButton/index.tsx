@@ -2,14 +2,10 @@ import React, { ButtonHTMLAttributes, ReactElement } from 'react';
 import { Button } from './styles';
 
 interface NoteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  customStyle?: Object;
+  customStyle?: React.CSSProperties;
 }
 
-export function NoteButton({
-  customStyle = {},
-  children,
-  ...props
-}: NoteButtonProps): ReactElement {
+export function NoteButton({ customStyle = {}, children, ...props }: NoteButtonProps): ReactElement {
   return (
     <Button style={customStyle} {...props}>
       {children}

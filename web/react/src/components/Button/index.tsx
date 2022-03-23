@@ -5,7 +5,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button({ children, ...props }: ButtonProps): ReactElement {
   return (
-    <Container type="button" {...props}>
+    <Container type='button' {...props}>
       {children}
     </Container>
   );

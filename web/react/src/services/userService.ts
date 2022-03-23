@@ -1,10 +1,19 @@
 import { AxiosResponse } from 'axios';
-import User from '../models/User';
-import UserUpdateCredentials from '../models/UserUpdateCredentials';
-import api from '../utils/api';
+import { User, UserUpdateCredentials } from '../types';
+import { api } from '../utils';
 
 export class UserService {
+  private static resource = '/user';
+
   static updateUser(user: UserUpdateCredentials): Promise<AxiosResponse<User>> {
-    return api.put('/user', user);
+    return api.put(this.resource, user);
+  }
+
+  static createUser(user: UserSignUp): Promise<AxiosResponse<User>> {
+    return api.post(this.resource, {
+      name,
+      email,
+      password,
+    });
   }
 }

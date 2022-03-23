@@ -1,37 +1,20 @@
 /* eslint-disable object-curly-newline */
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { FiChevronLeft, FiPenTool } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { ColorResult, TwitterPicker } from 'react-color';
-import NoteModel from '../../models/Note';
 import { NoteButton } from './NoteButton';
 import { NoteInput } from './NoteInput';
 import { NoteTextArea } from './NoteTextArea';
-import {
-  Container,
-  Header,
-  Layer,
-  Content,
-  ColorPickerContainer,
-  CenterContainer,
-} from './styles';
-import NoteAction from '../../utils/noteAction';
-import { Action } from '../../reducers/noteReducer';
-import { NoteService } from '../../services/noteService';
-import NoteUpdate from '../../models/NoteUpdate';
-import NoteCreate from '../../models/NoteCreate';
+import { Container, Header, Layer, Content, ColorPickerContainer, CenterContainer } from './styles';
+import { NoteService } from '../../services';
+import { NoteCreate, NoteUpdate, Note } from '../../types';
 import { COLORS } from '../../constants';
 
 type NoteProps = {
-  addNote: (note: NoteModel) => Promise<void>;
-  note: NoteModel;
+  addNote: (note: Note) => Promise<void>;
+  note: Note;
 };
 
 export function Note({ addNote, note }: NoteProps): ReactElement {
@@ -63,7 +46,7 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
         } as NoteUpdate;
 
         try {
-          NoteService.update(updateNote).then(response => {
+          NoteService.update(updateNote).then((response) => {
             dispatch({ type: NoteAction.UPDATE, payload: { note: response } });
           });
         } catch (err) {
@@ -77,7 +60,7 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
         } as NoteCreate;
 
         try {
-          NoteService.create(createNote).then(response => {
+          NoteService.create(createNote).then((response) => {
             dispatch({ type: NoteAction.ADD, payload: { note: response } });
           });
         } catch (err) {
@@ -115,31 +98,24 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
               </NoteButton>
               <div style={{ flex: 1 }} />
               <NoteButton
-                type="button"
+                type='button'
                 onClick={() => setShowPicker(!showPicker)}
                 customStyle={{ marginLeft: 6, marginRight: 6 }}
               >
                 <FiPenTool size={20} />
                 {showPicker && (
                   <ColorPickerContainer>
-                    <TwitterPicker
-                      triangle="top-right"
-                      colors={colors}
-                      onChange={handleColorChange}
-                    />
+                    <TwitterPicker triangle='top-right' colors={colors} onChange={handleColorChange} />
                   </ColorPickerContainer>
                 )}
               </NoteButton>
-              <NoteButton
-                type="submit"
-                customStyle={{ paddingLeft: 16, paddingRight: 16 }}
-              >
+              <NoteButton type='submit' customStyle={{ paddingLeft: 16, paddingRight: 16 }}>
                 Save
               </NoteButton>
             </Header>
             <Content>
-              <NoteInput name="title" type="text" />
-              <NoteTextArea name="text" type="text" />
+              <NoteInput name='title' type='text' />
+              <NoteTextArea name='text' type='text' />
             </Content>
           </Form>
         </Container>

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import React, { HTMLAttributes, ReactElement } from 'react';
-import NoteModel from '../../models/Note';
+import { Note } from '../../types';
 import { Container } from './styles';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  note: NoteModel;
+  note: Note;
 }
 
 export function Card({ note, onClick }: CardProps): ReactElement {

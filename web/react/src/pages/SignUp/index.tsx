@@ -5,12 +5,10 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { Link, useHistory } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
-import UserSignUp from '../../models/UserSignUp';
-import api from '../../utils/api';
-import { Input } from '../../components/Input';
-import { Button } from '../../components/Button';
+import { UserSignUp } from '../../types';
+import { api, getValidationErrors } from '../../utils';
+import { Input, Button } from '../../components';
 import signupBackground from '../../assets/signup.svg';
-import getValidationErrors from '../../utils/getValidationError';
 import { Background, Container, Content, Links } from './styles';
 
 export function SignUp(): ReactElement {
@@ -24,16 +22,9 @@ export function SignUp(): ReactElement {
 
         const schema = Yup.object({
           name: Yup.string().required('Name is required'),
-          email: Yup.string()
-            .email('Type a valid email')
-            .required('E-mail is required'),
-          password: Yup.string()
-            .required('Senha obrigatória')
-            .min(6, 'At least 6 digits'),
-          confirmPassword: Yup.string().oneOf(
-            [Yup.ref('password'), undefined],
-            'Senhas devem ser iguais',
-          ),
+          email: Yup.string().email('Type a valid email').required('E-mail is required'),
+          password: Yup.string().required('Senha obrigatória').min(6, 'At least 6 digits'),
+          confirmPassword: Yup.string().oneOf([Yup.ref('password'), undefined], 'Senhas devem ser iguais'),
         });
 
         await schema.validate(data, {
@@ -60,29 +51,19 @@ export function SignUp(): ReactElement {
   return (
     <Container>
       <Background>
-        <img src={signupBackground} alt="bg" />
+        <img src={signupBackground} alt='bg' />
         <p>Sign up now and never miss a word</p>
       </Background>
       <Content>
         <Form onSubmit={handleSubmit} ref={formRef}>
           <h1>Sign Up</h1>
-          <Input name="name" icon={FiUser} type="text" placeholder="Name" />
-          <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Password"
-          />
-          <Input
-            name="confirmPassword"
-            icon={FiLock}
-            type="password"
-            placeholder="Confirm Password"
-          />
-          <Button type="submit">Sign up</Button>
+          <Input name='name' icon={FiUser} type='text' placeholder='Name' />
+          <Input name='email' icon={FiMail} type='email' placeholder='E-mail' />
+          <Input name='password' icon={FiLock} type='password' placeholder='Password' />
+          <Input name='confirmPassword' icon={FiLock} type='password' placeholder='Confirm Password' />
+          <Button type='submit'>Sign up</Button>
           <Links>
-            <Link to="/">
+            <Link to='/'>
               <FiChevronLeft />
               SignIn page
             </Link>

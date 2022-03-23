@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Container } from './styles';
-import User from '../../models/User';
+import { User } from '../../types';
 
 type ProfilePicProps = {
   user: User | undefined;
@@ -10,12 +10,7 @@ type ProfilePicProps = {
   children?: ReactNode;
 };
 
-export function ProfilePic({
-  onClick,
-  user,
-  size = 32,
-  children,
-}: ProfilePicProps): ReactElement {
+export function ProfilePic({ onClick, user, size = 32, children }: ProfilePicProps): ReactElement {
   const [initials, setInitials] = useState('');
   useEffect(() => {
     const fullName = user?.name.split(' ') || [];
@@ -23,11 +18,7 @@ export function ProfilePic({
   }, [user]);
 
   return (
-    <Container
-      onClick={onClick}
-      size={size}
-      avatar_url={user?.avatar_url || ''}
-    >
+    <Container onClick={onClick} size={size} avatar_url={user?.avatar_url || ''}>
       {!user?.avatar_url && <span>{initials}</span>}
       {children}
     </Container>

@@ -11,7 +11,7 @@ export const Container = styled(motion.div)<NoteProps>`
   flex-direction: column;
   padding: 20px;
   width: 180px;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   color: #252525;
   border-radius: 8px;
   height: auto;

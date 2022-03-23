@@ -13,12 +13,7 @@ export function SearchBar(): ReactElement {
 
   return (
     <Form ref={formRef} onSubmit={handleSubmit}>
-      <Input
-        name="search"
-        icon={FiSearch}
-        type="text"
-        placeholder="Search..."
-      />
+      <Input name='search' icon={FiSearch} type='text' placeholder='Search...' />
     </Form>
   );
 }
