@@ -13,19 +13,15 @@ export interface AuthStoreSlice {
   updateUser: (userUpdate: UserUpdateCredentials) => void;
 }
 
-export const createAuthSlice: StoreSlice<AuthStoreSlice> = (set, get) => ({
+export const createAuthSlice: StoreSlice<AuthStoreSlice> = set => ({
   user: undefined,
   token: undefined,
   signIn: async ({ email, password }) => {
     const response = await AuthService.signIn({ email, password });
-
     const { user, token } = response.data;
-
     set({ user, token });
   },
-  signOut: () => {
-    set({ user: undefined });
-  },
+  signOut: () => set({ user: undefined }),
   updateUser: async user => {
     const { data } = await UserService.updateUser(user);
     set({ user: data });
