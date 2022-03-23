@@ -30,11 +30,11 @@ import NoteCreate from '../../models/NoteCreate';
 import { COLORS } from '../../constants';
 
 type NoteProps = {
-  dispatch: React.Dispatch<Action>;
+  addNote: (note: NoteModel) => Promise<void>;
   note: NoteModel;
 };
 
-export function Note({ dispatch, note }: NoteProps): ReactElement {
+export function Note({ addNote, note }: NoteProps): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const [color, setColor] = useState('');
   const [colors, setColors] = useState([] as string[]);

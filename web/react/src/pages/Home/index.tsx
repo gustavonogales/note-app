@@ -1,26 +1,14 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable object-curly-newline */
-import React, {
-  ChangeEvent,
-  ReactElement,
-  useEffect,
-  useReducer,
-  useRef,
-} from 'react';
+import React, { ChangeEvent, ReactElement, useEffect, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import shallow from 'zustand/shallow';
 import { Menu } from '../../components/Menu';
 import { Card } from '../../components/Card';
 import { Note } from '../../components/Note';
 import { Input } from '../../components/Input';
 import NoteModel from '../../models/Note';
-import noteReducer from '../../reducers/noteReducer';
-import NoteAction from '../../utils/noteAction';
-import NoteState from '../../models/NoteState';
-import { NoteService } from '../../services/noteService';
 import {
   Container,
   Content,
@@ -29,6 +17,7 @@ import {
   NotesContainer,
   Toolbar,
 } from './styles';
+import { useStore } from '../../store/useStore';
 
 const initialState = {
   notes: [],
@@ -41,25 +30,41 @@ const initialState = {
 
 export function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);
-  const [state, dispatch] = useReducer(noteReducer, initialState as NoteState);
-  const hasNotes = state.filteredNotes.length !== 0;
+  const {
+    fetchNotes,
+    filteredNotes,
+    searchNotes,
+    openNote,
+    isNoteOpen,
+    currentNote,
+  } = useStore(
+    state => ({
+      fetchNotes: state.fetchNotes,
+      filteredNotes: state.filteredNotes,
+      searchNotes: state.searchNotes,
+      openNote: state.openNote,
+      isNoteOpen: state.isNoteOpen,
+      currentNote: state.currentNote,
+    }),
+    shallow,
+  );
+  const hasNotes = filteredNotes.length !== 0;
 
   useEffect(() => {
-    NoteService.getAll().then(notes => {
-      dispatch({ type: NoteAction.FETCH_ALL, payload: { notes } });
-    });
+    fetchNotes();
   }, []);
 
   function handleAddAction() {
-    dispatch({ type: NoteAction.OPEN_NOTE });
+    openNote({} as NoteModel);
   }
 
   function handleOpenNote(note: NoteModel) {
-    dispatch({ type: NoteAction.OPEN_NOTE, payload: { note } });
+    openNote(note);
   }
 
   function handleSearch(e: ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: NoteAction.FILTER, payload: { pattern: e.target.value } });
+    e.preventDefault();
+    searchNotes(e.target.value);
   }
 
   return (
@@ -79,25 +84,25 @@ export function Home(): ReactElement {
             </Form>
           </Toolbar>
           <h1>Notes</h1>
-          {!state.isLoading && !hasNotes && (
-          <EmptyContainer>
-            <Empty />
-            <p>Nothing here...</p>
-          </EmptyContainer>
+          {!hasNotes ? (
+            <EmptyContainer>
+              <Empty />
+              <p>Nothing here...</p>
+            </EmptyContainer>
+          ) : (
+            <NotesContainer>
+              {filteredNotes.map((note: NoteModel) => (
+                <Card
+                  key={note.id}
+                  note={note}
+                  onClick={() => handleOpenNote(note)}
+                />
+              ))}
+            </NotesContainer>
           )}
-          <NotesContainer>
-            {hasNotes
-            && state.filteredNotes.map((note: NoteModel) => (
-              <Card
-                key={note.id}
-                note={note}
-                onClick={() => handleOpenNote(note)}
-              />
-            ))}
-          </NotesContainer>
-          {state.isNoteOpen && (
+          {isNoteOpen && (
             <AnimatePresence>
-              <Note note={state.currentNote} dispatch={dispatch} />
+              <Note note={currentNote} addNote={addNote} />
             </AnimatePresence>
           )}
         </Content>
