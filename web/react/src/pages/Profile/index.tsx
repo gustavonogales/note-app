@@ -7,14 +7,15 @@ import { FiLock, FiMail, FiUser } from 'react-icons/fi';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { Menu } from '../../components/Menu';
-import { useAuth } from '../../hooks/Auth';
 import { ProfilePic } from '../../components/ProfilePic';
 import api from '../../utils/api';
 import UserUpdate from '../../models/UserUpdate';
 import { Container, Content, FormContent, InputLabel } from './styles';
+import { useStore } from '../../store/useStore';
 
 export function Profile(): ReactElement {
-  const { user, updateUser } = useAuth();
+  const user = useStore(state => state.user);
+  const updateUser = useStore(state => state.updateUser);
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
@@ -53,16 +54,13 @@ export function Profile(): ReactElement {
           email,
           ...(old_password ? { old_password, password } : {}),
         };
-
-        const response = await api.put('/user', formData);
-
         formRef.current?.clearField('old_password');
         formRef.current?.clearField('password');
         formRef.current?.clearField('password_confirmation');
 
-        updateUser(response.data);
+        updateUser(formData);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     },
     [updateUser],
@@ -97,13 +95,13 @@ export function Profile(): ReactElement {
               <input type="file" id="avatar" onChange={handleAvatarChange} />
             </InputLabel>
           </ProfilePic>
-          <h1>{user.name}</h1>
+          <h1>{user?.name}</h1>
           <Form
             onSubmit={handleSubmit}
             ref={formRef}
             initialData={{
-              email: user.email,
-              name: user.name,
+              email: user?.email,
+              name: user?.name,
             }}
           >
             <Input

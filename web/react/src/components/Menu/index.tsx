@@ -2,7 +2,7 @@
 import React, { ReactElement, ReactNode, useCallback } from 'react';
 import { FiChevronLeft, FiLogOut, FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../hooks/Auth';
+import { useStore } from '../../store/useStore';
 import { ProfilePic } from '../ProfilePic';
 import {
   AddButton,
@@ -27,7 +27,8 @@ export function Menu({
   addAction = () => ({}),
   children,
 }: MenuProps): ReactElement {
-  const { user, signOut } = useAuth();
+  const user = useStore(state => state.user);
+  const signOut = useStore(state => state.signOut);
   const history = useHistory();
 
   const handleNavigate = useCallback(() => {
@@ -41,7 +42,7 @@ export function Menu({
   return (
     <Container>
       {hasProfileButton && (
-        <ProfilePic user={user} onClick={handleNavigate} size={24} />
+        <ProfilePic user={user!} onClick={handleNavigate} size={24} />
       )}
       {hasBackButton && (
         <BackButton onClick={() => history.goBack()}>

@@ -5,7 +5,6 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
-import { useAuth } from '../../hooks/Auth';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationError';
@@ -17,10 +16,11 @@ import {
   Content,
   Links,
 } from './styles';
+import { useStore } from '../../store/useStore';
 
 export function SignIn(): ReactElement {
   const formRef = useRef<FormHandles>(null);
-  const { signIn } = useAuth();
+  const signIn = useStore(state => state.signIn);
   const history = useHistory();
 
   const handleSubmit = useCallback(async (credentials: UserSignInCredentials) => {
@@ -41,9 +41,9 @@ export function SignIn(): ReactElement {
       signIn({
         email: credentials.email,
         password: credentials.password,
+      }).then(() => {
+        history.push('/home');
       });
-
-      history.push('/home');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const errors = getValidationErrors(error);

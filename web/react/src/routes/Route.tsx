@@ -4,7 +4,7 @@ import {
   Route as ReactDOMRoute,
   Redirect,
 } from 'react-router-dom';
-import { useAuth } from '../hooks/Auth';
+import { useStore } from '../store/useStore';
 import api from '../utils/api';
 
 interface RouteProps extends ReactDOMRouteProps {
@@ -17,18 +17,19 @@ const Route: React.FC<RouteProps> = ({
   component: Component,
   ...props
 }) => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useStore.getState();
 
   api.interceptors.response.use(undefined, err => {
     const { status } = err.response;
 
-    if (status === 401) {
-      signOut();
-    }
-    // return null;
+    // if (status === 401) {
+    //   signOut();
+    // }
+    return Promise.reject(err);
   });
 
   const handleRender = useCallback(() => {
+    console.log('handleRender', user);
     if (isPrivate === !!user) {
       return <Component />;
     }
