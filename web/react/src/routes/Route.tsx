@@ -10,7 +10,8 @@ interface RouteProps extends ReactDOMRouteProps {
 }
 
 const Route: React.FC<RouteProps> = ({ isPrivate = false, component: Component, ...props }) => {
-  const { user, signOut } = useStore.getState();
+  const user = useStore((state) => state.user);
+  const signOut = useStore((state) => state.signOut);
 
   api.interceptors.response.use(undefined, (err) => {
     const { status } = err.response;

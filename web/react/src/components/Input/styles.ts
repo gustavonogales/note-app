@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { shade } from 'polished';
 import styled, { css } from 'styled-components';
 import Tooltip from '../Tooltip';
@@ -39,22 +38,28 @@ export const Container = styled.div<ContainerProps>`
     color: ${shade(0.4, '#fff')};
   }
 
-  ${props => props.isErrored && css`
-    border-color: #c53030;
-  `}
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: #c53030;
+    `}
 
-  ${props => props.isFilled && css`
-    svg {
-      color: #fff;
-    }
-  `}
+  ${(props) =>
+    props.isFilled &&
+    css`
+      svg {
+        color: #fff;
+      }
+    `}
 
-  ${props => props.isFocused && css`
-    border-color: #fff;
-    svg {
-      color: #fff;
-    }
-  `}
+  ${(props) =>
+    props.isFocused &&
+    css`
+      border-color: #fff;
+      svg {
+        color: #fff;
+      }
+    `}
 `;
 
 export const Error = styled(Tooltip)`
