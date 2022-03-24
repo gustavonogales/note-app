@@ -66,7 +66,7 @@ export function Home(): ReactElement {
           )}
           {isNoteOpen && (
             <AnimatePresence>
-              <Note note={currentNote} addNote={addNote} />
+              <Note note={currentNote} />
             </AnimatePresence>
           )}
         </Content>

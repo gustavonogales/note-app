@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { StoreSlice, Note } from '../types';
+import { StoreSlice, Note, NoteCreate } from '../types';
 import { NoteService } from '../services';
 
 export interface NoteStoreSlice {
@@ -11,7 +11,7 @@ export interface NoteStoreSlice {
   fetchNotes: () => Promise<void>;
   openNote: (note: Note) => void;
   closeNote: () => void;
-  addNote: (note: Note) => Promise<void>;
+  addNote: (note: NoteCreate) => Promise<void>;
   updateNote: (note: Note) => Promise<void>;
   searchNotes: (pattern: string) => void;
 }
@@ -36,12 +36,13 @@ export const createNoteSlice: StoreSlice<NoteStoreSlice> = (set) => ({
       isNoteOpen: false,
       currentNote: {} as Note,
     }),
-  addNote: async (note: Note) => {
-    await NoteService.create(note);
+  addNote: async (note: NoteCreate) => {
+    const data = await NoteService.create(note);
     set((state) => ({
       isNoteOpen: false,
       currentNote: {} as Note,
-      notes: [...state.notes, note],
+      notes: [...state.notes, data],
+      filteredNotes: [...state.notes, data],
     }));
   },
   updateNote: async (noteToUpdate: Note) => {
@@ -49,7 +50,9 @@ export const createNoteSlice: StoreSlice<NoteStoreSlice> = (set) => ({
       produce(state, (draft) => {
         draft.currentNote = {} as Note;
         draft.isNoteOpen = false;
-        draft.notes = draft.notes.map((note) => (note.id === noteToUpdate.id ? noteToUpdate : note));
+        const notes = draft.notes.map((note) => (note.id === noteToUpdate.id ? noteToUpdate : note));
+        draft.notes = notes;
+        draft.filteredNotes = notes;
       }),
     );
   },

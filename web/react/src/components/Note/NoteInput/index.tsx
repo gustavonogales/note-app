@@ -6,7 +6,7 @@ import { InputTitle } from './styles';
 
 interface NoteInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  customStyle?: object;
+  customStyle?: React.CSSProperties;
 }
 
 export function NoteInput({ name, customStyle = {} }: NoteInputProps): ReactElement {

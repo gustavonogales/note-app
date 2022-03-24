@@ -9,19 +9,22 @@ import { NoteInput } from './NoteInput';
 import { NoteTextArea } from './NoteTextArea';
 import { Container, Header, Layer, Content, ColorPickerContainer, CenterContainer } from './styles';
 import { NoteService } from '../../services';
-import { NoteCreate, NoteUpdate, Note } from '../../types';
+import { NoteCreate, NoteUpdate, Note as NoteModel } from '../../types';
 import { COLORS } from '../../constants';
+import { useStore } from '../../stores';
 
 type NoteProps = {
-  addNote: (note: Note) => Promise<void>;
-  note: Note;
+  note: NoteModel;
 };
 
-export function Note({ addNote, note }: NoteProps): ReactElement {
+export function Note({ note }: NoteProps): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const [color, setColor] = useState('');
   const [colors, setColors] = useState([] as string[]);
   const [showPicker, setShowPicker] = useState(false);
+  const addNote = useStore((state) => state.addNote);
+  const updateNote = useStore((state) => state.updateNote);
+  const closeNote = useStore((state) => state.closeNote);
 
   useEffect(() => {
     const keys: string[] = Object.values(COLORS);
@@ -38,7 +41,7 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
   const handleSubmit = useCallback(
     async ({ title, text }) => {
       if (note.id) {
-        const updateNote = {
+        const notePayload = {
           id: note.id,
           title,
           text,
@@ -46,8 +49,8 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
         } as NoteUpdate;
 
         try {
-          NoteService.update(updateNote).then((response) => {
-            dispatch({ type: NoteAction.UPDATE, payload: { note: response } });
+          NoteService.update(notePayload).then((response) => {
+            updateNote(response);
           });
         } catch (err) {
           console.log(err);
@@ -60,20 +63,14 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
         } as NoteCreate;
 
         try {
-          NoteService.create(createNote).then((response) => {
-            dispatch({ type: NoteAction.ADD, payload: { note: response } });
-          });
+          addNote(createNote);
         } catch (err) {
           console.log(err);
         }
       }
     },
-    [note, color, dispatch],
+    [note, color],
   );
-
-  const handleRevert = useCallback(() => {
-    dispatch({ type: NoteAction.CLOSE_NOTE });
-  }, [dispatch]);
 
   function handleColorChange(colorResult: ColorResult) {
     setColor(colorResult.hex);
@@ -81,7 +78,7 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
 
   return (
     <>
-      <Layer onClick={handleRevert} />
+      <Layer onClick={closeNote} />
       <CenterContainer>
         <Container backgroundColor={color} layoutId={note?.id}>
           <Form
@@ -93,7 +90,7 @@ export function Note({ addNote, note }: NoteProps): ReactElement {
             }}
           >
             <Header>
-              <NoteButton onClick={handleRevert}>
+              <NoteButton onClick={closeNote}>
                 <FiChevronLeft size={24} />
               </NoteButton>
               <div style={{ flex: 1 }} />
