@@ -1,25 +1,13 @@
 import React, { ChangeEvent, ReactElement, useEffect, useRef } from 'react';
+import shallow from 'zustand/shallow';
 import { FiSearch } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import shallow from 'zustand/shallow';
-import { Menu } from '../../components/Menu';
-import { Card } from '../../components/Card';
-import { Note } from '../../components/Note';
-import { Input } from '../../components/Input';
-import NoteModel from '../../models/Note';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { Input, Menu, Card, Note } from '../../components';
+import { Note as NoteModel } from '../../types';
 import { Container, Content, Empty, EmptyContainer, NotesContainer, Toolbar } from './styles';
-import { useStore } from '../../store/useStore';
-
-const initialState = {
-  notes: [],
-  currentNote: {} as NoteModel,
-  filteredNotes: [],
-  error: '',
-  isNoteOpen: false,
-  isLoading: true,
-};
+import { useStore } from '../../stores';
 
 export function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);
@@ -34,7 +22,7 @@ export function Home(): ReactElement {
     }),
     shallow,
   );
-  const hasNotes = filteredNotes.length !== 0;
+  const hasNotes = !!filteredNotes.length;
 
   useEffect(() => {
     fetchNotes();

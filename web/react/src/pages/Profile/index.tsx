@@ -4,14 +4,11 @@ import * as Yup from 'yup';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { FiLock, FiMail, FiUser } from 'react-icons/fi';
-import { Button } from '../../components/Button';
-import { Input } from '../../components/Input';
-import { Menu } from '../../components/Menu';
-import { ProfilePic } from '../../components/ProfilePic';
-import api from '../../utils/api';
-import UserUpdate from '../../types/UserUpdate';
+import { ProfilePic, Menu, Input, Button } from '../../components';
+import { api } from '../../utils';
+import { UserUpdate } from '../../types';
 import { Container, Content, FormContent, InputLabel } from './styles';
-import { useStore } from '../../stores/useStore';
+import { useStore } from '../../stores';
 
 export function Profile(): ReactElement {
   const user = useStore((state) => state.user);

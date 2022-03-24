@@ -5,7 +5,7 @@ import { Form } from '@unform/web';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Input, Button } from '../../components';
-import getValidationErrors from '../../utils/getValidationError';
+import { getValidationErrors } from '../../utils';
 import { UserSignInCredentials } from '../../types';
 import { Background, Container, Content, Links } from './styles';
 import signInBackground from '../../assets/signin.svg';

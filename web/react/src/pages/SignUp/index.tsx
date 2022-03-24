@@ -10,13 +10,20 @@ import { api, getValidationErrors } from '../../utils';
 import { Input, Button } from '../../components';
 import signupBackground from '../../assets/signup.svg';
 import { Background, Container, Content, Links } from './styles';
+import { UserService } from '../../services';
+interface UserSignUpForm {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
 
 export function SignUp(): ReactElement {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
   const handleSubmit = useCallback(
-    async (data: UserSignUp) => {
+    async (data: UserSignUpForm) => {
       try {
         formRef.current?.setErrors({});
 
@@ -33,14 +40,10 @@ export function SignUp(): ReactElement {
 
         const { name, email, password } = data;
 
-        await api.post('/user', {
-          name,
-          email,
-          password,
-        });
+        UserService.createUser({ name, email, password });
 
         history.push('/');
-      } catch (error) {
+      } catch (error: any) {
         const errors = getValidationErrors(error);
         formRef.current?.setErrors(errors);
       }
