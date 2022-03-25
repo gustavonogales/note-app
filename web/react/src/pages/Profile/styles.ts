@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import bg from '../../assets/bg.svg';
+import bg from '@/assets/bg.svg';
 
 export const Container = styled.div`
   display: flex;

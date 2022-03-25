@@ -8,10 +8,10 @@ import { NoteButton } from './NoteButton';
 import { NoteInput } from './NoteInput';
 import { NoteTextArea } from './NoteTextArea';
 import { Container, Header, Layer, Content, ColorPickerContainer, CenterContainer } from './styles';
-import { NoteService } from '../../services';
-import { NoteCreate, NoteUpdate, Note as NoteModel } from '../../types';
-import { COLORS } from '../../constants';
-import { useStore } from '../../stores';
+import { NoteService } from '@/services';
+import { NoteCreate, NoteUpdate, Note as NoteModel } from '@/types';
+import { COLORS } from '@/constants';
+import { useStore } from '@/stores';
 
 type NoteProps = {
   note: NoteModel;

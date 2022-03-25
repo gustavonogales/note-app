@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Switch } from 'react-router-dom';
 import Route from './Route';
-import { SignIn } from '../pages/SignIn';
-import { SignUp } from '../pages/SignUp';
-import { Home } from '../pages/Home';
-import { Profile } from '../pages/Profile';
-import { ROUTES } from '../constants';
+import { SignIn } from '@/pages/SignIn';
+import { SignUp } from '@/pages/SignUp';
+import { Home } from '@/pages/Home';
+import { Profile } from '@/pages/Profile';
+import { ROUTES } from '@/constants';
 
 export function Routes(): ReactElement {
   return (

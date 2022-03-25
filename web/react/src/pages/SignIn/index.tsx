@@ -4,12 +4,12 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
-import { Input, Button } from '../../components';
-import { getValidationErrors } from '../../utils';
-import { UserSignInCredentials } from '../../types';
+import { Input, Button } from '@/components';
+import { getValidationErrors } from '@/utils';
+import { UserSignInCredentials } from '@/types';
 import { Background, Container, Content, Links } from './styles';
-import signInBackground from '../../assets/signin.svg';
-import { useStore } from '../../stores';
+import signInBackground from '@/assets/signin.svg';
+import { useStore } from '@/stores';
 
 export function SignIn(): ReactElement {
   const formRef = useRef<FormHandles>(null);

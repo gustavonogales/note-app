@@ -1,6 +1,6 @@
 import produce from 'immer';
-import { Note, NoteCreate, NoteUpdate } from '../types';
-import { formatDate, api } from '../utils';
+import { Note, NoteCreate, NoteUpdate } from '@/types';
+import { formatDate, api } from '@/utils';
 
 export class NoteService {
   private static resource = '/note';

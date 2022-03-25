@@ -4,10 +4,10 @@ import { FiSearch } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
-import { Input, Menu, Card, Note } from '../../components';
-import { Note as NoteModel } from '../../types';
+import { Input, Menu, Card, Note } from '@/components';
+import { Note as NoteModel } from '@/types';
 import { Container, Content, Empty, EmptyContainer, NotesContainer, Toolbar } from './styles';
-import { useStore } from '../../stores';
+import { useStore } from '@/stores';
 
 export function Home(): ReactElement {
   const searchFormRef = useRef<FormHandles>(null);

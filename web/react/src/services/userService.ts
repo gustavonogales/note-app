@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
-import { User, UserUpdateCredentials, UserSignUp } from '../types';
-import { api } from '../utils';
+import { User, UserUpdateCredentials, UserSignUp } from '@/types';
+import { api } from '@/utils';
 
 export class UserService {
   private static resource = '/user';

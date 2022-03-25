@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { RouteProps as ReactDOMRouteProps, Route as ReactDOMRoute, Redirect } from 'react-router-dom';
-import { ROUTES } from '../constants/routes';
-import { useStore } from '../stores';
-import { api } from '../utils';
+import { ROUTES } from '@/constants';
+import { useStore } from '@/stores';
+import { api } from '@/utils';
 
 interface RouteProps extends ReactDOMRouteProps {
   isPrivate?: boolean;

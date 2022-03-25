@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { HTMLAttributes, ReactElement } from 'react';
-import { Note } from '../../types';
+import { Note } from '@/types';
 import { Container } from './styles';
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {

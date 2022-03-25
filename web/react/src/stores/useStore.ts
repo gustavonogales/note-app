@@ -1,6 +1,6 @@
 import create, { SetState, GetState } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { StorageService } from '../services';
+import { StorageService } from '@/services';
 import { createAuthSlice, AuthStoreSlice } from './authStore';
 import { createNoteSlice, NoteStoreSlice } from './noteStore';
 

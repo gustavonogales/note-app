@@ -5,12 +5,11 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import { Link, useHistory } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiChevronLeft } from 'react-icons/fi';
-import { UserSignUp } from '../../types';
-import { api, getValidationErrors } from '../../utils';
-import { Input, Button } from '../../components';
-import signupBackground from '../../assets/signup.svg';
+import { api, getValidationErrors } from '@/utils';
+import { Input, Button } from '@/components';
+import signupBackground from '@/assets/signup.svg';
 import { Background, Container, Content, Links } from './styles';
-import { UserService } from '../../services';
+import { UserService } from '@/services';
 interface UserSignUpForm {
   name: string;
   email: string;

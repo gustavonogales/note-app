@@ -2,7 +2,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { ReactElement, useCallback, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { Input } from '../Input';
+import { Input } from '@/components';
 
 export function SearchBar(): ReactElement {
   const formRef = useRef<FormHandles>(null);

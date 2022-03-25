@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { Container } from './styles';
-import { User } from '../../types';
+import { User } from '@/types';
 
 type ProfilePicProps = {
   user: User | undefined;

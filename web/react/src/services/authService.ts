@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
-import { UserAuth, UserSignInCredentials } from '../types';
-import { api } from '../utils';
+import { UserAuth, UserSignInCredentials } from '@/types';
+import { api } from '@/utils';
 
 export class AuthService {
   private static resource = '/session';

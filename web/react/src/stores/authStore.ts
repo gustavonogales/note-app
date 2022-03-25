@@ -1,5 +1,5 @@
-import { User, UserSignInCredentials, UserUpdateCredentials, StoreSlice } from '../types';
-import { AuthService, UserService } from '../services';
+import { User, UserSignInCredentials, UserUpdateCredentials, StoreSlice } from '@/types';
+import { AuthService, UserService } from '@/services';
 
 export interface AuthStoreSlice {
   user?: User;

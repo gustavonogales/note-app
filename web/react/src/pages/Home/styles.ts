@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import bg from '../../assets/bg.svg';
-import emptyImg from '../../assets/empty.svg';
+import bg from '@/assets/bg.svg';
+import emptyImg from '@/assets/empty.svg';
 
 export const Container = styled.div`
   display: flex;

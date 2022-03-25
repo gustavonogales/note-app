@@ -1,6 +1,6 @@
 import produce from 'immer';
-import { StoreSlice, Note, NoteCreate } from '../types';
-import { NoteService } from '../services';
+import { StoreSlice, Note, NoteCreate } from '@/types';
+import { NoteService } from '@/services';
 
 export interface NoteStoreSlice {
   notes: Note[];

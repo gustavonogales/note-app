@@ -2,8 +2,8 @@
 import React, { ReactElement, ReactNode, useCallback } from 'react';
 import { FiChevronLeft, FiLogOut, FiPlus } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
-import { useStore } from '../../stores';
-import { ProfilePic } from '../ProfilePic';
+import { useStore } from '@/stores';
+import { ProfilePic } from '@/components';
 import { AddButton, BackButton, Container, Flex1, LogoutButton } from './styles';
 
 type MenuProps = {
