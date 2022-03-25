@@ -4,3 +4,4 @@ build
 /src/react-app-env.d.ts
 /src/reportWebVitals.ts
 /*.js
+/*.ts
