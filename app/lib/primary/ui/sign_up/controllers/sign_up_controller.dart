@@ -33,7 +33,7 @@ abstract class _SignUpControllerBase with Store {
   @observable
   bool loading = false;
 
-  FieldFormState fullName = FieldFormState((value) {
+  FieldFormState fullName = FieldFormState(validate: (value) {
     switch (value) {
       case '':
         return 'Name is required';
@@ -42,7 +42,7 @@ abstract class _SignUpControllerBase with Store {
     }
   });
 
-  FieldFormState email = FieldFormState((value) {
+  FieldFormState email = FieldFormState(validate: (value) {
     switch (value) {
       case '':
         return 'E-mail is required';
@@ -51,7 +51,7 @@ abstract class _SignUpControllerBase with Store {
     }
   });
 
-  FieldFormState password = FieldFormState((value) {
+  FieldFormState password = FieldFormState(validate: (value) {
     switch (value) {
       case '':
         return 'Password is required';
@@ -62,7 +62,7 @@ abstract class _SignUpControllerBase with Store {
     }
   });
 
-  FieldFormState confirmPassword = FieldFormState((value) {
+  FieldFormState confirmPassword = FieldFormState(validate: (value) {
     switch (value) {
       case '':
         return 'Password is required';

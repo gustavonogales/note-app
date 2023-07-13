@@ -1,8 +1,11 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:mobx/mobx.dart';
 import 'package:note_app/container.dart';
 import 'package:note_app/domain/domain.dart';
+import 'package:note_app/primary/ui/shared/shared.dart';
+
+import '../layouts/layouts.dart';
 
 part 'home_controller.g.dart';
 
@@ -11,8 +14,13 @@ class HomeController = _HomeControllerBase with _$HomeController;
 abstract class _HomeControllerBase with Store {
   late final NoteServicePort _noteService;
 
+  List<Layout> randomLayout() => layouts[Random().nextInt(layouts.length)];
+
   @observable
-  ObservableList<Note> notes = ObservableList<Note>();
+  ObservableList<ViewNote> notes = ObservableList<ViewNote>();
+
+  @observable
+  ObservableList<Layout> layout = ObservableList<Layout>();
 
   _HomeControllerBase() {
     _noteService = locator();
@@ -21,15 +29,29 @@ abstract class _HomeControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  bool isEmpty = false;
+
   @action
   Future<void> getAllNotes() async {
     try {
       loading = true;
+
       final data = await _noteService.getAll();
-      notes = ObservableList<Note>();
-      notes.addAll(data);
+
+      final definedLayout = randomLayout();
+      layout = ObservableList.of(definedLayout);
+
+      while (data.length > layout.length) {
+        layout.addAll(definedLayout);
+      }
+
+      notes.replaceRange(
+        0,
+        notes.length,
+        data.map((note) => ViewNote.fromModel(note)),
+      );
     } catch (e) {
-      log(e.toString());
     } finally {
       loading = false;
     }

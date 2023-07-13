@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:note_app/domain/domain.dart';
+import 'package:note_app/primary/ui/shared/shared.dart';
 
 import '../../home/home.dart';
 import '../../note/note.dart';
@@ -72,10 +70,17 @@ final router = GoRouter(
         GoRoute(
           path: '${NoteScreen.route}/:id',
           pageBuilder: (context, state) {
-            final id = state.pathParameters['id'];
-            final note = state.extra as Note;
+            final note = state.extra as ViewNote;
             return BottomToTopTransition(
-              child: NoteScreen(id!, note),
+              child: NoteScreen(note: note),
+            );
+          },
+        ),
+        GoRoute(
+          path: NoteScreen.route,
+          pageBuilder: (context, state) {
+            return BottomToTopTransition(
+              child: const NoteScreen(),
             );
           },
         ),

@@ -13,15 +13,31 @@ mixin _$HomeController on _HomeControllerBase, Store {
       Atom(name: '_HomeControllerBase.notes', context: context);
 
   @override
-  ObservableList<Note> get notes {
+  ObservableList<ViewNote> get notes {
     _$notesAtom.reportRead();
     return super.notes;
   }
 
   @override
-  set notes(ObservableList<Note> value) {
+  set notes(ObservableList<ViewNote> value) {
     _$notesAtom.reportWrite(value, super.notes, () {
       super.notes = value;
+    });
+  }
+
+  late final _$layoutAtom =
+      Atom(name: '_HomeControllerBase.layout', context: context);
+
+  @override
+  ObservableList<Layout> get layout {
+    _$layoutAtom.reportRead();
+    return super.layout;
+  }
+
+  @override
+  set layout(ObservableList<Layout> value) {
+    _$layoutAtom.reportWrite(value, super.layout, () {
+      super.layout = value;
     });
   }
 
@@ -41,6 +57,22 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  late final _$isEmptyAtom =
+      Atom(name: '_HomeControllerBase.isEmpty', context: context);
+
+  @override
+  bool get isEmpty {
+    _$isEmptyAtom.reportRead();
+    return super.isEmpty;
+  }
+
+  @override
+  set isEmpty(bool value) {
+    _$isEmptyAtom.reportWrite(value, super.isEmpty, () {
+      super.isEmpty = value;
+    });
+  }
+
   late final _$getAllNotesAsyncAction =
       AsyncAction('_HomeControllerBase.getAllNotes', context: context);
 
@@ -53,7 +85,9 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 notes: ${notes},
-loading: ${loading}
+layout: ${layout},
+loading: ${loading},
+isEmpty: ${isEmpty}
     ''';
   }
 }

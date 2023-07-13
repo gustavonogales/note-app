@@ -6,9 +6,14 @@ class FieldFormState = _FieldFormStateBase with _$FieldFormState;
 
 abstract class _FieldFormStateBase with Store {
   final bool validateOnChange;
-  final String Function(String value) _validate;
+  late final String Function(String value)? _validate;
 
-  _FieldFormStateBase(this._validate, {this.validateOnChange = false});
+  _FieldFormStateBase({
+    String Function(String value)? validate,
+    this.validateOnChange = false,
+  }) {
+    _validate = validate;
+  }
 
   @observable
   String value = '';
@@ -26,7 +31,11 @@ abstract class _FieldFormStateBase with Store {
   }
 
   @action
-  void validate() => error = _validate(value);
+  void validate() {
+    if (_validate != null) {
+      error = _validate!(value);
+    }
+  }
 
   @action
   void compareTo(String data, {required String errorMessage}) {

@@ -14,6 +14,8 @@ void main() {
 class NoteApp extends StatelessWidget {
   const NoteApp({super.key});
 
+  TextTheme? get textTheme => GoogleFonts.robotoSlabTextTheme();
+
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
@@ -23,12 +25,12 @@ class NoteApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: lightTheme,
           useMaterial3: true,
-          textTheme: GoogleFonts.robotoSlabTextTheme(),
+          textTheme: textTheme,
         ),
         darkTheme: ThemeData(
           colorScheme: darkTheme,
           useMaterial3: true,
-          textTheme: GoogleFonts.robotoSlabTextTheme(),
+          textTheme: textTheme,
         ),
         routerConfig: router,
       );

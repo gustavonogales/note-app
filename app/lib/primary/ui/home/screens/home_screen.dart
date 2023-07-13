@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:note_app/container.dart';
-import 'package:note_app/domain/domain.dart';
 import 'package:note_app/primary/ui/shared/shared.dart';
+import 'package:collection/collection.dart';
 
 import '../controller/home_controller.dart';
 import '../widgets/empty_placeholder.dart';
@@ -36,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => context.push(Routes.note),
         enableFeedback: false,
         elevation: 3,
         backgroundColor: context.theme.colorScheme.primary,
@@ -57,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ActionButton(
               iconData: FeatherIcons.search,
               onPressed: () {
-                controller.getAllNotes();
+                for (var e in controller.notes) {
+                  log(e.title + ' - ' + e.color.name + '\n');
+                }
               }),
           ProfileBadge(
             name: store.auth.user!.name,
@@ -66,60 +70,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Observer(builder: (context) {
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(Spacings.xxxs),
-            child: StaggeredGrid.count(
-              crossAxisCount: 4,
-              mainAxisSpacing: Spacings.micro,
-              crossAxisSpacing: Spacings.micro,
-              children: [
-                ...controller.notes.map((note) {
-                  return StaggeredGridTile.count(
-                    crossAxisCellCount: 2,
-                    mainAxisCellCount: 2,
-                    child: NoteCard(note),
-                  );
-                })
-              ],
-              // StaggeredGridTile.count(
-              //   crossAxisCellCount: 2,
-              //   mainAxisCellCount: 2,
-              //   child: NoteCard(
-              //     Note(
-              //       id: 'e0fa8166-6bec-4ea1-bd3f-ae65223db811',
-              //       color: "#FFAB91",
-              //       title: 'Lista de compras 3',
-              //       text: 'lorem ipsum sin amet dolor.',
-              //       userId: '',
-              //       updatedAt: '',
-              //     ),
-              //   ),
-              // ),
-              // StaggeredGridTile.count(
-              //   crossAxisCellCount: 2,
-              //   mainAxisCellCount: 2,
-              //   child: NoteCard(
-              //     hexColor: "#FFCC80",
-              //   ),
-              // ),
-              // StaggeredGridTile.count(
-              //   crossAxisCellCount: 4,
-              //   mainAxisCellCount: 2,
-              //   child: NoteCard(
-              //     hexColor: "#E6EE9B",
-              //   ),
-              // ),
-              // StaggeredGridTile.count(
-              //   crossAxisCellCount: 2,
-              //   mainAxisCellCount: 3,
-              //   child: NoteCard(
-              //     hexColor: "#CF93D9",
-              //   ),
-              // ),
+      body: Observer(builder: (_) {
+        return RefreshIndicator.adaptive(
+          onRefresh: controller.getAllNotes,
+          child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
             ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(Spacings.xxxs),
+                child: StaggeredGrid.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: Spacings.micro,
+                  crossAxisSpacing: Spacings.micro,
+                  children: controller.notes.mapIndexed((i, note) {
+                    return Observer(
+                        key: note.key,
+                        builder: (context) {
+                          return StaggeredGridTile.count(
+                            crossAxisCellCount:
+                                controller.layout[i].crossAxisCellCount,
+                            mainAxisCellCount:
+                                controller.layout[i].mainAxisCellCount,
+                            child: NoteCard(note),
+                          );
+                        });
+                  }).toList(),
+                ),
+              ),
+            ],
           ),
         );
       }),

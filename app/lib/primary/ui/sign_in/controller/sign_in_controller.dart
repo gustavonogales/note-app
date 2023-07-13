@@ -22,7 +22,7 @@ abstract class _SignInControllerBase with Store {
 
   @observable
   FieldFormState email = FieldFormState(
-    (value) {
+    validate: (value) {
       return value.isEmpty ? 'E-mail is required' : '';
     },
     validateOnChange: true,
@@ -30,7 +30,7 @@ abstract class _SignInControllerBase with Store {
 
   @observable
   FieldFormState password = FieldFormState(
-    (value) {
+    validate: (value) {
       return value.isEmpty ? 'Password is required' : '';
     },
     validateOnChange: true,

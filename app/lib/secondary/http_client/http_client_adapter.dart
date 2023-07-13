@@ -16,8 +16,8 @@ final class HttpClientAdapter implements HttpClientPort {
   late final http.Client _client;
   late String _baseUrl;
 
-  List<Interceptor> requestInterceptors = List.empty(growable: true);
-  List<Interceptor> responseInterceptors = List.empty(growable: true);
+  List<Interceptor> requestInterceptors = [];
+  List<Interceptor> responseInterceptors = [];
 
   HttpClientAdapter(RequestTokenInterceptor requestTokenInterceptor) {
     _baseUrl = 'http://10.0.2.2:3333';
