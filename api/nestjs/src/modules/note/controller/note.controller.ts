@@ -22,7 +22,7 @@ export class NoteController {
 
   @Get()
   async index(@Request() request: any): Promise<Note[]> {
-    const user_id: string = request.user.id;
+    const user_id: string = request.user.sub;
 
     const notes = await this.noteService.index(user_id);
 
@@ -38,7 +38,7 @@ export class NoteController {
 
   @Post()
   async create(@Request() request: any): Promise<Note> {
-    const user_id: string = request.user.id;
+    const user_id: string = request.user.sub;
     const { title, text } = request.body;
 
     const createNote = {
@@ -61,7 +61,7 @@ export class NoteController {
 
   @Put()
   async update(@Request() request: any): Promise<Note> {
-    const user_id = request.user.id;
+    const user_id = request.user.sub;
     const { id, title, text } = request.body;
 
     const updateNote = {

@@ -8,7 +8,8 @@ import { UserRepository } from 'src/modules/user/repository/user.repository';
 import { HashModule } from '../hash/hash.module';
 import { AuthController } from './controller/auth.controller';
 import { AuthService } from './service/auth.service';
-import { JwtStrategy } from './util/jwt.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { RefreshJwtStrategy } from './strategy/jwt.refresh.strategy';
 
 @Module({
   imports: [
@@ -19,15 +20,12 @@ import { JwtStrategy } from './util/jwt.strategy';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('APP_JWT_SECRET'),
-        signOptions: {
-          expiresIn: configService.get('APP_JWT_EXPIRES_IN'),
-        },
       }),
       inject: [ConfigService],
     }),
     HashModule,
   ],
   controllers: [AuthController],
-  providers: [UserRepository, AuthService, JwtStrategy],
+  providers: [UserRepository, AuthService, JwtStrategy, RefreshJwtStrategy],
 })
 export class AuthModule {}

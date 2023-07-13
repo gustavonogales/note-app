@@ -2,10 +2,13 @@ import {
   Body,
   Controller,
   Get,
+  HttpStatus,
   Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { log } from 'console';
 import { UserCredentialsDTO } from 'src/shared/modules/auth/dto/user-credentials.dto';
 import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
 import { Auth } from 'src/shared/modules/auth/model/auth.model';
@@ -25,9 +28,11 @@ export class AuthController {
     return auth;
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  async getTest(@Request() req) {
-    return req.user;
+  @UseGuards(AuthGuard('jwt-refresh'))
+  @Post('/refresh')
+  async refresh(@Request() req) {
+    const { email, sub } = req.user;
+    const auth = await this.authService.recreate({ email, id: sub });
+    return auth;
   }
 }

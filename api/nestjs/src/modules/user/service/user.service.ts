@@ -58,33 +58,14 @@ export class UserService implements UserServiceInterface {
       throw new AppError('E-mail already in use', HttpStatus.NOT_ACCEPTABLE);
     }
 
-    if (user.password && !user.oldPassword) {
-      throw new AppError(
-        'Current password is needed to change your password',
-        HttpStatus.NOT_ACCEPTABLE,
-      );
-    }
-
-    if (user.password && user.oldPassword) {
-      const checkPasswords = await this.hashService.compareHash(
-        user.oldPassword,
-        userFound.password,
-      );
-
-      if (!checkPasswords) {
-        throw new AppError(
-          'Current password is incorrect',
-          HttpStatus.UNAUTHORIZED,
-        );
-      }
-
+    if (user.password) {
       hashedPassword = await this.hashService.generateHash(user.password);
     }
 
     const userUpdated = new User(
       user.id,
-      user.name,
-      user.email,
+      user.name || userFound.name,
+      user.email || userFound.email,
       hashedPassword || userFound.password,
       userFound.avatar || '',
     );

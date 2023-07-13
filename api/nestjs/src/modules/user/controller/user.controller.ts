@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Put,
   Request,
@@ -12,6 +13,7 @@ import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
 import UpdateUserDTO from '../dto/update-user.dto';
 import User from '../model/user.model';
 import { UserService } from '../service/user.service';
+import { Request as ExpressRequest } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -27,17 +29,17 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put()
+  @Patch()
   async update(@Request() request: any): Promise<User> {
-    const id = request.user.id;
-    const { name, email, password, old_password } = request.body;
+    const id = request.user.sub;
+    console.log(request);
+    const { name, email, password } = request.body;
 
     const userUpdate = {
       id,
       name,
       email,
       password,
-      oldPassword: old_password,
     } as UpdateUserDTO;
 
     const user = await this.userService.update(userUpdate);
@@ -48,10 +50,16 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get()
   async show(@Request() request: any): Promise<User> {
-    const id = request.user.id;
+    const id = request.user.sub;
 
     const user = await this.userService.show(id);
 
     return classToClass(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('/avatar')
+  async updateAvatar(@Request() request: ExpressRequest): Promise<void> {
+    // log(request.);
   }
 }
