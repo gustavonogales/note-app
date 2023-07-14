@@ -5,12 +5,15 @@ import UpdateUserDTO from '../dto/update-user.dto';
 import User from '../model/user.model';
 import { UserRepository } from '../repository/user.repository';
 import UserServiceInterface from './user.service.interface';
+import { StorageServiceImpl } from 'src/shared/modules/storage';
+import UpdateUserAvatarDTO from '../dto/update-user-avatar.dto';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
   constructor(
     private userRepository: UserRepository,
     private hashService: HashServiceImpl,
+    private storageService: StorageServiceImpl,
   ) {}
 
   public async show(id: string): Promise<User> {
@@ -73,5 +76,34 @@ export class UserService implements UserServiceInterface {
     const userSaved = await this.userRepository.save(userUpdated);
 
     return userSaved;
+  }
+
+  public async updateAvatar({
+    id,
+    filename,
+  }: UpdateUserAvatarDTO): Promise<User> {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new AppError('Only authenticated users can change the avatar', 403);
+    }
+
+    if (user.avatar) {
+      await this.storageService.deleteFile(filename);
+    }
+
+    const filePath = await this.storageService.saveFile(filename);
+
+    const userWithAvatar = new User(
+      user.id,
+      user.name,
+      user.email,
+      user.password,
+      filePath,
+    );
+
+    await this.userRepository.save(userWithAvatar);
+
+    return userWithAvatar;
   }
 }

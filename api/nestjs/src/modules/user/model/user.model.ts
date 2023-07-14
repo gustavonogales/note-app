@@ -19,7 +19,7 @@ export default class User {
       return null;
     }
 
-    return `${process.env.APP_URL}:${process.env.APP_PORT}/files/${this.avatar}`;
+    return `${process.env.APP_URL}:${process.env.APP_PORT}/${this.avatar}`;
   }
 
   constructor(

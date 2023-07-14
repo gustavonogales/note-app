@@ -6,7 +6,9 @@ import {
   Post,
   Put,
   Request,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { classToClass } from 'class-transformer';
 import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
@@ -14,6 +16,9 @@ import UpdateUserDTO from '../dto/update-user.dto';
 import User from '../model/user.model';
 import { UserService } from '../service/user.service';
 import { Request as ExpressRequest } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('user')
 export class UserController {
@@ -32,7 +37,6 @@ export class UserController {
   @Patch()
   async update(@Request() request: any): Promise<User> {
     const id = request.user.sub;
-    console.log(request);
     const { name, email, password } = request.body;
 
     const userUpdate = {
@@ -58,8 +62,25 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './tmp',
+        filename(req: any, file, cb) {
+          cb(null, `${req.user.sub}${extname(file.originalname)}`);
+        },
+      }),
+    }),
+  )
   @Patch('/avatar')
-  async updateAvatar(@Request() request: ExpressRequest): Promise<void> {
-    // log(request.);
+  async updateAvatar(
+    @Request() request: any,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<User> {
+    const id = request.user.sub;
+    const filename = file.filename;
+
+    const user = await this.userService.updateAvatar({ id, filename });
+    return user;
   }
 }
