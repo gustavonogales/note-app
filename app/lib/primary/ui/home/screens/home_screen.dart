@@ -80,43 +80,34 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(Spacings.xxxs),
-                child: StaggeredGrid.count(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: Spacings.micro,
-                  crossAxisSpacing: Spacings.micro,
-                  children: controller.notes.mapIndexed((i, note) {
-                    return Observer(
-                        key: note.key,
-                        builder: (context) {
-                          return StaggeredGridTile.count(
-                            crossAxisCellCount:
-                                controller.layout[i].crossAxisCellCount,
-                            mainAxisCellCount:
-                                controller.layout[i].mainAxisCellCount,
-                            child: NoteCard(note),
-                          );
-                        });
-                  }).toList(),
-                ),
+                child: controller.notes.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.only(top: Spacings.xxxl),
+                        child: EmptyPlaceholder(),
+                      )
+                    : StaggeredGrid.count(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: Spacings.micro,
+                        crossAxisSpacing: Spacings.micro,
+                        children: controller.notes.mapIndexed((i, note) {
+                          return Observer(
+                              key: note.key,
+                              builder: (context) {
+                                return StaggeredGridTile.count(
+                                  crossAxisCellCount:
+                                      controller.layout[i].crossAxisCellCount,
+                                  mainAxisCellCount:
+                                      controller.layout[i].mainAxisCellCount,
+                                  child: NoteCard(note),
+                                );
+                              });
+                        }).toList(),
+                      ),
               ),
             ],
           ),
         );
       }),
-      // body: Observer(builder: (context) {
-      //   return Padding(
-      //     padding: const EdgeInsets.all(Spacings.xxxs),
-      //     child: Column(
-      //       mainAxisSize: MainAxisSize.max,
-      //       crossAxisAlignment: CrossAxisAlignment.stretch,
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-
-      //         // EmptyPlaceholder(),
-      //       ],
-      //     ),
-      //   );
-      // }),
     );
   }
 }

@@ -58,13 +58,6 @@ final class HttpClientAdapter implements HttpClientPort {
 
     final streamedResponse = await _client.send(httpRequest);
     final httpResponse = await http.Response.fromStream(streamedResponse);
-    log("got here - ${httpResponse.body.toString()}");
-
-    try {
-      var json = jsonDecode(httpResponse.body);
-    } catch (e) {
-      log("GOT ERROR - " + e.toString());
-    }
 
     var response = Response(
       statusCode: httpResponse.statusCode,
@@ -72,8 +65,6 @@ final class HttpClientAdapter implements HttpClientPort {
       headers: httpResponse.headers,
       request: request,
     );
-
-    log("got here 2 - ${response.body.toString()}");
 
     for (var interceptor in responseInterceptors) {
       response = interceptor.interceptResponse(response);
@@ -83,7 +74,9 @@ final class HttpClientAdapter implements HttpClientPort {
     if (response.statusCode >= 400) {
       throw HttpSendException(
         statusCode: response.statusCode,
-        message: response.body['message'] ?? 'Unexpected Error',
+        message: response.body['message'] ??
+            response.body['status'] ??
+            'Unexpected Error',
       );
     }
 
