@@ -17,19 +17,19 @@ mixin _$ThemeStore on _ThemeStoreBase, Store {
               name: '_ThemeStoreBase.themeMode'))
           .value;
 
-  late final _$useDarkModeAtom =
-      Atom(name: '_ThemeStoreBase.useDarkMode', context: context);
+  late final _$useLightModeAtom =
+      Atom(name: '_ThemeStoreBase.useLightMode', context: context);
 
   @override
-  bool get useDarkMode {
-    _$useDarkModeAtom.reportRead();
-    return super.useDarkMode;
+  bool get useLightMode {
+    _$useLightModeAtom.reportRead();
+    return super.useLightMode;
   }
 
   @override
-  set useDarkMode(bool value) {
-    _$useDarkModeAtom.reportWrite(value, super.useDarkMode, () {
-      super.useDarkMode = value;
+  set useLightMode(bool value) {
+    _$useLightModeAtom.reportWrite(value, super.useLightMode, () {
+      super.useLightMode = value;
     });
   }
 
@@ -37,11 +37,11 @@ mixin _$ThemeStore on _ThemeStoreBase, Store {
       ActionController(name: '_ThemeStoreBase', context: context);
 
   @override
-  void setUseDarkMode(bool use) {
+  void toggleTheme() {
     final _$actionInfo = _$_ThemeStoreBaseActionController.startAction(
-        name: '_ThemeStoreBase.setUseDarkMode');
+        name: '_ThemeStoreBase.toggleTheme');
     try {
-      return super.setUseDarkMode(use);
+      return super.toggleTheme();
     } finally {
       _$_ThemeStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -50,7 +50,7 @@ mixin _$ThemeStore on _ThemeStoreBase, Store {
   @override
   String toString() {
     return '''
-useDarkMode: ${useDarkMode},
+useLightMode: ${useLightMode},
 themeMode: ${themeMode}
     ''';
   }

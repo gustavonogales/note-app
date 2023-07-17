@@ -10,6 +10,9 @@ part 'global_store.g.dart';
 class GlobalStore = _GlobalStoreBase with _$GlobalStore;
 
 abstract class _GlobalStoreBase with Store {
-  ThemeStore theme = ThemeStore();
+  final ThemeStore theme;
+
+  _GlobalStoreBase(this.theme);
+
   AuthStore auth = AuthStore();
 }

@@ -60,11 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
           titleText: 'Notes',
           actions: [
             ActionButton(
-                iconData: store.theme.useDarkMode
-                    ? FeatherIcons.sun
-                    : FeatherIcons.moon,
-                onPressed: () =>
-                    store.theme.setUseDarkMode(!store.theme.useDarkMode)),
+              iconData: store.theme.useLightMode
+                  ? FeatherIcons.moon
+                  : FeatherIcons.sun,
+              onPressed: () => store.theme.toggleTheme(),
+            ),
             ActionButton(iconData: FeatherIcons.search, onPressed: () {}),
             ProfileBadge(
               name: store.auth.user!.name,
