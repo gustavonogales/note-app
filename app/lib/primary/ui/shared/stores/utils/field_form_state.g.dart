@@ -64,6 +64,17 @@ mixin _$FieldFormState on _FieldFormStateBase, Store {
   }
 
   @override
+  void compareWith() {
+    final _$actionInfo = _$_FieldFormStateBaseActionController.startAction(
+        name: '_FieldFormStateBase.compareWith');
+    try {
+      return super.compareWith();
+    } finally {
+      _$_FieldFormStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void validate() {
     final _$actionInfo = _$_FieldFormStateBaseActionController.startAction(
         name: '_FieldFormStateBase.validate');

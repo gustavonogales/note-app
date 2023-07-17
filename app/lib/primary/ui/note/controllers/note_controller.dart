@@ -1,6 +1,4 @@
 import 'package:mobx/mobx.dart';
-import 'package:note_app/container.dart';
-import 'package:note_app/domain/domain.dart';
 import 'package:note_app/primary/ui/shared/shared.dart';
 
 part 'note_controller.g.dart';
@@ -8,10 +6,7 @@ part 'note_controller.g.dart';
 class NoteController = _NoteControllerBase with _$NoteController;
 
 abstract class _NoteControllerBase with Store {
-  late final UserServicePort _userService;
-
   _NoteControllerBase([ViewNote? data]) {
-    _userService = locator();
     if (data != null) note = data;
     if (note.title.isEmpty && note.text.isEmpty) {
       setEditMode(true);
@@ -30,10 +25,8 @@ abstract class _NoteControllerBase with Store {
   @observable
   ViewNote note = ViewNote();
 
-  @observable
   FieldFormState title = FieldFormState();
 
-  @observable
   FieldFormState text = FieldFormState();
 
   @action

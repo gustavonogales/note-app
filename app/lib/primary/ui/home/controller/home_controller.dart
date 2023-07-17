@@ -32,8 +32,13 @@ abstract class _HomeControllerBase with Store {
   @observable
   bool isEmpty = false;
 
+  @observable
+  String? errorText;
+
   @action
   Future<void> getAllNotes() async {
+    errorText = null;
+
     try {
       loading = true;
 
@@ -51,7 +56,8 @@ abstract class _HomeControllerBase with Store {
         notes.length,
         data.map((note) => ViewNote.fromModel(note)),
       );
-    } catch (e) {
+    } catch (_) {
+      errorText = 'An error occurred, please try again';
     } finally {
       loading = false;
     }

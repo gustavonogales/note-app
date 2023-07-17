@@ -73,38 +73,6 @@ mixin _$NoteController on _NoteControllerBase, Store {
     });
   }
 
-  late final _$titleAtom =
-      Atom(name: '_NoteControllerBase.title', context: context);
-
-  @override
-  FieldFormState get title {
-    _$titleAtom.reportRead();
-    return super.title;
-  }
-
-  @override
-  set title(FieldFormState value) {
-    _$titleAtom.reportWrite(value, super.title, () {
-      super.title = value;
-    });
-  }
-
-  late final _$textAtom =
-      Atom(name: '_NoteControllerBase.text', context: context);
-
-  @override
-  FieldFormState get text {
-    _$textAtom.reportRead();
-    return super.text;
-  }
-
-  @override
-  set text(FieldFormState value) {
-    _$textAtom.reportWrite(value, super.text, () {
-      super.text = value;
-    });
-  }
-
   late final _$_NoteControllerBaseActionController =
       ActionController(name: '_NoteControllerBase', context: context);
 
@@ -147,9 +115,7 @@ mixin _$NoteController on _NoteControllerBase, Store {
 loading: ${loading},
 editMode: ${editMode},
 colorPickerVisible: ${colorPickerVisible},
-note: ${note},
-title: ${title},
-text: ${text}
+note: ${note}
     ''';
   }
 }

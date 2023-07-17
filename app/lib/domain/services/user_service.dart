@@ -50,4 +50,23 @@ final class UserService implements UserServicePort {
 
     return UserDto.fromJson(response.body);
   }
+
+  @override
+  Future<User> update({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    final response = await _httpAdapter.send(
+      to: '/user',
+      method: Method.patch,
+      body: {
+        'name': name,
+        'email': email,
+        'password': password,
+      },
+    );
+
+    return UserDto.fromJson(response.body);
+  }
 }

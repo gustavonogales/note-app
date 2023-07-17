@@ -81,6 +81,6 @@ export class UserController {
     const filename = file.filename;
 
     const user = await this.userService.updateAvatar({ id, filename });
-    return user;
+    return classToClass(user);
   }
 }

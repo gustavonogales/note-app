@@ -13,4 +13,10 @@ abstract interface class UserServicePort {
     required String email,
     required String password,
   });
+
+  Future<User> update({
+    required String name,
+    required String email,
+    required String password,
+  });
 }

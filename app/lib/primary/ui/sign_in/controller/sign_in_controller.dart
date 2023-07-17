@@ -39,12 +39,16 @@ abstract class _SignInControllerBase with Store {
   @computed
   bool get hasError => email.hasError || password.hasError;
 
+  @observable
+  String? errorText;
+
   @action
   void setUser(User value) => user = value;
 
   @action
   Future<void> signIn() async {
     try {
+      errorText = null;
       loading = true;
 
       email.validate();
@@ -58,6 +62,7 @@ abstract class _SignInControllerBase with Store {
       );
       user = data;
     } catch (e) {
+      errorText = 'Invalid email/password';
     } finally {
       loading = false;
     }

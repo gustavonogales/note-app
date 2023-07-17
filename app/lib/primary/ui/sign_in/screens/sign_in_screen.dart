@@ -46,78 +46,89 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      return Scaffold(
-        body: SafeArea(
-          child: GestureDetector(
-            onTap: FocusScope.of(context).unfocus,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(Spacings.xxxs),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: Spacings.sm),
-                      SvgPicture.asset(Assets.logo, width: 100),
-                      const SizedBox(height: Spacings.xxs),
-                      const Heading('Sign In'),
-                      const SizedBox(height: Spacings.sm),
-                      TextInput(
-                        onChanged: controller.email.setValue,
-                        errorText: controller.email.error,
-                        hintText: 'E-mail',
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: FeatherIconsSnakeCase.mail,
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: Spacings.xxxs),
-                      PasswordInput(
-                        onChanged: controller.password.setValue,
-                        errorText: controller.password.error,
-                        hintText: 'Password',
-                        keyboardType: TextInputType.visiblePassword,
-                        prefixIcon: FeatherIcons.lock,
-                        textInputAction: TextInputAction.done,
-                      ),
-                      const SizedBox(height: Spacings.xxs),
-                      Button(
-                        'Sign in',
-                        isLoading: controller.loading,
-                        onPressed: () => controller.signIn(),
-                      ),
-                      const SizedBox(height: Spacings.xxs),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TouchableOpacity(
-                            onTap: () => context.push(Routes.forgotPassword),
-                            child: BodyText(
-                              'forgot password',
-                              color: context
-                                  .theme.colorScheme.onSecondaryContainer,
+    return ReactionBuilder(
+      builder: (context) => reaction((_) => controller.errorText, (errorText) {
+        if (errorText != null) {
+          ScaffoldMessenger.of(context).showSnackBar(Toast(
+            context: context,
+            message: errorText,
+            type: ToastType.error,
+          ));
+        }
+      }),
+      child: Observer(builder: (context) {
+        return Scaffold(
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: FocusScope.of(context).unfocus,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(Spacings.xxxs),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: Spacings.sm),
+                        SvgPicture.asset(Assets.logo, width: 100),
+                        const SizedBox(height: Spacings.xxs),
+                        const Heading('Sign In'),
+                        const SizedBox(height: Spacings.sm),
+                        TextInput(
+                          onChanged: controller.email.setValue,
+                          errorText: controller.email.error,
+                          hintText: 'E-mail',
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: FeatherIconsSnakeCase.mail,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: Spacings.xxxs),
+                        PasswordInput(
+                          onChanged: controller.password.setValue,
+                          errorText: controller.password.error,
+                          hintText: 'Password',
+                          keyboardType: TextInputType.visiblePassword,
+                          prefixIcon: FeatherIcons.lock,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const SizedBox(height: Spacings.xxs),
+                        Button(
+                          'Sign in',
+                          isLoading: controller.loading,
+                          onPressed: () => controller.signIn(),
+                        ),
+                        const SizedBox(height: Spacings.xxs),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TouchableOpacity(
+                              onTap: () => context.push(Routes.forgotPassword),
+                              child: BodyText(
+                                'forgot password',
+                                color: context
+                                    .theme.colorScheme.onSecondaryContainer,
+                              ),
                             ),
-                          ),
-                          TouchableOpacity(
-                            onTap: () => context.push(Routes.signUp),
-                            child: BodyText(
-                              'create an account',
-                              color: context
-                                  .theme.colorScheme.onSecondaryContainer,
+                            TouchableOpacity(
+                              onTap: () => context.push(Routes.signUp),
+                              child: BodyText(
+                                'create an account',
+                                color: context
+                                    .theme.colorScheme.onSecondaryContainer,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

@@ -6,7 +6,6 @@ export 'buttons/touchable_opacity.dart';
 export 'spinner/spinner.dart';
 export 'inputs/text_input.dart';
 export 'inputs/password_input.dart';
-export 'templates/screen_template.dart';
 export 'app_bar/top_bar.dart';
 export 'profile_badge/profile_badge.dart';
 export 'toast/toast.dart';
