@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:note_app/environment.dart';
 import 'interceptors/request_token_interceptor.dart';
 import 'models/http_send_exception.dart';
 import 'models/interceptor.dart';
@@ -18,8 +19,11 @@ final class HttpClientAdapter implements HttpClientPort {
   List<Interceptor> requestInterceptors = [];
   List<Interceptor> responseInterceptors = [];
 
-  HttpClientAdapter(RequestTokenInterceptor requestTokenInterceptor) {
-    _baseUrl = 'http://10.0.2.2:3333';
+  HttpClientAdapter(
+    AppEnvironment environment,
+    RequestTokenInterceptor requestTokenInterceptor,
+  ) {
+    _baseUrl = environment.baseUrl;
     _client = http.Client();
     requestInterceptors.add(requestTokenInterceptor);
   }
