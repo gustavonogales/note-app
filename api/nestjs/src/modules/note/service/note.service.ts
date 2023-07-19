@@ -45,14 +45,13 @@ export class NoteService implements NoteServiceInterface {
       throw new AppError('Note not found', HttpStatus.NOT_FOUND);
     }
 
-    const updated_at = new Date();
-
     const noteUpdated = new Note(
       note.id,
       note.user_id,
       note.title,
       note.text,
-      updated_at,
+      note.color,
+      new Date(),
     );
 
     const noteSaved = await this.noteRepository.save(noteUpdated);

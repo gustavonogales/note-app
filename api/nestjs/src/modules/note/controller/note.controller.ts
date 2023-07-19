@@ -6,8 +6,7 @@ import {
   Request,
   Param,
   Delete,
-  Put,
-  Body,
+  Patch,
 } from '@nestjs/common';
 import { classToClass } from 'class-transformer';
 import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
@@ -39,12 +38,13 @@ export class NoteController {
   @Post()
   async create(@Request() request: any): Promise<Note> {
     const user_id: string = request.user.sub;
-    const { title, text } = request.body;
+    const { title, text, color } = request.body;
 
     const createNote = {
       user_id,
       title,
       text,
+      color,
     };
 
     const note = await this.noteService.create(createNote);
@@ -59,16 +59,17 @@ export class NoteController {
     await this.noteService.delete(id);
   }
 
-  @Put()
+  @Patch()
   async update(@Request() request: any): Promise<Note> {
     const user_id = request.user.sub;
-    const { id, title, text } = request.body;
+    const { id, title, text, color } = request.body;
 
     const updateNote = {
       user_id,
       id,
       title,
       text,
+      color,
     } as UpdateNote;
 
     const note = await this.noteService.update(updateNote);
