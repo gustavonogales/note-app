@@ -16,7 +16,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       for (Widget action in actions!) {
         list.add(
           Padding(
-            padding: const EdgeInsets.only(left: Spacings.xxxs),
+            padding: const EdgeInsets.only(right: Spacings.xxxs),
             child: action,
           ),
         );
@@ -31,42 +31,25 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor ?? context.theme.colorScheme.background,
       forceMaterialTransparency: false,
       shadowColor: context.theme.colorScheme.background.darken(20),
-      titleSpacing: 0,
       elevation: 0,
       scrolledUnderElevation: 2,
-      automaticallyImplyLeading: false,
       surfaceTintColor: context.theme.colorScheme.background.darken(2),
-      flexibleSpace: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: Spacings.xxxs),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Navigator.of(context).canPop()
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                            right: Spacings.xxxs,
-                          ),
-                          child: ActionButton(
-                            iconData: FeatherIcons.chevronLeft,
-                            onPressed: context.pop,
-                            color: backgroundColor,
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                  titleText != null
-                      ? Heading(titleText!)
-                      : const SizedBox.shrink(),
-                ],
+      title: titleText != null ? Heading(titleText!) : null,
+      leading: Navigator.of(context).canPop()
+          ? Padding(
+              padding: const EdgeInsets.only(
+                top: Spacings.micro,
+                left: Spacings.xxxs,
+                bottom: Spacings.micro,
               ),
-              Row(children: _actions)
-            ],
-          ),
-        ),
-      ),
+              child: ActionButton(
+                iconData: FeatherIcons.chevronLeft,
+                onPressed: context.pop,
+                color: backgroundColor,
+              ),
+            )
+          : null,
+      actions: _actions,
     );
   }
 
