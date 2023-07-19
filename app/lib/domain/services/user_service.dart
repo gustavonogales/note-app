@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:note_app/domain/models/user.dart';
-import 'package:note_app/secondary/secondary.dart';
+import 'package:note_app/adapter/adapter.dart';
 
 import '../ports/user_service_port.dart';
 import 'dtos/user.dto.dart';

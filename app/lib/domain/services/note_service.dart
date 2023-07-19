@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:note_app/domain/models/note.dart';
-import 'package:note_app/secondary/secondary.dart';
+import 'package:note_app/adapter/adapter.dart';
 
 import '../ports/note_service_port.dart';
 import 'dtos/note.dto.dart';
