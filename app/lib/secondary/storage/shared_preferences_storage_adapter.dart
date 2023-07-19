@@ -18,7 +18,7 @@ final class SharedPreferencesStorageAdapter implements StoragePort {
   }
 
   @override
-  void save(String key, String value) async {
+  Future<void> save(String key, String value) async {
     await _sharedPref.setString(key, value);
   }
 

@@ -33,6 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  void _navigateToNewNote() {
+    context.push(Routes.note);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ReactionBuilder(
@@ -47,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () => context.push(Routes.note),
+          onPressed: _navigateToNewNote,
           enableFeedback: false,
           elevation: 3,
           backgroundColor: context.theme.colorScheme.primary,

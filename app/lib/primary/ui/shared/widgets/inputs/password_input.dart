@@ -2,8 +2,6 @@ import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/primary/ui/shared/shared.dart';
 
-import 'text_input.dart';
-
 class PasswordInput extends StatefulWidget {
   final IconData? prefixIcon;
   final String hintText;

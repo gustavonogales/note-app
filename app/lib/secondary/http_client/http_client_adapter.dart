@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:note_app/environment.dart';
+import 'package:note_app/secondary/http_client/interceptors/refresh_token_interceptor.dart';
 import 'interceptors/request_token_interceptor.dart';
 import 'models/http_send_exception.dart';
 import 'models/interceptor.dart';
@@ -22,10 +23,12 @@ final class HttpClientAdapter implements HttpClientPort {
   HttpClientAdapter(
     AppEnvironment environment,
     RequestTokenInterceptor requestTokenInterceptor,
+    RefreshTokenInterceptor refreshTokenInterceptor,
   ) {
     _baseUrl = environment.baseUrl;
     _client = http.Client();
     requestInterceptors.add(requestTokenInterceptor);
+    responseInterceptors.add(refreshTokenInterceptor);
   }
 
   String treatPath(String path) =>
@@ -38,6 +41,7 @@ final class HttpClientAdapter implements HttpClientPort {
     Map<dynamic, dynamic>? body,
     Map<String, String> headers = const {},
     String contentType = 'application/json',
+    bool avoidInterceptors = false,
   }) async {
     final httpRequest = _buildHttpRequest(
       to: to,
@@ -49,7 +53,8 @@ final class HttpClientAdapter implements HttpClientPort {
 
     var request = Request(
       url: httpRequest.url,
-      body: httpRequest.body,
+      body: body,
+      contentType: contentType,
       headers: httpRequest.headers,
       method: method,
       path: to,
@@ -69,8 +74,10 @@ final class HttpClientAdapter implements HttpClientPort {
       request: request,
     );
 
-    for (var interceptor in responseInterceptors) {
-      response = interceptor.interceptResponse(response);
+    if (!avoidInterceptors) {
+      for (var interceptor in responseInterceptors) {
+        response = await interceptor.interceptResponse(response);
+      }
     }
 
     // Client or Server Error
@@ -105,4 +112,14 @@ final class HttpClientAdapter implements HttpClientPort {
     }
     return request;
   }
+
+  @override
+  Future<Response> retry(Request request) => send(
+        method: request.method,
+        to: request.path,
+        body: request.body,
+        contentType: request.contentType,
+        headers: request.headers,
+        avoidInterceptors: true,
+      );
 }

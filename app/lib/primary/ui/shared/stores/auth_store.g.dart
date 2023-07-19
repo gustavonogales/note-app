@@ -9,21 +9,13 @@ part of 'auth_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthStore on _AuthStoreBase, Store {
-  late final _$isLoggedInAtom =
-      Atom(name: '_AuthStoreBase.isLoggedIn', context: context);
+  Computed<bool>? _$isSignedInComputed;
 
   @override
-  bool get isLoggedIn {
-    _$isLoggedInAtom.reportRead();
-    return super.isLoggedIn;
-  }
-
-  @override
-  set isLoggedIn(bool value) {
-    _$isLoggedInAtom.reportWrite(value, super.isLoggedIn, () {
-      super.isLoggedIn = value;
-    });
-  }
+  bool get isSignedIn =>
+      (_$isSignedInComputed ??= Computed<bool>(() => super.isSignedIn,
+              name: '_AuthStoreBase.isSignedIn'))
+          .value;
 
   late final _$userAtom = Atom(name: '_AuthStoreBase.user', context: context);
 
@@ -68,8 +60,8 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   @override
   String toString() {
     return '''
-isLoggedIn: ${isLoggedIn},
-user: ${user}
+user: ${user},
+isSignedIn: ${isSignedIn}
     ''';
   }
 }

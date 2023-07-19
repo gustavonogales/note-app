@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:note_app/domain/services/user_service.dart';
 
 import '../../storage/ports/storage_port.dart';
 import '../models/models.dart';
@@ -13,7 +14,7 @@ class RequestTokenInterceptor extends Interceptor {
 
   @override
   Request interceptRequest(Request request) {
-    final token = _storagePort.get('token');
+    final token = _storagePort.get(UserService.tokenKey);
     if (token != null) {
       request.headers.addAll({'Authorization': 'Bearer $token'});
     }
@@ -21,5 +22,6 @@ class RequestTokenInterceptor extends Interceptor {
   }
 
   @override
-  Response interceptResponse(Response response) => response;
+  Future<Response> interceptResponse(Response response) =>
+      Future.value(response);
 }

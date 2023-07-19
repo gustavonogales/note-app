@@ -19,4 +19,8 @@ abstract interface class UserServicePort {
     required String email,
     required String password,
   });
+
+  User? signedUser();
+
+  Future<void> refreshToken();
 }

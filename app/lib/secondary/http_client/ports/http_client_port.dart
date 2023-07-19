@@ -1,5 +1,4 @@
-import '../models/method.dart';
-import '../models/response.dart';
+import '../models/models.dart';
 
 abstract interface class HttpClientPort {
   Future<Response> send({
@@ -8,5 +7,8 @@ abstract interface class HttpClientPort {
     Map<dynamic, dynamic>? body,
     Map<String, String> headers,
     String contentType,
+    bool avoidInterceptors,
   });
+
+  Future<Response> retry(Request request);
 }

@@ -10,13 +10,6 @@
 include: package:flutter_lints/flutter.yaml
 
 linter:
-  always_declare_return_types: true
-  always_specify_types: true
-  annotate_overrides: true
-  avoid_annotating_with_dynamic: true
-  always_put_required_named_parameters_first: true
-  avoid_multiple_declarations_per_line: true
-  lines_longer_than_80_chars: true
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
   # included above or to enable additional rules. A list of all available lints
@@ -34,6 +27,10 @@ linter:
     avoid_types_as_parameter_names: true
     avoid_print: true
     prefer_single_quotes: true
+    annotate_overrides: true
+    avoid_annotating_with_dynamic: true
+    always_put_required_named_parameters_first: true
+    avoid_multiple_declarations_per_line: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

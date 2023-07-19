@@ -1,7 +1,6 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/container.dart';
 import 'package:note_app/primary/ui/shared/shared.dart';
@@ -20,7 +19,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late final AuthStore store;
   late final ProfileController controller;
-  late final ReactionDisposer loggedInDisposer;
   late final ReactionDisposer userChangedDisposer;
 
   @override
@@ -33,15 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    loggedInDisposer = reaction(
-      (_) => store.isLoggedIn,
-      (isLoggedIn) {
-        if (!isLoggedIn) {
-          context.go(Routes.signIn);
-        }
-      },
-    );
 
     userChangedDisposer = reaction((_) => controller.messageText, (result) {
       if (result != null) {
@@ -62,7 +51,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void dispose() {
-    loggedInDisposer();
     userChangedDisposer();
     super.dispose();
   }

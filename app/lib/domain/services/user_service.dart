@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:note_app/domain/models/user.dart';
 import 'package:note_app/secondary/secondary.dart';
@@ -7,6 +8,10 @@ import 'dtos/user.dto.dart';
 
 @Singleton(as: UserServicePort)
 final class UserService implements UserServicePort {
+  static const tokenKey = 'token';
+  static const _refreshTokenKey = 'refreshToken';
+  static const _userKey = 'user';
+
   late HttpClientPort _httpAdapter;
   late StoragePort _storageAdapter;
 
@@ -24,7 +29,12 @@ final class UserService implements UserServicePort {
     );
 
     final user = UserDto.fromJson(response.body['user']);
-    _storageAdapter.save('token', response.body['token']);
+
+    await _save(
+      token: response.body['token'],
+      refreshToken: response.body['refreshToken'],
+      user: user,
+    );
 
     return user;
   }
@@ -68,5 +78,44 @@ final class UserService implements UserServicePort {
     );
 
     return UserDto.fromJson(response.body);
+  }
+
+  @override
+  User? signedUser() {
+    final payload = _storageAdapter.get(_userKey);
+    if (payload == null) return null;
+    return UserDto.fromJson(jsonDecode(payload));
+  }
+
+  @override
+  Future<void> refreshToken() async {
+    final refreshToken = _storageAdapter.get(_refreshTokenKey);
+
+    final response = await _httpAdapter.send(
+      to: '/session/refresh',
+      method: Method.post,
+      body: {'refreshToken': refreshToken},
+      avoidInterceptors: true,
+    );
+
+    final user = UserDto.fromJson(response.body['user']);
+
+    await _save(
+      token: response.body['token'],
+      refreshToken: response.body['refreshToken'],
+      user: user,
+    );
+  }
+
+  Future<void> _save({
+    required String token,
+    required String refreshToken,
+    required User user,
+  }) async {
+    await Future.wait([
+      _storageAdapter.save(tokenKey, token),
+      _storageAdapter.save(_refreshTokenKey, refreshToken),
+      _storageAdapter.save(_userKey, jsonEncode(UserDto.toJson(user))),
+    ]);
   }
 }

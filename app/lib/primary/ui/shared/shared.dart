@@ -10,3 +10,4 @@ export './tokens/spacings.dart';
 export './tokens/assets.dart';
 export './tokens/note_colors.dart';
 export './view_models/note.dart';
+export './screens/splash_screen.dart';

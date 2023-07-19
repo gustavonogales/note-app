@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unused_element
+
 import 'package:mobx/mobx.dart';
 
 part 'field_form_state.g.dart';
@@ -7,12 +9,12 @@ class FieldFormState = _FieldFormStateBase with _$FieldFormState;
 abstract class _FieldFormStateBase with Store {
   final bool validateOnChange;
   late final String Function(String value)? _validate;
-  late final FieldFormState? _compareField;
+  final FieldFormState? compareField;
   final String Function(String compareValue, String value)? compare;
 
   _FieldFormStateBase({
     String Function(String value)? validate,
-    FieldFormState? compareField,
+    this.compareField,
     this.compare,
     this.validateOnChange = false,
   }) {
@@ -21,7 +23,6 @@ abstract class _FieldFormStateBase with Store {
         compareField != null && compare != null,
         'Compare function needs compareField',
       );
-      _compareField = compareField;
 
       reaction(
         (_) => compareField!.value,
@@ -56,7 +57,7 @@ abstract class _FieldFormStateBase with Store {
   @action
   void compareWith() {
     if (compare != null) {
-      error = compare?.call(_compareField!.value, value) ?? error;
+      error = compare?.call(compareField!.value, value) ?? error;
     }
   }
 

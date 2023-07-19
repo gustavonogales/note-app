@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -41,6 +43,7 @@ abstract class _ViewNote with Store {
 
   _ViewNote();
 
+  // ignore: unused_element
   _ViewNote.fromModel(Note note) {
     id = note.id;
     userId = note.userId;

@@ -3,7 +3,6 @@ export 'texts/body_text.dart';
 export 'buttons/button.dart';
 export 'buttons/action_button.dart';
 export 'buttons/touchable_opacity.dart';
-export 'spinner/spinner.dart';
 export 'inputs/text_input.dart';
 export 'inputs/password_input.dart';
 export 'app_bar/top_bar.dart';

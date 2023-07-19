@@ -6,4 +6,9 @@ final class HttpSendException implements Exception {
     required this.statusCode,
     required this.message,
   });
+
+  @override
+  String toString() {
+    return '[HttpSendException] - $message';
+  }
 }

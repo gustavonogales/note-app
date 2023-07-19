@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:mobx/mobx.dart';
 import 'package:note_app/container.dart';
 import 'package:note_app/domain/domain.dart';

@@ -18,13 +18,14 @@ abstract class Routes {
   static const home = HomeScreen.route;
   static const profile = ProfileScreen.route;
   static const note = NoteScreen.route;
+  static const splash = SplashScreen.route;
 }
 
-final _rootKey = GlobalKey<NavigatorState>();
+final navigationKey = GlobalKey<NavigatorState>();
 
 final _nestedKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
-  navigatorKey: _rootKey,
+  navigatorKey: navigationKey,
   routes: [
     ShellRoute(
       navigatorKey: _nestedKey,
@@ -37,6 +38,12 @@ final router = GoRouter(
         );
       },
       routes: [
+        GoRoute(
+          path: SplashScreen.route,
+          pageBuilder: (context, state) => BottomToTopTransition(
+            child: const SplashScreen(),
+          ),
+        ),
         GoRoute(
           path: SignInScreen.route,
           pageBuilder: (context, state) => BottomToTopTransition(
@@ -52,7 +59,7 @@ final router = GoRouter(
         GoRoute(
           path: SignUpScreen.route,
           pageBuilder: (context, state) => RightToLeftTransition(
-            child: SignUpScreen(),
+            child: const SignUpScreen(),
           ),
         ),
         GoRoute(

@@ -10,7 +10,7 @@ import 'package:note_app/primary/ui/shared/shared.dart';
 import '../controller/sign_in_controller.dart';
 
 class SignInScreen extends StatefulWidget {
-  static const String route = '/';
+  static const String route = '/sign-in';
   const SignInScreen({super.key});
 
   @override

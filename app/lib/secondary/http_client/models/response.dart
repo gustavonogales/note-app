@@ -12,4 +12,9 @@ final class Response {
     required this.request,
     this.headers = const {},
   });
+
+  @override
+  String toString() {
+    return '$statusCode [${request.method.name.toUpperCase()}] - ${request.url}';
+  }
 }
