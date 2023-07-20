@@ -22,7 +22,10 @@ export class NoteRepository implements NoteRepositoryInterface {
   }
 
   async findByUserId(user_id: string): Promise<Note[]> {
-    const notes = await this.repository.find({ where: { user_id } });
+    const notes = await this.repository.find({
+      where: { user_id },
+      order: { created_at: 'ASC' },
+    });
 
     const response = notes.map((note) => note.toNote());
     return response;
