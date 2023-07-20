@@ -59,10 +59,11 @@ export class NoteController {
     await this.noteService.delete(id);
   }
 
-  @Patch()
+  @Patch(':id')
   async update(@Request() request: any): Promise<Note> {
     const user_id = request.user.sub;
-    const { id, title, text, color } = request.body;
+    const { title, text, color } = request.body;
+    const { id } = request.params;
 
     const updateNote = {
       user_id,

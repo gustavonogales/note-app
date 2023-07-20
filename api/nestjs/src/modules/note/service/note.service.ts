@@ -48,9 +48,9 @@ export class NoteService implements NoteServiceInterface {
     const noteUpdated = new Note(
       note.id,
       note.user_id,
-      note.title,
-      note.text,
-      note.color,
+      note.title ?? noteFound.title,
+      note.text ?? noteFound.text,
+      note.color ?? noteFound.color,
       new Date(),
     );
 
