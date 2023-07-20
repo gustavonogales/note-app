@@ -1,0 +1,81 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:go_router/go_router.dart';
+import 'package:injectable/injectable.dart';
+import 'package:mobx/mobx.dart';
+import 'package:note_app/domain/domain.dart';
+
+import '../routes/routes.dart';
+import '../screens/profile/profile_screen_controller.dart';
+import '../screens/sign_in/sign_in_screen_controller.dart';
+import '../screens/sign_up/sign_up_screen_controller.dart';
+
+part 'user_store.g.dart';
+
+@singleton
+class UserStore = _UserStoreBase with _$UserStore;
+
+abstract class _UserStoreBase with Store {
+  late final UserServicePort _userService;
+  late SignInScreenController signInController;
+  late SignUpScreenController signUpController;
+
+  _UserStoreBase(this._userService) {
+    final signedUser = _userService.signedUser();
+
+    signInController = SignInScreenController(this as UserStore);
+    signUpController = SignUpScreenController(this as UserStore);
+
+    if (signedUser != null) setUser(signedUser);
+
+    reaction((_) => user, (user) {
+      if (user == null) {
+        GoRouter.of(navigationKey.currentState!.context).go(Routes.signIn);
+      }
+    });
+  }
+
+  @observable
+  User? user;
+
+  @computed
+  bool get isSignedIn => user != null;
+
+  @action
+  void setUser(User value) {
+    user = value;
+  }
+
+  @action
+  void signOut() {
+    _userService.signOut();
+    user = null;
+  }
+
+  Future<void> signIn({required String email, required String password}) async {
+    user = await _userService.signIn(email: email, password: password);
+  }
+
+  Future<void> update({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    user = await _userService.update(
+      name: name,
+      email: email,
+      password: password,
+    );
+  }
+
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+  }) =>
+      _userService.signUp(
+        name: name,
+        email: email,
+        password: password,
+      );
+}

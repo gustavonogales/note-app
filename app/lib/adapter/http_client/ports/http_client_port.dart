@@ -11,4 +11,7 @@ abstract interface class HttpClientPort {
   });
 
   Future<Response> retry(Request request);
+
+  List<Interceptor> requestInterceptors = [];
+  List<Interceptor> responseInterceptors = [];
 }

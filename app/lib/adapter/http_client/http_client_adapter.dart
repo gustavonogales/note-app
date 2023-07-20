@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:note_app/environment.dart';
-import 'package:note_app/adapter/http_client/interceptors/refresh_token_interceptor.dart';
-import 'interceptors/request_token_interceptor.dart';
 import 'models/http_send_exception.dart';
 import 'models/interceptor.dart';
 import 'models/method.dart';
@@ -17,18 +15,17 @@ final class HttpClientAdapter implements HttpClientPort {
   late final http.Client _client;
   late String _baseUrl;
 
+  @override
   List<Interceptor> requestInterceptors = [];
+
+  @override
   List<Interceptor> responseInterceptors = [];
 
   HttpClientAdapter(
     AppEnvironment environment,
-    RequestTokenInterceptor requestTokenInterceptor,
-    RefreshTokenInterceptor refreshTokenInterceptor,
   ) {
     _baseUrl = environment.baseUrl;
     _client = http.Client();
-    requestInterceptors.add(requestTokenInterceptor);
-    responseInterceptors.add(refreshTokenInterceptor);
   }
 
   String treatPath(String path) =>

@@ -25,4 +25,31 @@ final class NoteService implements NoteServicePort {
 
     return notes;
   }
+
+  @override
+  Future<void> save({
+    required String title,
+    required String text,
+    required String color,
+  }) async {
+    await _httpAdapter.send(
+      to: '/note',
+      method: Method.post,
+      body: {
+        'title': title,
+        'text': text,
+        'color': color,
+      },
+    );
+  }
+
+  @override
+  Future<void> update({
+    required String title,
+    required String text,
+    required String color,
+  }) {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }
