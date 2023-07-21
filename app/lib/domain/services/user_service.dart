@@ -77,7 +77,9 @@ final class UserService implements UserServicePort {
       },
     );
 
-    return UserDto.fromJson(response.body);
+    final user = UserDto.fromJson(response.body);
+    _storageAdapter.save(_userKey, jsonEncode(UserDto.toJson(user)));
+    return user;
   }
 
   @override

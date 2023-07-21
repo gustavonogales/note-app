@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:typed_data';
+
 import 'package:mobx/mobx.dart';
 import 'package:note_app/ui/stores/utils/field_form_state.dart';
 
@@ -70,6 +72,15 @@ abstract class _ProfileScreenControllerBase with Store {
 
   @observable
   bool successfull = false;
+
+  @observable
+  Uint8List? avatar;
+
+  @action
+  setAvatar(Uint8List value) {
+    avatar = value;
+    //TODO MULTIPART
+  }
 
   @action
   Future<void> updateProfile() async {

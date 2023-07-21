@@ -65,6 +65,22 @@ mixin _$ProfileScreenController on _ProfileScreenControllerBase, Store {
     });
   }
 
+  late final _$avatarAtom =
+      Atom(name: '_ProfileScreenControllerBase.avatar', context: context);
+
+  @override
+  Uint8List? get avatar {
+    _$avatarAtom.reportRead();
+    return super.avatar;
+  }
+
+  @override
+  set avatar(Uint8List? value) {
+    _$avatarAtom.reportWrite(value, super.avatar, () {
+      super.avatar = value;
+    });
+  }
+
   late final _$updateProfileAsyncAction = AsyncAction(
       '_ProfileScreenControllerBase.updateProfile',
       context: context);
@@ -74,12 +90,27 @@ mixin _$ProfileScreenController on _ProfileScreenControllerBase, Store {
     return _$updateProfileAsyncAction.run(() => super.updateProfile());
   }
 
+  late final _$_ProfileScreenControllerBaseActionController =
+      ActionController(name: '_ProfileScreenControllerBase', context: context);
+
+  @override
+  dynamic setAvatar(Uint8List value) {
+    final _$actionInfo = _$_ProfileScreenControllerBaseActionController
+        .startAction(name: '_ProfileScreenControllerBase.setAvatar');
+    try {
+      return super.setAvatar(value);
+    } finally {
+      _$_ProfileScreenControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 messageText: ${messageText},
 successfull: ${successfull},
+avatar: ${avatar},
 hasError: ${hasError}
     ''';
   }

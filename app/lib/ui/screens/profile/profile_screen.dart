@@ -1,6 +1,7 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/container.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
@@ -28,6 +29,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     controller = ProfileScreenController(store.userStore);
 
     super.initState();
+  }
+
+  Future<void> pickImage() async {
+    final imagePicker = ImagePicker();
+    final file = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      final bytes = await file.readAsBytes();
+      controller.setAvatar(bytes);
+    }
   }
 
   @override
@@ -62,9 +72,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         ProfileBadge(
                           name: controller.name.value,
+                          bytes: controller.avatar,
                           avatarUrl: store.userStore.user?.avatarUrl,
                           size: 140,
-                          onPressed: () {},
+                          onPressed: pickImage,
                         ),
                         const SizedBox(height: Spacings.xxs),
                         Heading(
