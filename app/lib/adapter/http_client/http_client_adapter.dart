@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:note_app/environment.dart';
@@ -39,7 +39,7 @@ final class HttpClientAdapter implements HttpClientPort {
     required String to,
     required Method method,
     Map<dynamic, dynamic>? body,
-    Map<String, Uint8List>? files,
+    Map<String, File>? files,
     Map<String, String> headers = const {},
     ContentType contentType = ContentType.json,
     bool avoidInterceptors = false,
@@ -112,7 +112,7 @@ final class HttpClientAdapter implements HttpClientPort {
     required Method method,
     required Map<String, String> headers,
     Map<dynamic, dynamic>? body,
-    Map<String, dynamic>? files,
+    Map<String, File>? files,
   }) {
     var request = http.MultipartRequest(method.name, uriParser(to));
     request.headers.addAll(headers);
@@ -129,13 +129,16 @@ final class HttpClientAdapter implements HttpClientPort {
 
     if (files != null) {
       for (var i = 0; i < files.keys.length; i++) {
-        request.files.add(
-          http.MultipartFile.fromBytes(
-            files.keys.toList()[i],
-            files.values.toList()[i],
-            filename: files.keys.toList()[i],
-          ),
-        );
+        final file = files.values.toList()[i];
+        final splittedFilename = file.path.split('/');
+        final filename = '${splittedFilename.first}.${splittedFilename.last}';
+
+        request.files.add(http.MultipartFile(
+          files.keys.toList()[i],
+          file.readAsBytes().asStream(),
+          file.lengthSync(),
+          filename: filename,
+        ));
       }
     }
     return request;

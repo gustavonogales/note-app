@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -35,8 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final imagePicker = ImagePicker();
     final file = await imagePicker.pickImage(source: ImageSource.gallery);
     if (file != null) {
-      final bytes = await file.readAsBytes();
-      controller.setAvatar(bytes);
+      controller.setAvatar(File(file.path));
     }
   }
 
@@ -72,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         ProfileBadge(
                           name: controller.name.value,
-                          bytes: controller.avatar,
+                          file: controller.avatar,
                           avatarUrl: store.userStore.user?.avatarUrl,
                           size: 140,
                           onPressed: pickImage,

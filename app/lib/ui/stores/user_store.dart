@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -81,11 +82,11 @@ abstract class _UserStoreBase with Store {
 
   Future<void> updateAvatar({
     required String filename,
-    required Uint8List bytes,
+    required File file,
   }) async {
     user = await _userService.updateAvatar(
       filename: filename,
-      bytes: bytes,
+      file: file,
     );
   }
 }

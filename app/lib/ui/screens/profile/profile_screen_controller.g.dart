@@ -69,13 +69,13 @@ mixin _$ProfileScreenController on _ProfileScreenControllerBase, Store {
       Atom(name: '_ProfileScreenControllerBase.avatar', context: context);
 
   @override
-  Uint8List? get avatar {
+  File? get avatar {
     _$avatarAtom.reportRead();
     return super.avatar;
   }
 
   @override
-  set avatar(Uint8List? value) {
+  set avatar(File? value) {
     _$avatarAtom.reportWrite(value, super.avatar, () {
       super.avatar = value;
     });
@@ -94,11 +94,11 @@ mixin _$ProfileScreenController on _ProfileScreenControllerBase, Store {
       ActionController(name: '_ProfileScreenControllerBase', context: context);
 
   @override
-  dynamic setAvatar(Uint8List value) {
+  dynamic setAvatar(File file) {
     final _$actionInfo = _$_ProfileScreenControllerBaseActionController
         .startAction(name: '_ProfileScreenControllerBase.setAvatar');
     try {
-      return super.setAvatar(value);
+      return super.setAvatar(file);
     } finally {
       _$_ProfileScreenControllerBaseActionController.endAction(_$actionInfo);
     }

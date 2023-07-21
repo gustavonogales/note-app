@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 import '../domain.dart';
 
@@ -28,6 +28,6 @@ abstract interface class UserServicePort {
 
   Future<User> updateAvatar({
     required String filename,
-    required Uint8List bytes,
+    required File file,
   });
 }

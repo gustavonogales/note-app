@@ -1,4 +1,5 @@
-import 'dart:typed_data';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
@@ -6,7 +7,7 @@ import 'package:note_app/ui/widgets/widgets.dart';
 class ProfileBadge extends StatelessWidget {
   final String name;
   final String? avatarUrl;
-  final Uint8List? bytes;
+  final File? file;
   final double size;
   final VoidCallback onPressed;
 
@@ -14,7 +15,7 @@ class ProfileBadge extends StatelessWidget {
     required this.name,
     required this.onPressed,
     this.avatarUrl,
-    this.bytes,
+    this.file,
     this.size = 40,
     super.key,
   });
@@ -33,8 +34,8 @@ class ProfileBadge extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(size)),
         child: Image(
-          image: bytes != null
-              ? MemoryImage(bytes!) as ImageProvider
+          image: file != null
+              ? FileImage(file!) as ImageProvider
               : NetworkImage(correctUrl ?? ''),
           fit: BoxFit.cover,
           height: size,

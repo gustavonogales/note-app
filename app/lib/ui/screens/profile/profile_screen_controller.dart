@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:mobx/mobx.dart';
 import 'package:note_app/ui/stores/utils/field_form_state.dart';
@@ -74,12 +74,12 @@ abstract class _ProfileScreenControllerBase with Store {
   bool successfull = false;
 
   @observable
-  Uint8List? avatar;
+  File? avatar;
 
   @action
-  setAvatar(Uint8List value) {
-    avatar = value;
-    _parentStore.updateAvatar(filename: 'avatar', bytes: value);
+  setAvatar(File file) {
+    avatar = file;
+    _parentStore.updateAvatar(filename: 'avatar', file: file);
   }
 
   @action
