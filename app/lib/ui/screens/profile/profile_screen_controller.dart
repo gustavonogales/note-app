@@ -79,7 +79,7 @@ abstract class _ProfileScreenControllerBase with Store {
   @action
   setAvatar(Uint8List value) {
     avatar = value;
-    //TODO MULTIPART
+    _parentStore.updateAvatar(filename: 'avatar', bytes: value);
   }
 
   @action

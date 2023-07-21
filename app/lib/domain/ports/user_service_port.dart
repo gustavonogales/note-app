@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../domain.dart';
 
 abstract interface class UserServicePort {
@@ -23,4 +25,9 @@ abstract interface class UserServicePort {
   User? signedUser();
 
   Future<void> refreshToken();
+
+  Future<User> updateAvatar({
+    required String filename,
+    required Uint8List bytes,
+  });
 }

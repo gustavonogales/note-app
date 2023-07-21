@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../models/models.dart';
 
 abstract interface class HttpClientPort {
@@ -5,8 +7,9 @@ abstract interface class HttpClientPort {
     required String to,
     required Method method,
     Map<dynamic, dynamic>? body,
+    Map<String, Uint8List>? files,
     Map<String, String> headers,
-    String contentType,
+    ContentType contentType,
     bool avoidInterceptors,
   });
 

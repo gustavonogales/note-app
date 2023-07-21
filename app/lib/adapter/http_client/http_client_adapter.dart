@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:note_app/environment.dart';
@@ -7,6 +7,7 @@ import 'models/http_send_exception.dart';
 import 'models/interceptor.dart';
 import 'models/method.dart';
 import 'models/request.dart';
+import 'models/content_type.dart';
 import 'models/response.dart';
 import 'ports/http_client_port.dart';
 
@@ -31,22 +32,38 @@ final class HttpClientAdapter implements HttpClientPort {
   String treatPath(String path) =>
       path.substring(0, 1) == '/' ? path.substring(1) : path;
 
+  Uri uriParser(String to) => Uri.parse('$_baseUrl/${treatPath(to)}');
+
   @override
   Future<Response> send({
     required String to,
     required Method method,
     Map<dynamic, dynamic>? body,
+    Map<String, Uint8List>? files,
     Map<String, String> headers = const {},
-    String contentType = 'application/json',
+    ContentType contentType = ContentType.json,
     bool avoidInterceptors = false,
   }) async {
-    final httpRequest = _buildHttpRequest(
-      to: to,
-      method: method,
-      body: body,
-      contentType: contentType,
-      headers: headers,
-    );
+    http.BaseRequest httpRequest;
+
+    switch (contentType) {
+      case ContentType.multipart:
+        httpRequest = _buildMultipartFormData(
+          to: to,
+          method: method,
+          body: body,
+          files: files,
+          headers: headers,
+        );
+      default:
+        httpRequest = _buildHttpRequest(
+          to: to,
+          method: method,
+          body: body,
+          contentType: contentType.name,
+          headers: headers,
+        );
+    }
 
     var request = Request(
       url: httpRequest.url,
@@ -90,6 +107,40 @@ final class HttpClientAdapter implements HttpClientPort {
     return response;
   }
 
+  http.BaseRequest _buildMultipartFormData({
+    required String to,
+    required Method method,
+    required Map<String, String> headers,
+    Map<dynamic, dynamic>? body,
+    Map<String, dynamic>? files,
+  }) {
+    var request = http.MultipartRequest(method.name, uriParser(to));
+    request.headers.addAll(headers);
+    request.headers.addEntries([
+      const MapEntry('Content-Type', 'multipart/form-data'),
+    ]);
+
+    if (body != null) {
+      for (var i = 0; i < body.keys.length; i++) {
+        request.fields[body.keys.toList()[i]] =
+            body.values.toList()[i].toString();
+      }
+    }
+
+    if (files != null) {
+      for (var i = 0; i < files.keys.length; i++) {
+        request.files.add(
+          http.MultipartFile.fromBytes(
+            files.keys.toList()[i],
+            files.values.toList()[i],
+            filename: files.keys.toList()[i],
+          ),
+        );
+      }
+    }
+    return request;
+  }
+
   http.Request _buildHttpRequest({
     required String to,
     required Method method,
@@ -97,10 +148,7 @@ final class HttpClientAdapter implements HttpClientPort {
     required String contentType,
     Map<dynamic, dynamic>? body,
   }) {
-    var request = http.Request(
-      method.name,
-      Uri.parse('$_baseUrl/${treatPath(to)}'),
-    );
+    var request = http.Request(method.name, uriParser(to));
     request.headers.addAll(headers);
     request.headers.addEntries([MapEntry('Content-Type', contentType)]);
 

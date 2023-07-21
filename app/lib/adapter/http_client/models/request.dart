@@ -1,11 +1,11 @@
-import 'method.dart';
+import 'models.dart';
 
 final class Request {
   final Uri url;
   final String path;
   final Method method;
   final Map<String, String> headers;
-  final String contentType;
+  final ContentType contentType;
   final Map? body;
 
   const Request({

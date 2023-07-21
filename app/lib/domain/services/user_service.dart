@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:injectable/injectable.dart';
 import 'package:note_app/domain/models/user.dart';
 import 'package:note_app/adapter/adapter.dart';
@@ -119,5 +120,22 @@ final class UserService implements UserServicePort {
       _storageAdapter.save(_refreshTokenKey, refreshToken),
       _storageAdapter.save(_userKey, jsonEncode(UserDto.toJson(user))),
     ]);
+  }
+
+  @override
+  Future<User> updateAvatar({
+    required String filename,
+    required Uint8List bytes,
+  }) async {
+    final response = await _httpAdapter.send(
+      to: '/user/avatar',
+      method: Method.patch,
+      contentType: ContentType.multipart,
+      files: {filename: bytes},
+    );
+
+    final user = UserDto.fromJson(response.body);
+    _storageAdapter.save(_userKey, jsonEncode(UserDto.toJson(user)));
+    return user;
   }
 }
