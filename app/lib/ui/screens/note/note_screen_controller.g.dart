@@ -89,6 +89,14 @@ mixin _$NoteScreenController on _NoteScreenControllerBase, Store {
     });
   }
 
+  late final _$saveAsyncAction =
+      AsyncAction('_NoteScreenControllerBase.save', context: context);
+
+  @override
+  Future<void> save() {
+    return _$saveAsyncAction.run(() => super.save());
+  }
+
   late final _$_NoteScreenControllerBaseActionController =
       ActionController(name: '_NoteScreenControllerBase', context: context);
 
@@ -142,17 +150,6 @@ mixin _$NoteScreenController on _NoteScreenControllerBase, Store {
         .startAction(name: '_NoteScreenControllerBase.changeColor');
     try {
       return super.changeColor(color);
-    } finally {
-      _$_NoteScreenControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void save() {
-    final _$actionInfo = _$_NoteScreenControllerBaseActionController
-        .startAction(name: '_NoteScreenControllerBase.save');
-    try {
-      return super.save();
     } finally {
       _$_NoteScreenControllerBaseActionController.endAction(_$actionInfo);
     }

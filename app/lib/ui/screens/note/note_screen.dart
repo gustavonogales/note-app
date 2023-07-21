@@ -108,11 +108,6 @@ class _NoteScreenState extends State<NoteScreen> {
                         onPressed: controller.cancel,
                         color: controller.note.color.uiColor,
                       ),
-                    ActionButton(
-                      iconData: FeatherIcons.trash,
-                      onPressed: () {},
-                      color: controller.note.color.uiColor,
-                    ),
                   ],
                 ),
                 body: SafeArea(

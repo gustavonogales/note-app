@@ -9,9 +9,9 @@ abstract interface class NoteServicePort {
     required String color,
   });
 
-  Future<void> update({
-    required String title,
-    required String text,
-    required String color,
-  });
+  Future<void> update(Note note);
+
+  Future<Note> create(Note note);
+
+  Future<void> deleteMany(List<String> ids);
 }

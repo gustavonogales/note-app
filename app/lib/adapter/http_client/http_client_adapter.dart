@@ -66,7 +66,7 @@ final class HttpClientAdapter implements HttpClientPort {
 
     var response = Response(
       statusCode: httpResponse.statusCode,
-      body: jsonDecode(httpResponse.body),
+      body: httpResponse.body.isNotEmpty ? jsonDecode(httpResponse.body) : '',
       headers: httpResponse.headers,
       request: request,
     );

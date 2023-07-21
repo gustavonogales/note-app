@@ -38,6 +38,10 @@ export class NoteService implements NoteServiceInterface {
     await this.noteRepository.delete(id);
   }
 
+  async deleteMany(ids: string[]): Promise<void> {
+    await this.noteRepository.deleteMany(ids);
+  }
+
   async update(note: UpdateNote): Promise<Note> {
     const noteFound = await this.noteRepository.findById(note.id);
 

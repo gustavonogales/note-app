@@ -4,7 +4,7 @@ import 'dart:ui';
 import '../extensions/color_utils_extension.dart';
 
 enum NoteColor {
-  sunset(hexColor: '#FFCC80', name: 'Sunset'),
+  aquamarine(hexColor: '#A7FFC5', name: 'Aquamarine'),
   melon(hexColor: '#FFAB91', name: 'Melon'),
   mindaro(hexColor: '#E6EE9B', name: 'Mindaro'),
   nonPhotoBlue(hexColor: '#80DEEA', name: 'Non Photo blue'),

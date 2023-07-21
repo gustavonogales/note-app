@@ -76,6 +76,22 @@ mixin _$ViewNote on _ViewNote, Store {
     });
   }
 
+  late final _$selectedAtom =
+      Atom(name: '_ViewNote.selected', context: context);
+
+  @override
+  bool get selected {
+    _$selectedAtom.reportRead();
+    return super.selected;
+  }
+
+  @override
+  set selected(bool value) {
+    _$selectedAtom.reportWrite(value, super.selected, () {
+      super.selected = value;
+    });
+  }
+
   late final _$updatedAtAtom =
       Atom(name: '_ViewNote.updatedAt', context: context);
 
@@ -144,12 +160,35 @@ mixin _$ViewNote on _ViewNote, Store {
   }
 
   @override
+  void setSelected(bool value) {
+    final _$actionInfo =
+        _$_ViewNoteActionController.startAction(name: '_ViewNote.setSelected');
+    try {
+      return super.setSelected(value);
+    } finally {
+      _$_ViewNoteActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleSelected() {
+    final _$actionInfo = _$_ViewNoteActionController.startAction(
+        name: '_ViewNote.toggleSelected');
+    try {
+      return super.toggleSelected();
+    } finally {
+      _$_ViewNoteActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 id: ${id},
 userId: ${userId},
 title: ${title},
 text: ${text},
+selected: ${selected},
 updatedAt: ${updatedAt},
 color: ${color},
 key: ${key}

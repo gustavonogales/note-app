@@ -6,7 +6,6 @@ import 'package:mobx/mobx.dart';
 import 'package:note_app/domain/domain.dart';
 
 import '../routes/routes.dart';
-import '../screens/profile/profile_screen_controller.dart';
 import '../screens/sign_in/sign_in_screen_controller.dart';
 import '../screens/sign_up/sign_up_screen_controller.dart';
 

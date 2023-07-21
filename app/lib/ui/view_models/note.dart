@@ -24,6 +24,9 @@ abstract class _ViewNote with Store {
   String text = '';
 
   @observable
+  bool selected = false;
+
+  @observable
   String updatedAt = DateTime.now().toIso8601String();
 
   @observable
@@ -38,8 +41,14 @@ abstract class _ViewNote with Store {
   @action
   void setText(String value) => text = value;
 
+  @action
+  void setSelected(bool value) => selected = value;
+
+  @action
+  void toggleSelected() => selected = !selected;
+
   @computed
-  Key get key => Key('$id.$title.$text.${color.hexColor}.$updatedAt');
+  Key get key => Key('$id.$title.$text.${color.hexColor}');
 
   _ViewNote();
 

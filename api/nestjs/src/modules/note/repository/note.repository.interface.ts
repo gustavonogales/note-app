@@ -6,5 +6,6 @@ export default interface NoteRepositoryInterface {
   findByUserId(user_id: string): Promise<Note[]>;
   findById(id: string): Promise<Note | undefined>;
   delete(id: string): Promise<void>;
+  deleteMany(ids: string[]): Promise<void>;
   save(note: Note): Promise<Note>;
 }

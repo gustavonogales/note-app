@@ -59,6 +59,12 @@ export class NoteController {
     await this.noteService.delete(id);
   }
 
+  @Delete()
+  async deleteMany(@Request() request: any): Promise<void> {
+    const { ids } = request.body;
+    await this.noteService.deleteMany(ids);
+  }
+
   @Patch(':id')
   async update(@Request() request: any): Promise<Note> {
     const user_id = request.user.sub;

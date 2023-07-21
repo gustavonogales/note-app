@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:note_app/domain/domain.dart';
 import 'package:note_app/ui/stores/stores.dart';
 import 'package:note_app/ui/utils/utils.dart';
 
@@ -74,16 +73,22 @@ abstract class _NoteScreenControllerBase with Store {
   @action
   void changeColor(NoteColor color) {
     note.setColor(color);
-    //TODO: send patch
+    _parentStore.update(note);
   }
 
   @action
-  void save() {
+  Future<void> save() async {
     try {
       editMode = false;
       note.setTitle(titleController.text);
       note.setText(textController.text);
       note.updatedAt = DateTime.now().toIso8601String();
+
+      if (isNewNote) {
+        await _parentStore.create(note);
+      } else {
+        await _parentStore.update(note);
+      }
     } catch (_) {
       messageText = isNewNote
           ? 'Error to create new note, try again'

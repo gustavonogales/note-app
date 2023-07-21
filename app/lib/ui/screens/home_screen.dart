@@ -9,7 +9,6 @@ import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/routes/routes.dart';
 import 'package:note_app/ui/stores/stores.dart';
 import 'package:note_app/ui/utils/utils.dart';
-import 'package:note_app/ui/view_models/note.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
 
 import '../../container.dart';
@@ -35,11 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _navigateToNewNote() {
     noteStore.setSelectedNote(null);
-    context.push(Routes.note);
-  }
-
-  void _navigateToNote(ViewNote note) {
-    noteStore.setSelectedNote(note);
     context.push(Routes.note);
   }
 
@@ -72,13 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: TopBar(
             titleText: 'Notes',
             actions: [
+              if (noteStore.deleteMode)
+                ActionButton(
+                  iconData: FeatherIcons.trash,
+                  onPressed: noteStore.delete,
+                ),
               ActionButton(
                 iconData: store.themeStore.useLightMode
                     ? FeatherIcons.moon
                     : FeatherIcons.sun,
                 onPressed: () => store.themeStore.toggleTheme(),
               ),
-              ActionButton(iconData: FeatherIcons.search, onPressed: () {}),
               ProfileBadge(
                 name: store.userStore.user!.name,
                 avatarUrl: store.userStore.user!.avatarUrl,
@@ -114,12 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         noteStore.layout[i].crossAxisCellCount,
                                     mainAxisCellCount:
                                         noteStore.layout[i].mainAxisCellCount,
-                                    child: NoteCard(
-                                      id: note.id,
-                                      color: note.color.uiColor,
-                                      text: '${note.title}\n${note.text}',
-                                      onTap: () => _navigateToNote(note),
-                                    ),
+                                    child: NoteCard(note),
                                   );
                                 },
                               );

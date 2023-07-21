@@ -7,5 +7,6 @@ export interface NoteServiceInterface {
   index(user_id: string): Promise<Note[]>;
   show(id: string): Promise<Note>;
   delete(id: string): Promise<void>;
+  deleteMany(ids: string[]): Promise<void>;
   update(note: UpdateNote): Promise<Note>;
 }

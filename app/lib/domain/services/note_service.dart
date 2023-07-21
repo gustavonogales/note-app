@@ -44,12 +44,39 @@ final class NoteService implements NoteServicePort {
   }
 
   @override
-  Future<void> update({
-    required String title,
-    required String text,
-    required String color,
-  }) {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> update(Note note) async {
+    await _httpAdapter.send(
+      to: '/note/${note.id}',
+      method: Method.patch,
+      body: {
+        'title': note.title,
+        'text': note.text,
+        'color': note.color,
+      },
+    );
+  }
+
+  @override
+  Future<Note> create(Note note) async {
+    final response = await _httpAdapter.send(
+      to: '/note',
+      method: Method.post,
+      body: {
+        'title': note.title,
+        'text': note.text,
+        'color': note.color,
+      },
+    );
+
+    return NoteDto.fromJson(response.body);
+  }
+
+  @override
+  Future<void> deleteMany(List<String> ids) async {
+    await _httpAdapter.send(
+      to: '/note',
+      method: Method.delete,
+      body: {'ids': ids},
+    );
   }
 }
