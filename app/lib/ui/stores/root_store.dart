@@ -16,19 +16,21 @@ class RootStore = _RootStoreBase with _$RootStore;
 abstract class _RootStoreBase with Store {
   final UserServicePort _userServicePort;
   final NoteServicePort _noteServicePort;
-  final ThemeServicePort _themeServicePort;
+  final AppServicePort _appServicePort;
 
   _RootStoreBase(
     this._userServicePort,
     this._noteServicePort,
-    this._themeServicePort,
+    this._appServicePort,
   ) {
-    themeStore = ThemeStore(_themeServicePort);
     userStore = UserStore(_userServicePort);
     noteStore = NoteStore(_noteServicePort);
+    themeStore = ThemeStore(_appServicePort);
   }
 
   late final ThemeStore themeStore;
   late final UserStore userStore;
   late final NoteStore noteStore;
+
+  String appVersion() => _appServicePort.appVersion;
 }

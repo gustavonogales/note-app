@@ -8,7 +8,6 @@ import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
 
 import '../../stores/root_store.dart';
-import '../../stores/user_store.dart';
 import 'profile_screen_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,14 +18,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late final UserStore userStore;
+  late final RootStore store;
   late final ProfileScreenController controller;
   late final ReactionDisposer userChangedDisposer;
 
   @override
   void initState() {
-    userStore = locator<RootStore>().userStore;
-    controller = ProfileScreenController(userStore);
+    store = locator();
+    controller = ProfileScreenController(store.userStore);
+
     super.initState();
   }
 
@@ -48,95 +48,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Observer(builder: (context) {
         return Scaffold(
           appBar: const TopBar(),
-          body: GestureDetector(
-            onTap: FocusScope.of(context).unfocus,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(Spacings.xxxs),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ProfileBadge(
-                        name: controller.name.value,
-                        avatarUrl: userStore.user?.avatarUrl,
-                        size: 140,
-                        onPressed: () {},
-                      ),
-                      const SizedBox(height: Spacings.xxs),
-                      Heading(
-                        controller.name.value,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: Spacings.sm),
-                      TextInput(
-                        initialValue: controller.name.value,
-                        onChanged: controller.name.setValue,
-                        hintText: 'Full name',
-                        errorText: controller.name.error,
-                        prefixIcon: FeatherIcons.user,
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: Spacings.xxxs),
-                      TextInput(
-                        initialValue: controller.email.value,
-                        onChanged: controller.email.setValue,
-                        hintText: 'E-mail',
-                        errorText: controller.email.error,
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: FeatherIconsSnakeCase.mail,
-                        textInputAction: TextInputAction.next,
-                      ),
-                      const SizedBox(height: Spacings.xxxs),
-                      PasswordInput(
-                        hintText: 'New Password',
-                        onChanged: controller.password.setValue,
-                        errorText: controller.password.error,
-                        prefixIcon: FeatherIcons.lock,
-                        textInputAction: TextInputAction.done,
-                      ),
-                      const SizedBox(height: Spacings.xxxs),
-                      PasswordInput(
-                        hintText: 'Confirm Password',
-                        onChanged: controller.confirmPassword.setValue,
-                        errorText: controller.confirmPassword.error,
-                        prefixIcon: FeatherIcons.lock,
-                        textInputAction: TextInputAction.done,
-                      ),
-                      const SizedBox(height: Spacings.xxs),
-                      Button(
-                        'Save changes',
-                        onPressed: controller.hasError
-                            ? null
-                            : controller.updateProfile,
-                      ),
-                      const SizedBox(height: Spacings.xl),
-                      BodyText(
-                        'Version 0.0.1',
-                        color: context.theme.colorScheme.onSecondaryContainer,
-                      ),
-                    ],
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: FocusScope.of(context).unfocus,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(Spacings.xxxs),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ProfileBadge(
+                          name: controller.name.value,
+                          avatarUrl: store.userStore.user?.avatarUrl,
+                          size: 140,
+                          onPressed: () {},
+                        ),
+                        const SizedBox(height: Spacings.xxs),
+                        Heading(
+                          controller.name.value,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: Spacings.sm),
+                        TextInput(
+                          initialValue: controller.name.value,
+                          onChanged: controller.name.setValue,
+                          hintText: 'Full name',
+                          errorText: controller.name.error,
+                          prefixIcon: FeatherIcons.user,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: Spacings.xxxs),
+                        TextInput(
+                          initialValue: controller.email.value,
+                          onChanged: controller.email.setValue,
+                          hintText: 'E-mail',
+                          errorText: controller.email.error,
+                          keyboardType: TextInputType.emailAddress,
+                          prefixIcon: FeatherIconsSnakeCase.mail,
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const SizedBox(height: Spacings.xxxs),
+                        PasswordInput(
+                          hintText: 'New Password',
+                          onChanged: controller.password.setValue,
+                          errorText: controller.password.error,
+                          prefixIcon: FeatherIcons.lock,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const SizedBox(height: Spacings.xxxs),
+                        PasswordInput(
+                          hintText: 'Confirm Password',
+                          onChanged: controller.confirmPassword.setValue,
+                          errorText: controller.confirmPassword.error,
+                          prefixIcon: FeatherIcons.lock,
+                          textInputAction: TextInputAction.done,
+                        ),
+                        const SizedBox(height: Spacings.xxs),
+                        Button(
+                          'Save changes',
+                          onPressed: controller.hasError
+                              ? null
+                              : controller.updateProfile,
+                        ),
+                        const SizedBox(height: Spacings.xl),
+                        BodyText(
+                          'Version ${store.appVersion()}',
+                          color: context.theme.colorScheme.onSecondaryContainer,
+                        ),
+                        const SizedBox(height: Spacings.xxxl),
+                        TouchableOpacity(
+                          onTap: store.userStore.signOut,
+                          child: const BodyText('Sair'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-          bottomNavigationBar: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(Spacings.xxxs),
-                  child: Center(
-                    child: TouchableOpacity(
-                      onTap: userStore.signOut,
-                      child: const BodyText('Sair'),
-                    ),
-                  ),
-                )
-              ],
             ),
           ),
         );

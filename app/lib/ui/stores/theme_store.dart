@@ -11,10 +11,10 @@ part 'theme_store.g.dart';
 class ThemeStore = _ThemeStoreBase with _$ThemeStore;
 
 abstract class _ThemeStoreBase with Store {
-  final ThemeServicePort _themeServicePort;
+  final AppServicePort _appServicePort;
 
-  _ThemeStoreBase(this._themeServicePort) {
-    useLightMode = _themeServicePort.isUsingLightTheme();
+  _ThemeStoreBase(this._appServicePort) {
+    useLightMode = _appServicePort.isUsingLightTheme();
   }
 
   @observable
@@ -26,6 +26,6 @@ abstract class _ThemeStoreBase with Store {
   @action
   void toggleTheme() {
     useLightMode = !useLightMode;
-    _themeServicePort.usingLightTheme(useLightMode);
+    _appServicePort.usingLightTheme(useLightMode);
   }
 }
