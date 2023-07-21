@@ -81,12 +81,14 @@ abstract class _NoteStoreBase with Store {
 
   Future<void> update(ViewNote note) => _noteServicePort.update(note.toModel());
 
-  Future<void> create(ViewNote note) async {
+  Future<ViewNote> create(ViewNote note) async {
     final createdNote = await _noteServicePort.create(note.toModel());
     if (layout.length <= notes.length + 1) {
       layout.addAll(layout);
     }
-    notes.add(ViewNote.fromModel(createdNote));
+    final viewNote = ViewNote.fromModel(createdNote);
+    notes.add(viewNote);
+    return viewNote;
   }
 
   Future<void> delete() async {

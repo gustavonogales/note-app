@@ -51,8 +51,7 @@ abstract class _NoteScreenControllerBase with Store {
       titleController.text = data.title;
       textController.text = data.text;
       isNewNote = false;
-    }
-    if (note.title.isEmpty && note.text.isEmpty) {
+    } else {
       setEditMode(true);
     }
   }
@@ -73,7 +72,7 @@ abstract class _NoteScreenControllerBase with Store {
   @action
   void changeColor(NoteColor color) {
     note.setColor(color);
-    _parentStore.update(note);
+    if (!isNewNote) _parentStore.update(note);
   }
 
   @action
@@ -85,7 +84,8 @@ abstract class _NoteScreenControllerBase with Store {
       note.updatedAt = DateTime.now().toIso8601String();
 
       if (isNewNote) {
-        await _parentStore.create(note);
+        final createdNote = await _parentStore.create(note);
+        setNote(createdNote);
       } else {
         await _parentStore.update(note);
       }
