@@ -38,7 +38,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 2,
       surfaceTintColor: context.theme.colorScheme.background.darken(2),
       title: titleText != null ? Heading(titleText!) : null,
-      leading: Navigator.of(context).canPop()
+      leading: ModalRoute.of(context)?.canPop ?? false
           ? Padding(
               padding: const EdgeInsets.only(
                 top: Spacings.micro,
