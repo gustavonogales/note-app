@@ -20,12 +20,12 @@ class ProfileBadge extends StatelessWidget {
     super.key,
   });
 
-  String? get correctUrl => avatarUrl?.replaceAll('localhost', '10.0.2.2');
-
   Widget _buildLoadingWidget(
       _, Widget child, ImageChunkEvent? loadingProgress) {
     return loadingProgress == null ? child : InitialsBadge(name, size: size);
   }
+
+  bool get hasProfilePic => file != null || (avatarUrl ?? '').isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +33,18 @@ class ProfileBadge extends StatelessWidget {
       onTap: onPressed,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(size)),
-        child: Image(
-          image: file != null
-              ? FileImage(file!) as ImageProvider
-              : NetworkImage(correctUrl ?? ''),
-          fit: BoxFit.cover,
-          height: size,
-          width: size,
-          loadingBuilder: _buildLoadingWidget,
-          errorBuilder: (_, __, ___) => InitialsBadge(name, size: size),
-        ),
+        child: hasProfilePic
+            ? Image(
+                image: file != null
+                    ? FileImage(file!) as ImageProvider
+                    : NetworkImage(avatarUrl ?? ''),
+                fit: BoxFit.cover,
+                height: size,
+                width: size,
+                loadingBuilder: _buildLoadingWidget,
+                errorBuilder: (_, __, ___) => InitialsBadge(name, size: size),
+              )
+            : InitialsBadge(name, size: size),
       ),
     );
   }
