@@ -48,9 +48,6 @@ export class NoteRepository implements NoteRepositoryInterface {
   }
 
   public async deleteMany(ids: string[]): Promise<void> {
-    const founded = await this.repository.findByIds(ids);
-
-    // console.log(founded);
     this.repository.delete(ids);
   }
 }
