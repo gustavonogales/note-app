@@ -18,8 +18,12 @@ export default class User {
     if (!this.avatar) {
       return null;
     }
+    let port = '';
+    if (process.env.APP_PORT) {
+      port = `:${process.env.APP_PORT}`;
+    }
 
-    return `${process.env.APP_URL}:${process.env.APP_PORT}/files/${this.avatar}`;
+    return `${process.env.APP_URL}${port}/files/${this.avatar}`;
   }
 
   constructor(
