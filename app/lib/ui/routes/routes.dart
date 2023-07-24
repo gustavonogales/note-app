@@ -25,12 +25,7 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: _nestedKey,
       pageBuilder: (context, state, child) {
-        return MaterialPage(
-          child: HeroControllerScope(
-            controller: MaterialApp.createMaterialHeroController(),
-            child: child,
-          ),
-        );
+        return MaterialPage(child: child);
       },
       routes: [
         GoRoute(

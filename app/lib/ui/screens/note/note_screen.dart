@@ -22,6 +22,7 @@ class NoteScreen extends StatefulWidget {
 class _NoteScreenState extends State<NoteScreen> {
   RootStore get store => locator();
   NoteScreenController get controller => store.noteStore.noteController;
+  late final String heroTag;
 
   String get formattedDate {
     initializeDateFormatting();
@@ -41,6 +42,7 @@ class _NoteScreenState extends State<NoteScreen> {
   @override
   void initState() {
     controller.setNote(store.noteStore.selectedNote);
+    heroTag = controller.note.id;
     super.initState();
   }
 
@@ -73,7 +75,7 @@ class _NoteScreenState extends State<NoteScreen> {
         }),
         child: Observer(builder: (context) {
           return Hero(
-            tag: controller.note.id,
+            tag: heroTag,
             child: GestureDetector(
               onTap: () {
                 if (controller.colorPickerVisible) {
