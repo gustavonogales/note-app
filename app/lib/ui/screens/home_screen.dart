@@ -84,45 +84,56 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          body: RefreshIndicator.adaptive(
-            onRefresh: noteStore.getAllNotes,
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(Spacings.xxxs),
-                  child: noteStore.notes.isEmpty
-                      ? const Padding(
-                          padding: EdgeInsets.only(top: Spacings.xxxl),
-                          child: EmptyPlaceholder(),
-                        )
-                      : StaggeredGrid.count(
-                          crossAxisCount: 4,
-                          mainAxisSpacing: Spacings.micro,
-                          crossAxisSpacing: Spacings.micro,
-                          children: noteStore.notes.mapIndexed(
-                            (i, note) {
-                              return Observer(
-                                key: note.key,
-                                builder: (context) {
-                                  return StaggeredGridTile.count(
-                                    crossAxisCellCount:
-                                        noteStore.layout[i].crossAxisCellCount,
-                                    mainAxisCellCount:
-                                        noteStore.layout[i].mainAxisCellCount,
-                                    child: NoteCard(note),
-                                  );
-                                },
-                              );
-                            },
-                          ).toList(),
+          body: LayoutBuilder(builder: (context, constraints) {
+            return RefreshIndicator.adaptive(
+              onRefresh: () => noteStore.getAllNotes(refreshing: true),
+              child: Center(
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  children: [
+                    Observer(builder: (context) {
+                      return Container(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
                         ),
+                        padding: const EdgeInsets.all(Spacings.xxxs),
+                        child: noteStore.loading
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              )
+                            : noteStore.notes.isEmpty
+                                ? const Center(child: EmptyPlaceholder())
+                                : StaggeredGrid.count(
+                                    crossAxisCount: 4,
+                                    mainAxisSpacing: Spacings.micro,
+                                    crossAxisSpacing: Spacings.micro,
+                                    children: noteStore.notes.mapIndexed(
+                                      (i, note) {
+                                        return Observer(
+                                          key: note.key,
+                                          builder: (context) {
+                                            return StaggeredGridTile.count(
+                                              crossAxisCellCount: noteStore
+                                                  .layout[i].crossAxisCellCount,
+                                              mainAxisCellCount: noteStore
+                                                  .layout[i].mainAxisCellCount,
+                                              child: NoteCard(note),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                      );
+                    }),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          }),
         );
       }),
     );

@@ -100,8 +100,9 @@ mixin _$NoteStore on _NoteStoreBase, Store {
       AsyncAction('_NoteStoreBase.getAllNotes', context: context);
 
   @override
-  Future<void> getAllNotes() {
-    return _$getAllNotesAsyncAction.run(() => super.getAllNotes());
+  Future<void> getAllNotes({bool refreshing = false}) {
+    return _$getAllNotesAsyncAction
+        .run(() => super.getAllNotes(refreshing: refreshing));
   }
 
   late final _$_NoteStoreBaseActionController =

@@ -52,11 +52,11 @@ abstract class _NoteStoreBase with Store {
       cardLayouts[Random().nextInt(cardLayouts.length)];
 
   @action
-  Future<void> getAllNotes() async {
+  Future<void> getAllNotes({bool refreshing = false}) async {
     errorText = null;
 
     try {
-      loading = true;
+      loading = !refreshing;
 
       final data = await _noteServicePort.getAll();
 
