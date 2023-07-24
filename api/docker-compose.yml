@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  note-postgres:
+    image: postgres:latest
+    container_name: note-postgres
+    # restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: react-note
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: react-note
+  note-redis:
+    image: bitnami/redis:latest
+    container_name: note-redis
+    ports:
+      - '6379:6379'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
