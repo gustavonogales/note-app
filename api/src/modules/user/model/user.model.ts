@@ -10,21 +10,7 @@ export default class User {
   @Exclude()
   public readonly password: string;
 
-  @Exclude()
   public readonly avatar?: string;
-
-  @Expose({ name: 'avatar_url' })
-  getAvatarUrl(): string | null {
-    if (!this.avatar) {
-      return null;
-    }
-    let port = '';
-    if (process.env.APP_PORT) {
-      port = `:${process.env.APP_PORT}`;
-    }
-
-    return `${process.env.APP_URL}${port}/files/${this.avatar}`;
-  }
 
   constructor(
     id: string,

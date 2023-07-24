@@ -1,6 +1,9 @@
 import StorageService from './Storage.interface';
 
 export default class StorageServiceImpl implements StorageService {
+  public async buffer(file: string): Promise<string> {
+    return file;
+  }
   private storage: string[] = [];
 
   public async saveFile(file: string): Promise<string> {

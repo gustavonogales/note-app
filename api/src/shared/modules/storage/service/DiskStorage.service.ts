@@ -16,14 +16,18 @@ export default class DiskStorageService implements StorageService {
   }
 
   public async deleteFile(file: string): Promise<void> {
-    const filePath = path.resolve(storageConfig.publicFolder, file);
-
+    const tmpFilePath = path.resolve(storageConfig.tmpFolder, file);
     try {
-      await fs.promises.stat(filePath);
+      await fs.promises.stat(tmpFilePath);
     } catch {
       return;
     }
 
-    await fs.promises.unlink(filePath);
+    await fs.promises.unlink(tmpFilePath);
+  }
+
+  public async buffer(file: string): Promise<string> {
+    const image = fs.readFileSync(path.resolve(storageConfig.tmpFolder, file));
+    return image.toString('base64');
   }
 }

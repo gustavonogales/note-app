@@ -5,13 +5,13 @@ abstract class UserDto {
         id: json['id'],
         name: json['name'],
         email: json['email'],
-        avatarUrl: json['avatar_url'],
+        avatar: json['avatar'],
       );
 
   static Map<String, dynamic> toJson(User user) => {
         'id': user.id,
         'name': user.name,
         'email': user.email,
-        'avatar_url': user.avatarUrl,
+        'avatar': user.avatar,
       };
 }

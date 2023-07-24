@@ -88,18 +88,16 @@ export class UserService implements UserServiceInterface {
       throw new AppError('Only authenticated users can change the avatar', 403);
     }
 
-    if (user.avatar) {
-      await this.storageService.deleteFile(filename);
-    }
+    const encodedImage = await this.storageService.buffer(filename);
 
-    const filePath = await this.storageService.saveFile(filename);
+    await this.storageService.deleteFile(filename);
 
     const userWithAvatar = new User(
       user.id,
       user.name,
       user.email,
       user.password,
-      filePath,
+      encodedImage,
     );
 
     await this.userRepository.save(userWithAvatar);

@@ -4,7 +4,6 @@ import {
   Get,
   Patch,
   Post,
-  Put,
   Request,
   UploadedFile,
   UseGuards,
@@ -15,7 +14,6 @@ import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
 import UpdateUserDTO from '../dto/update-user.dto';
 import User from '../model/user.model';
 import { UserService } from '../service/user.service';
-import { Request as ExpressRequest } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { diskStorage } from 'multer';
 import { extname } from 'path';

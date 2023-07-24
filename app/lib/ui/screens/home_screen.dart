@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ProfileBadge(
                 name: store.userStore.user!.name,
-                avatarUrl: store.userStore.user!.avatarUrl,
+                avatar: store.userStore.user!.avatar,
                 onPressed: () => context.push(Routes.profile),
               ),
             ],

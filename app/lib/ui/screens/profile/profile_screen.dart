@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileBadge(
                           name: controller.name.value,
                           file: controller.avatar,
-                          avatarUrl: store.userStore.user?.avatarUrl,
+                          avatar: store.userStore.user?.avatar,
                           size: 140,
                           onPressed: pickImage,
                         ),
