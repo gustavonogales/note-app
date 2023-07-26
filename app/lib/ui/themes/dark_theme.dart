@@ -12,6 +12,7 @@ const darkTheme = ColorScheme.dark(
   onSecondaryContainer: Color(0xFF929292),
   primaryContainer: Color(0xFF21A67A),
   onPrimaryContainer: Color(0xFFFFFFFF),
-  errorContainer: Color(0xFFFF5652),
-  error: Color(0xFFFF5652),
+  errorContainer: Color(0xFFE33A36),
+  onErrorContainer: Color(0xFFFFD8D8),
+  error: Color(0xFFE33A36),
 );

@@ -81,4 +81,6 @@ export class UserController {
     const user = await this.userService.updateAvatar({ id, filename });
     return classToClass(user);
   }
+
+  @Delete
 }

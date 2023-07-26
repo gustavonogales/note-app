@@ -11,3 +11,4 @@ export 'profile_badge.dart';
 export 'toast.dart';
 export 'empty_placeholder.dart';
 export 'note_card.dart';
+export 'confirm_dialog.dart';

@@ -41,6 +41,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void _onDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ConfirmDialog(
+          titleText: 'Delete your account',
+          bodyText:
+              'Are you sure you want to delete your account?\nThis action is irreversible.',
+          cancelButton: Button(
+            'Cancel',
+            color: ButtonColor.opaque,
+            onPressed: Navigator.of(context).pop,
+          ),
+          confirmButton: Button(
+            'Delete',
+            color: ButtonColor.error,
+            onPressed: () {},
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ReactionBuilder(
@@ -133,8 +156,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(height: Spacings.xxxl),
                         TouchableOpacity(
                           onTap: store.userStore.signOut,
-                          child: const BodyText('Sair'),
+                          child: const BodyText('Sign out'),
                         ),
+                        const SizedBox(height: Spacings.xxs),
+                        TouchableOpacity(
+                          onTap: () => _onDelete(context),
+                          child: BodyText(
+                            'Delete your account',
+                            color: context.theme.colorScheme.error,
+                          ),
+                        ),
+                        const SizedBox(height: Spacings.xxxs),
                       ],
                     ),
                   ),
