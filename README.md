@@ -59,29 +59,3 @@ yarn start:dev
 
 
 Obs: Está disponível nesse repositório o arquivo json para importação no [Insomnia](https://insomnia.rest/download/).
-
-
-## How to delete your account
-All your personal data and notes will be deleted from the database. 
-
-1. Go to your profile details by clicking on the top-right corner icon
-
-<p align="center">
-  <img src=".github/delete-account-1.png" alt="Account deletion step 1" width="200"/>
-</p>
-
-2. Scroll down the page and click on "Delete your account"
-<p align="center">
-  <img src=".github/delete-account-2.png" alt="Account deletion step 2" width="200"/>  
-</p>
-
-3. Confirm by clicking "Delete" (This action is irreversible)
-
-<p align="center">
-  <img src=".github/delete-account-3.png" alt="Account deletion step 3" width="200"/>  
-</p>
-<!-- ## Endpoints Web
-
-- URL: http://localhost:3000/
-- Session: http://localhost:3000/session
-- User: http://localhost:3000/user -->
