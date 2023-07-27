@@ -138,4 +138,10 @@ final class UserService implements UserServicePort {
     _storageAdapter.save(_userKey, jsonEncode(UserDto.toJson(user)));
     return user;
   }
+
+  @override
+  Future<void> delete() async {
+    await _httpAdapter.send(to: '/user', method: Method.delete);
+    _storageAdapter.removeAll();
+  }
 }

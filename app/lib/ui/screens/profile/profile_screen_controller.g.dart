@@ -90,6 +90,14 @@ mixin _$ProfileScreenController on _ProfileScreenControllerBase, Store {
     return _$updateProfileAsyncAction.run(() => super.updateProfile());
   }
 
+  late final _$deleteAsyncAction =
+      AsyncAction('_ProfileScreenControllerBase.delete', context: context);
+
+  @override
+  Future<void> delete() {
+    return _$deleteAsyncAction.run(() => super.delete());
+  }
+
   late final _$_ProfileScreenControllerBaseActionController =
       ActionController(name: '_ProfileScreenControllerBase', context: context);
 

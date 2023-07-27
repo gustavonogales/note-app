@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -82,5 +83,11 @@ export class UserController {
     return classToClass(user);
   }
 
-  @Delete
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  async delete(@Request() request): Promise<void> {
+    const id = request.user.sub;
+
+    await this.userService.delete(id);
+  }
 }

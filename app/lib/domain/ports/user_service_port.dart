@@ -30,4 +30,6 @@ abstract interface class UserServicePort {
     required String filename,
     required File file,
   });
+
+  Future<void> delete();
 }

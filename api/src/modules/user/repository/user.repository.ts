@@ -42,4 +42,9 @@ export class UserRepository implements UserRepositoryInterface {
 
     return userCreated.toUser();
   }
+
+  async delete(id: string): Promise<void> {
+    const user = await this.repository.findOne(id);
+    await this.repository.remove(user);
+  }
 }

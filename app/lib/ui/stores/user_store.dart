@@ -89,4 +89,6 @@ abstract class _UserStoreBase with Store {
       file: file,
     );
   }
+
+  Future<void> delete() => _userService.delete();
 }

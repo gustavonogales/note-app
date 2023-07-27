@@ -104,4 +104,14 @@ export class UserService implements UserServiceInterface {
 
     return userWithAvatar;
   }
+
+  async delete(id: string): Promise<void> {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new AppError('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    await this.userRepository.delete(user.id);
+  }
 }

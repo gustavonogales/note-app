@@ -105,4 +105,24 @@ abstract class _ProfileScreenControllerBase with Store {
       isLoading = false;
     }
   }
+
+  @action
+  Future<void> delete() async {
+    try {
+      isLoading = true;
+      messageText = null;
+      successfull = false;
+
+      await _parentStore.delete();
+
+      successfull = true;
+      messageText = 'User deleted';
+
+      _parentStore.user = null;
+    } catch (_) {
+      messageText = 'Error to delete user, try again';
+    } finally {
+      isLoading = false;
+    }
+  }
 }

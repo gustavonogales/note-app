@@ -6,4 +6,5 @@ export default interface UserRepositoryInterface {
   findById(id: string): Promise<User | undefined>;
   findByEmail(email: string): Promise<User | undefined>;
   save(user: User): Promise<User>;
+  delete(id: string): Promise<void>;
 }

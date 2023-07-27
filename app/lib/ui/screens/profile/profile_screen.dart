@@ -21,14 +21,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late final RootStore store;
-  late final ProfileScreenController controller;
-  late final ReactionDisposer userChangedDisposer;
+  late final RootStore _store;
+  late final ProfileScreenController _controller;
 
   @override
   void initState() {
-    store = locator();
-    controller = ProfileScreenController(store.userStore);
+    _store = locator();
+    _controller = ProfileScreenController(_store.userStore);
 
     super.initState();
   }
@@ -37,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final imagePicker = ImagePicker();
     final file = await imagePicker.pickImage(source: ImageSource.gallery);
     if (file != null) {
-      controller.setAvatar(File(file.path));
+      _controller.setAvatar(File(file.path));
     }
   }
 
@@ -57,7 +56,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           confirmButton: Button(
             'Delete',
             color: ButtonColor.error,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pop();
+              _controller.delete();
+            },
           ),
         );
       },
@@ -67,14 +69,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return ReactionBuilder(
-      builder: (context) => reaction((_) => controller.messageText, (result) {
+      builder: (context) => reaction((_) => _controller.messageText, (result) {
         if (result != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             Toast(
               context: context,
               message: result,
               type:
-                  controller.successfull ? ToastType.success : ToastType.error,
+                  _controller.successfull ? ToastType.success : ToastType.error,
             ),
           );
         }
@@ -95,32 +97,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ProfileBadge(
-                          name: controller.name.value,
-                          file: controller.avatar,
-                          avatar: store.userStore.user?.avatar,
+                          name: _controller.name.value,
+                          file: _controller.avatar,
+                          avatar: _store.userStore.user?.avatar,
                           size: 140,
                           onPressed: pickImage,
                         ),
                         const SizedBox(height: Spacings.xxs),
                         Heading(
-                          controller.name.value,
+                          _controller.name.value,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: Spacings.sm),
                         TextInput(
-                          initialValue: controller.name.value,
-                          onChanged: controller.name.setValue,
+                          initialValue: _controller.name.value,
+                          onChanged: _controller.name.setValue,
                           hintText: 'Full name',
-                          errorText: controller.name.error,
+                          errorText: _controller.name.error,
                           prefixIcon: FeatherIcons.user,
                           textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: Spacings.xxxs),
                         TextInput(
-                          initialValue: controller.email.value,
-                          onChanged: controller.email.setValue,
+                          initialValue: _controller.email.value,
+                          onChanged: _controller.email.setValue,
                           hintText: 'E-mail',
-                          errorText: controller.email.error,
+                          errorText: _controller.email.error,
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: FeatherIconsSnakeCase.mail,
                           textInputAction: TextInputAction.next,
@@ -128,34 +130,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(height: Spacings.xxxs),
                         PasswordInput(
                           hintText: 'New Password',
-                          onChanged: controller.password.setValue,
-                          errorText: controller.password.error,
+                          onChanged: _controller.password.setValue,
+                          errorText: _controller.password.error,
                           prefixIcon: FeatherIcons.lock,
                           textInputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: Spacings.xxxs),
                         PasswordInput(
                           hintText: 'Confirm Password',
-                          onChanged: controller.confirmPassword.setValue,
-                          errorText: controller.confirmPassword.error,
+                          onChanged: _controller.confirmPassword.setValue,
+                          errorText: _controller.confirmPassword.error,
                           prefixIcon: FeatherIcons.lock,
                           textInputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: Spacings.xxs),
                         Button(
                           'Save changes',
-                          onPressed: controller.hasError
+                          onPressed: _controller.hasError
                               ? null
-                              : controller.updateProfile,
+                              : _controller.updateProfile,
                         ),
                         const SizedBox(height: Spacings.xl),
                         BodyText(
-                          'Version ${store.appVersion()}',
+                          'Version ${_store.appVersion()}',
                           color: context.theme.colorScheme.onSecondaryContainer,
                         ),
                         const SizedBox(height: Spacings.xxxl),
                         TouchableOpacity(
-                          onTap: store.userStore.signOut,
+                          onTap: _store.userStore.signOut,
                           child: const BodyText('Sign out'),
                         ),
                         const SizedBox(height: Spacings.xxs),
