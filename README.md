@@ -62,6 +62,7 @@ Obs: Está disponível nesse repositório o arquivo json para importação no [I
 
 
 ## How to delete your account
+All your personal data and notes will be deleted from the database. 
 
 1. Go to your profile details by clicking on the top-right corner icon
 
