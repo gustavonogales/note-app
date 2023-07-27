@@ -1,4 +1,4 @@
-# React-Note
+# Notes
 
 Aplicação web e mobile para anotações rápidas.
 
@@ -11,65 +11,74 @@ Aplicação web e mobile para anotações rápidas.
 
 - [NodeJS 12.*](https://nodejs.org/en/download/)
 - [Yarn 1.*](https://yarnpkg.com/getting-started/install/)
+- [Flutter 3.*](https://docs.flutter.dev/get-started/install)
 
 ## Tecnologias/Frameworks
 
-- [Typescript](https://www.typescriptlang.org/)
+- [NestJs](https://nestjs.com/)
 - [React](https://github.com/facebook/react)
-- [Express](https://expressjs.com/)
-- [React-native](https://reactnative.dev/)
-- [Celebrate](https://github.com/arb/celebrate/)
-- [Cors](https://github.com/expressjs/cors/)
-- [TypeORM](https://typeorm.io/#/)
-- [Multer](https://github.com/expressjs/multer)
-- [Axios](https://github.com/axios/axios)
-- [Uuid](https://www.npmjs.com/package/uuid/)
-- [Tsyringe](https://github.com/microsoft/tsyringe/)
-- [Bcryptjs](https://www.npmjs.com/package/bcryptjs/)
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken/)
-- [dotenv](https://github.com/motdotla/dotenv/)
+- [Flutter](https://flutter.dev)
 
 <!-- ## Padrões de projeto
 
 - *Clean Architecture* -->
 
-## Execução API
+## Running the API
 
-Esse projeto utiliza PostgreSQL e Redis, para criar o banco e popular com seed execute os comandos na pasta api:
+This project utilizes PostgreSQL, to create the database and run the migrations you need to run the following commands:
 ```
-cp .env.example .env
+cp .env.example .env 
 yarn
 docker-compose up -d
-yarn typeorm migration:run
 ```
-Para executar a API:
+Run the API (dev mode):
 
 ```shell script
-yarn start
+yarn start:dev
 ```
 
 ## Endpoints API
 
-**URL**: http://localhost:3333
+**URL**: http://localhost:3000
 
 ### User [All with bearer token except POST]
 - **[Create] Post:** /user
-- **[Update Info] Put:** /user
-- **[Update Avatar] Patch:** /user
+- **[Update Info] Patch:** /user
+- **[Update Avatar] Patch:** /user/avatar
 
 ### Session [SignIn]
 - **[Create] Post:** /session
+- **[Refresh] Post:** /session/refresh
 
 ### Note  [All with bearer token]
 - **[Create] Post:** /note
-- **[Show] Get:** /note
+- **[Show All] Get:** /note
 - **[Show] Get ID:** /note/{id}
 - **[Delete] Delete:** /note/{id}
-- **[Update] Put:** /note
+- **[Update] Patch:** /note/{id}
 
 
 Obs: Está disponível nesse repositório o arquivo json para importação no [Insomnia](https://insomnia.rest/download/).
 
+
+## How to delete your account
+
+1. Go to your profile details by clicking on the top-right corner icon
+
+<p align="center">
+  <img src=".github/delete-account-1.png" alt="Account deletion step 1" width="200"/>
+</p>
+
+2. Scroll down the page and click on "Delete your account"
+<p align="center">
+  <img src=".github/delete-account-2.png" alt="Account deletion step 2" width="200"/>  
+</p>
+
+3. Confirm by clicking "Delete" (This action is irreversible)
+
+<p align="center">
+  <img src=".github/delete-account-3.png" alt="Account deletion step 3" width="200"/>  
+</p>
 <!-- ## Endpoints Web
 
 - URL: http://localhost:3000/
