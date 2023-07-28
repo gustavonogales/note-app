@@ -1,7 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/adapter/adapter.dart';
+import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/stores/user_store.dart';
 import 'package:note_app/ui/stores/utils/field_form_state.dart';
 
@@ -22,7 +24,49 @@ class SignUpScreenController = _SignUpScreenControllerBase
 abstract class _SignUpScreenControllerBase with Store {
   final UserStore _parentStore;
 
-  _SignUpScreenControllerBase(this._parentStore);
+  BuildContext? get currentContext => _parentStore.uiStore.currentContext;
+
+  _SignUpScreenControllerBase(this._parentStore) {
+    fullName = FieldFormState(validate: (value) {
+      switch (value) {
+        case '':
+          return currentContext!.l10n.nameIsRequired;
+        default:
+          return '';
+      }
+    });
+
+    email = FieldFormState(validate: (value) {
+      switch (value) {
+        case '':
+          return currentContext!.l10n.emailIsRequired;
+        default:
+          return '';
+      }
+    });
+
+    password = FieldFormState(validate: (value) {
+      switch (value) {
+        case '':
+          return currentContext!.l10n.passwordIsRequired;
+        case String value when value.length < 6:
+          return currentContext!.l10n.passwordMinLengthIs(6);
+        default:
+          return '';
+      }
+    });
+
+    confirmPassword = FieldFormState(validate: (value) {
+      switch (value) {
+        case '':
+          return currentContext!.l10n.passwordIsRequired;
+        case String value when value.length < 6:
+          return currentContext!.l10n.passwordMinLengthIs(6);
+        default:
+          return '';
+      }
+    });
+  }
 
   @observable
   SignUpStatus status = SignUpStatus.idle;
@@ -33,45 +77,13 @@ abstract class _SignUpScreenControllerBase with Store {
   @observable
   bool loading = false;
 
-  FieldFormState fullName = FieldFormState(validate: (value) {
-    switch (value) {
-      case '':
-        return 'Name is required';
-      default:
-        return '';
-    }
-  });
+  FieldFormState fullName = FieldFormState();
 
-  FieldFormState email = FieldFormState(validate: (value) {
-    switch (value) {
-      case '':
-        return 'E-mail is required';
-      default:
-        return '';
-    }
-  });
+  FieldFormState email = FieldFormState();
 
-  FieldFormState password = FieldFormState(validate: (value) {
-    switch (value) {
-      case '':
-        return 'Password is required';
-      case String value when value.length < 6:
-        return 'Password must have 6 or more characters';
-      default:
-        return '';
-    }
-  });
+  FieldFormState password = FieldFormState();
 
-  FieldFormState confirmPassword = FieldFormState(validate: (value) {
-    switch (value) {
-      case '':
-        return 'Password is required';
-      case String value when value.length < 6:
-        return 'Password must have 6 or more characters';
-      default:
-        return '';
-    }
-  });
+  FieldFormState confirmPassword = FieldFormState();
 
   @computed
   bool get hasError => fullName.hasError || email.hasError || password.hasError;
@@ -88,7 +100,7 @@ abstract class _SignUpScreenControllerBase with Store {
       confirmPassword.validate();
       confirmPassword.compareTo(
         password.value,
-        errorMessage: 'Passwords not match!',
+        errorMessage: currentContext?.l10n.passwordsNotMatch ?? '',
       );
 
       if (hasError) return;
@@ -100,12 +112,12 @@ abstract class _SignUpScreenControllerBase with Store {
       );
 
       status = SignUpStatus.success;
-      statusMessage = 'User created successfully';
+      statusMessage = currentContext?.l10n.userCreatedMessage ?? '';
     } on HttpSendException catch (e) {
       statusMessage = e.message;
       status = SignUpStatus.error;
     } catch (_) {
-      statusMessage = 'Unexpected error, please try again';
+      statusMessage = currentContext?.l10n.unexpectedErrorMessage ?? '';
       status = SignUpStatus.error;
     } finally {
       loading = false;

@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:mobx/mobx.dart';
+import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/stores/utils/field_form_state.dart';
 
 import '../../stores/user_store.dart';
@@ -13,26 +14,33 @@ class SignInScreenController = _SignInScreenControllerBase
 abstract class _SignInScreenControllerBase with Store {
   final UserStore _parentStore;
 
-  _SignInScreenControllerBase(this._parentStore);
+  _SignInScreenControllerBase(this._parentStore) {
+    email = FieldFormState(
+      validate: (value) {
+        return value.isEmpty
+            ? _parentStore.uiStore.currentContext!.l10n.emailIsRequired
+            : '';
+      },
+      validateOnChange: true,
+    );
+    password = FieldFormState(
+      validate: (value) {
+        return value.isEmpty
+            ? _parentStore.uiStore.currentContext!.l10n.passwordIsRequired
+            : '';
+      },
+      validateOnChange: true,
+    );
+  }
 
   @observable
   bool loading = false;
 
   @observable
-  FieldFormState email = FieldFormState(
-    validate: (value) {
-      return value.isEmpty ? 'E-mail is required' : '';
-    },
-    validateOnChange: true,
-  );
+  FieldFormState email = FieldFormState();
 
   @observable
-  FieldFormState password = FieldFormState(
-    validate: (value) {
-      return value.isEmpty ? 'Password is required' : '';
-    },
-    validateOnChange: true,
-  );
+  FieldFormState password = FieldFormState();
 
   @computed
   bool get hasError => email.hasError || password.hasError;
@@ -56,7 +64,8 @@ abstract class _SignInScreenControllerBase with Store {
         password: password.value,
       );
     } catch (e) {
-      errorText = 'Invalid email/password';
+      errorText =
+          _parentStore.uiStore.currentContext?.l10n.invalidEmailOrPassword;
     } finally {
       loading = false;
     }

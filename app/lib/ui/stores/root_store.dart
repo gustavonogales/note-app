@@ -6,7 +6,7 @@ import 'package:note_app/domain/domain.dart';
 
 import 'user_store.dart';
 import 'note_store.dart';
-import 'theme_store.dart';
+import 'ui_store.dart';
 
 part 'root_store.g.dart';
 
@@ -23,12 +23,12 @@ abstract class _RootStoreBase with Store {
     this._noteServicePort,
     this._appServicePort,
   ) {
-    userStore = UserStore(_userServicePort);
-    noteStore = NoteStore(_noteServicePort);
-    themeStore = ThemeStore(_appServicePort);
+    uiStore = UiStore(_appServicePort);
+    userStore = UserStore(_userServicePort, uiStore);
+    noteStore = NoteStore(_noteServicePort, uiStore);
   }
 
-  late final ThemeStore themeStore;
+  late final UiStore uiStore;
   late final UserStore userStore;
   late final NoteStore noteStore;
 

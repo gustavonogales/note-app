@@ -4,7 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobx/mobx.dart';
-import 'package:note_app/container.dart';
+import 'package:note_app/config/config.dart';
+import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
 
@@ -66,10 +67,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     SvgPicture.asset(Assets.logo, width: 100),
                     const SizedBox(height: Spacings.xxs),
-                    const Heading('Sign Up'),
+                    Heading(context.l10n.signUp),
                     const SizedBox(height: Spacings.sm),
                     TextInput(
-                      hintText: 'Full name',
+                      hintText: context.l10n.fullName,
                       onChanged: controller.fullName.setValue,
                       errorText: controller.fullName.error,
                       prefixIcon: FeatherIcons.user,
@@ -77,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: Spacings.xxxs),
                     TextInput(
-                      hintText: 'E-mail',
+                      hintText: context.l10n.email,
                       onChanged: controller.email.setValue,
                       errorText: controller.email.error,
                       keyboardType: TextInputType.emailAddress,
@@ -86,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: Spacings.xxxs),
                     PasswordInput(
-                      hintText: 'Password',
+                      hintText: context.l10n.password,
                       onChanged: controller.password.setValue,
                       errorText: controller.password.error,
                       prefixIcon: FeatherIcons.lock,
@@ -94,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: Spacings.xxxs),
                     PasswordInput(
-                      hintText: 'Confirm Password',
+                      hintText: context.l10n.confirmPassword,
                       onChanged: controller.confirmPassword.setValue,
                       errorText: controller.confirmPassword.error,
                       prefixIcon: FeatherIcons.lock,
@@ -103,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: Spacings.xxs),
                     Button(
-                      'Sign up',
+                      context.l10n.signUp,
                       isLoading: controller.loading,
                       onPressed: controller.signUp,
                     ),

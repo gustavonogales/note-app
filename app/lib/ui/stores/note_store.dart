@@ -1,13 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:math' show Random;
+import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/domain/domain.dart';
+import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/utils/utils.dart';
 
 import '../screens/note/note_screen_controller.dart';
 import '../view_models/note.dart';
+import 'ui_store.dart';
 part 'note_store.g.dart';
 
 @singleton
@@ -15,12 +18,14 @@ class NoteStore = _NoteStoreBase with _$NoteStore;
 
 abstract class _NoteStoreBase with Store {
   late final NoteScreenController noteController;
-
   final NoteServicePort _noteServicePort;
+  final UiStore _uiStore;
 
-  _NoteStoreBase(this._noteServicePort) {
+  _NoteStoreBase(this._noteServicePort, this._uiStore) {
     noteController = NoteScreenController(this as NoteStore);
   }
+
+  BuildContext? get currentContext => _uiStore.currentContext;
 
   @computed
   bool get deleteMode => notes.where((note) => note.selected).isNotEmpty;
@@ -73,7 +78,7 @@ abstract class _NoteStoreBase with Store {
         data.map((note) => ViewNote.fromModel(note)),
       );
     } catch (_) {
-      errorText = 'An error occurred, please try again';
+      errorText = currentContext?.l10n.unexpectedErrorMessage;
     } finally {
       loading = false;
     }
@@ -101,7 +106,7 @@ abstract class _NoteStoreBase with Store {
         notes.removeWhere((note) => note.selected);
       }
     } catch (_) {
-      errorText = 'An error occurred, please try again';
+      errorText = currentContext?.l10n.unexpectedErrorMessage;
     }
   }
 }

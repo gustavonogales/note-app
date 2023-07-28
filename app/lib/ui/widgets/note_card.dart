@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
+import 'package:note_app/config/config.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/routes/routes.dart';
 import 'package:note_app/ui/stores/stores.dart';
 import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/view_models/note.dart';
-
-import '../../container.dart';
 
 class NoteCard extends StatelessWidget {
   final ViewNote note;

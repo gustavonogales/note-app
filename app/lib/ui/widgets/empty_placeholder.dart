@@ -19,7 +19,7 @@ class EmptyPlaceholder extends StatelessWidget {
         ),
         const SizedBox(height: Spacings.xxs),
         Text(
-          'So empty in here...',
+          context.l10n.emptyMessage,
           style: TextStyle(
             fontSize: 20,
             color: context.theme.colorScheme.onBackground.darken(20),

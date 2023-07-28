@@ -23,23 +23,23 @@ class ForgotPasswordScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Heading('Forgot password'),
+                    Heading(context.l10n.forgotPassword),
                     const SizedBox(height: Spacings.xxs),
                     BodyText(
-                      'We’ll send you a link and a guide to recovery your password',
+                      context.l10n.forgotPasswordDescription,
                       textAlign: TextAlign.center,
                       color: context.theme.colorScheme.onSecondaryContainer,
                     ),
                     const SizedBox(height: Spacings.xxs),
-                    const TextInput(
-                      hintText: 'E-mail',
+                    TextInput(
+                      hintText: context.l10n.email,
                       keyboardType: TextInputType.emailAddress,
                       prefixIcon: FeatherIconsSnakeCase.mail,
                       textInputAction: TextInputAction.next,
                     ),
                     const SizedBox(height: Spacings.xxs),
                     Button(
-                      'Send',
+                      context.l10n.send,
                       onPressed: () {},
                     ),
                   ],

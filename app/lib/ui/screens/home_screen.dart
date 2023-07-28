@@ -5,13 +5,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobx/mobx.dart';
+import 'package:note_app/config/container/container.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/routes/routes.dart';
 import 'package:note_app/ui/stores/stores.dart';
 import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
-
-import '../../container.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -72,10 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: noteStore.delete,
                 ),
               ActionButton(
-                iconData: store.themeStore.useLightMode
+                iconData: store.uiStore.useLightMode
                     ? FeatherIcons.moon
                     : FeatherIcons.sun,
-                onPressed: () => store.themeStore.toggleTheme(),
+                onPressed: () => store.uiStore.toggleTheme(),
               ),
               ProfileBadge(
                 name: store.userStore.user!.name,

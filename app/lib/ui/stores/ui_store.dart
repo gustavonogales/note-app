@@ -5,17 +5,20 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/domain/domain.dart';
 
-part 'theme_store.g.dart';
+part 'ui_store.g.dart';
 
 @singleton
-class ThemeStore = _ThemeStoreBase with _$ThemeStore;
+class UiStore = _UiStoreBase with _$UiStore;
 
-abstract class _ThemeStoreBase with Store {
+abstract class _UiStoreBase with Store {
+  final navigationKey = GlobalKey<NavigatorState>();
   final AppServicePort _appServicePort;
 
-  _ThemeStoreBase(this._appServicePort) {
+  _UiStoreBase(this._appServicePort) {
     useLightMode = _appServicePort.isUsingLightTheme();
   }
+
+  BuildContext? get currentContext => navigationKey.currentState?.context;
 
   @observable
   bool useLightMode = false;

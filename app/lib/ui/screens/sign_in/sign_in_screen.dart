@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobx/mobx.dart';
-import 'package:note_app/container.dart';
+import 'package:note_app/config/config.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/screens/sign_in/sign_in_screen_controller.dart';
 
@@ -82,12 +82,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: Spacings.sm),
                         SvgPicture.asset(Assets.logo, width: 100),
                         const SizedBox(height: Spacings.xxs),
-                        const Heading('Sign In'),
+                        Heading(context.l10n.signIn),
                         const SizedBox(height: Spacings.sm),
                         TextInput(
                           onChanged: controller.email.setValue,
                           errorText: controller.email.error,
-                          hintText: 'E-mail',
+                          hintText: context.l10n.email,
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: FeatherIconsSnakeCase.mail,
                           textInputAction: TextInputAction.next,
@@ -96,14 +96,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         PasswordInput(
                           onChanged: controller.password.setValue,
                           errorText: controller.password.error,
-                          hintText: 'Password',
+                          hintText: context.l10n.password,
                           keyboardType: TextInputType.visiblePassword,
                           prefixIcon: FeatherIcons.lock,
                           textInputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: Spacings.xxs),
                         Button(
-                          'Sign in',
+                          context.l10n.signIn,
                           isLoading: controller.loading,
                           onPressed: () => controller.signIn(),
                         ),
@@ -114,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             TouchableOpacity(
                               onTap: () => context.push(Routes.forgotPassword),
                               child: BodyText(
-                                'forgot password',
+                                context.l10n.forgotPassword.toLowerCase(),
                                 color: context
                                     .theme.colorScheme.onSecondaryContainer,
                               ),
@@ -122,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             TouchableOpacity(
                               onTap: () => context.push(Routes.signUp),
                               child: BodyText(
-                                'create an account',
+                                context.l10n.createAnAccount.toLowerCase(),
                                 color: context
                                     .theme.colorScheme.onSecondaryContainer,
                               ),

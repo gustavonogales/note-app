@@ -1,0 +1,163 @@
+{
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Sign In message"
+  },
+  "email": "E-mail",
+  "@email": {
+    "description": "E-mail message"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password message"
+  },
+  "newPassword": "New password",
+  "@newPassword": {
+    "description": "field hint text"
+  },
+  "forgotPassword": "Forgot password",
+  "@forgotPassword": {
+    "description": "Forgot password message for buttons and headings" 
+  },
+  "forgotPasswordDescription": "We’ll send you a link and a guide to recovery your password",
+  "@forgotPasswordDescription": {
+    "description": "Forgot password steps"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Send message"
+  },
+  "createAnAccount": "Create an account",
+  "@createAnAccount": {
+    "description": "Create an account message"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign up message"
+  },
+  "fullName": "Full name",
+  "@fullName": {
+    "description": "Full name placeholder for input fields"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password placeholder for input fields"
+  },
+  "invalidEmailOrPassword": "Invalid email/password",
+  "@invalidEmailOrPassword": {
+    "description": "Invalid email or password error message"
+  },
+  "emailIsRequired": "E-mail is required",
+  "@emailIsRequired": {
+    "description": "E-mail is required field validation"
+  },
+  "passwordIsRequired": "Password is required",
+  "@passwordIsRequired": {
+    "description": "Password is required field validation"
+  },
+  "nameIsRequired": "Name is required",
+  "@nameIsRequired": {
+    "description": "Name is required field validation"
+  },
+  "passwordMinLengthIs": "Password must have {length} or more characters",
+  "@passwordMinLengthIs": {
+    "description": "Password min length validation with a parameter",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "passwordsNotMatch": "Passwords not match!",
+  "@passwordsNotMatch": {
+    "description": "Password not match field validation"
+  },
+  "userCreatedMessage": "User created successfully",
+  "@userCreatedMessage": {
+    "description": "User created toast message"
+  },
+  "unexpectedErrorMessage": "An error occurred, please try again",
+  "@unexpectedErrorMessage": {
+    "description": "Unexpected error toast message"
+  },
+  "emptyMessage": "So empty in here...",
+  "@emptyMessage": {
+    "description": "Empty placeholder message" 
+  },
+  "saveChanges": "Save changes",
+  "@saveChanges": {
+    "description": "save changes button text"
+  },
+  "versionIs": "Version {version}",
+  "@versionIs": {
+    "description": "app version",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "signOut": "Sign out",
+  "@signOut": {
+    "description": "Sign out button text"
+  },
+  "deleteYourAccount": "Delete your account",
+  "@deleteYourAccount": {
+    "description": "Delete account button text"
+  },
+  "deleteYourAccountText": "Are you sure you want to delete your account?\nThis action is irreversible.",
+  "@deleteYourAccountText": {
+    "description": "Delete account dialog message"
+  },
+  "deleteYourAccountSuccessMessage": "User deleted",
+  "@deleteYourAccountSuccessMessage": {
+    "description": "User deleted toast message"
+  },
+  "deleteYourAccountErrorMessage": "Error to delete your user, please try again",
+  "@deleteYourAccountErrorMessage": {
+    "description": "User deleted error toast message"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "profileUpdatedMessage": "Profile updated",
+  "@profileUpdatedMessage": {
+    "description": "Profile updated toast message"
+  },
+  "profileErrorMessage": "Error updating profile, try again",
+  "@profileErrorMessage": {
+    "description": "Profile error toast message"
+  },
+  "createNoteErrorMessage": "Error to create new note, try again",
+  "@createNoteErrorMessage": {
+    "description": "Create note error toast message"
+  },
+  "updateNoteErrorMessage": "Error while saving changes, try again",
+  "@updateNoteErrorMessage": {
+    "description": "Update note error toast message"
+  },
+  "title": "Title",
+  "@title": {
+    "description": "Title field hint text"
+  },
+  "typeSomething": "Type something...",
+  "@typeSomething": {
+    "description": "Note body field hint text"
+  },
+  "updatedAt": "{date}",
+  "@updatedAt": {
+    "description": "Formatted note updated_at field",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMM dd, yyyy",
+        "isCustomDateFormat": "true"
+      }
+    }
+  }
+}

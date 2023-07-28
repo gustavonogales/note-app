@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
-import 'package:note_app/container.dart';
+import 'package:note_app/config/config.dart';
 import 'package:note_app/domain/domain.dart';
 
 import '../../../adapter/adapter.dart';

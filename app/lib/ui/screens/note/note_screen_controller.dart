@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/stores/stores.dart';
 import 'package:note_app/ui/utils/utils.dart';
 
@@ -91,8 +92,8 @@ abstract class _NoteScreenControllerBase with Store {
       }
     } catch (_) {
       messageText = isNewNote
-          ? 'Error to create new note, try again'
-          : 'Error while saving changes, try again.';
+          ? _parentStore.currentContext!.l10n.createNoteErrorMessage
+          : _parentStore.currentContext!.l10n.updateNoteErrorMessage;
     }
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:note_app/environment.dart';
+import 'package:note_app/config/environment.dart';
 import 'models/http_send_exception.dart';
 import 'models/interceptor.dart';
 import 'models/method.dart';

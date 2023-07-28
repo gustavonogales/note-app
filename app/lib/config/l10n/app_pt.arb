@@ -1,0 +1,45 @@
+{
+  "signIn": "Faça seu login",
+  "email": "E-mail",
+  "password": "Senha",
+  "newPassword": "Nova senha",
+  "forgotPassword": "Recuperar senha",
+  "forgotPasswordDescription": "Nós enviaremos um link e um guia com passos para recuperar sua senha",
+  "send": "Enviar",
+  "createAnAccount": "Criar uma conta",
+  "signUp": "Registre-se",
+  "fullName": "Nome completo",
+  "confirmPassword": "Confirme sua senha",
+  "invalidEmailOrPassword": "E-mail ou senha inválido",
+  "emailIsRequired": "E-mail obrigatório",
+  "passwordIsRequired": "Senha obrigatória",
+  "nameIsRequired": "Nome obrigatório",
+  "passwordMinLengthIs": "A senha precisa ter {length} ou mais caracteres",
+  "passwordsNotMatch": "Senhas não coincidem!",
+  "userCreatedMessage": "Usuário criado com sucesso!",
+  "unexpectedErrorMessage": "Ocorreu um erro, por favor tente novamente.",
+  "emptyMessage": "Está tão vazio por aqui...",
+  "saveChanges": "Salver alterações",
+  "versionIs": "Versão {version}",
+  "signOut": "Sair",
+  "deleteYourAccount": "Deletar sua conta",
+  "deleteYourAccountText": "Tem certeza que você deseja deletar sua conta?\nEssa ação é irreversível.",
+  "deleteYourAccountSuccessMessage": "Usuário deletado",
+  "deleteYourAccountErrorMessage": "Erro ao deletar usuário, tente novamente",
+  "cancel": "Cancelar",
+  "delete": "Deletar",
+  "profileUpdatedMessage": "Perfil atualizado",
+  "profileErrorMessage": "Erro ao atualizar perfil, tente novamente",
+  "createNoteErrorMessage": "Erro ao criar nota, tente novamente",
+  "updateNoteErrorMessage": "Erro ao salvar mudanças, tente novamente",
+  "title": "Título",
+  "typeSomething": "Digite alguma coisa...",
+  "updatedAt": "{date}",
+  "@updatedAt": {
+    "placeholders": {
+      "date": {
+        "format": "dd MMM, yyyy"
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-import 'package:note_app/container.dart';
+import 'package:note_app/config/config.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
@@ -45,16 +45,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (context) {
         return ConfirmDialog(
-          titleText: 'Delete your account',
-          bodyText:
-              'Are you sure you want to delete your account?\nThis action is irreversible.',
+          titleText: context.l10n.deleteYourAccount,
+          bodyText: context.l10n.deleteYourAccountText,
           cancelButton: Button(
-            'Cancel',
+            context.l10n.cancel,
             color: ButtonColor.opaque,
             onPressed: Navigator.of(context).pop,
           ),
           confirmButton: Button(
-            'Delete',
+            context.l10n.delete,
             color: ButtonColor.error,
             onPressed: () {
               Navigator.of(context).pop();
@@ -112,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         TextInput(
                           initialValue: _controller.name.value,
                           onChanged: _controller.name.setValue,
-                          hintText: 'Full name',
+                          hintText: context.l10n.fullName,
                           errorText: _controller.name.error,
                           prefixIcon: FeatherIcons.user,
                           textInputAction: TextInputAction.next,
@@ -121,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         TextInput(
                           initialValue: _controller.email.value,
                           onChanged: _controller.email.setValue,
-                          hintText: 'E-mail',
+                          hintText: context.l10n.email,
                           errorText: _controller.email.error,
                           keyboardType: TextInputType.emailAddress,
                           prefixIcon: FeatherIconsSnakeCase.mail,
@@ -129,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: Spacings.xxxs),
                         PasswordInput(
-                          hintText: 'New Password',
+                          hintText: context.l10n.newPassword,
                           onChanged: _controller.password.setValue,
                           errorText: _controller.password.error,
                           prefixIcon: FeatherIcons.lock,
@@ -137,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: Spacings.xxxs),
                         PasswordInput(
-                          hintText: 'Confirm Password',
+                          hintText: context.l10n.confirmPassword,
                           onChanged: _controller.confirmPassword.setValue,
                           errorText: _controller.confirmPassword.error,
                           prefixIcon: FeatherIcons.lock,
@@ -145,26 +144,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: Spacings.xxs),
                         Button(
-                          'Save changes',
+                          context.l10n.saveChanges,
                           onPressed: _controller.hasError
                               ? null
                               : _controller.updateProfile,
                         ),
                         const SizedBox(height: Spacings.xl),
                         BodyText(
-                          'Version ${_store.appVersion()}',
+                          context.l10n.versionIs(_store.appVersion()),
                           color: context.theme.colorScheme.onSecondaryContainer,
                         ),
                         const SizedBox(height: Spacings.xxxl),
                         TouchableOpacity(
                           onTap: _store.userStore.signOut,
-                          child: const BodyText('Sign out'),
+                          child: BodyText(context.l10n.signOut),
                         ),
                         const SizedBox(height: Spacings.xxs),
                         TouchableOpacity(
                           onTap: () => _onDelete(context),
                           child: BodyText(
-                            'Delete your account',
+                            context.l10n.deleteYourAccount,
                             color: context.theme.colorScheme.error,
                           ),
                         ),

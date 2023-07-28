@@ -16,63 +16,62 @@ abstract class Routes {
   static const note = '/note';
 }
 
-final navigationKey = GlobalKey<NavigatorState>();
-
-final _nestedKey = GlobalKey<NavigatorState>();
-final router = GoRouter(
-  navigatorKey: navigationKey,
-  routes: [
-    ShellRoute(
-      navigatorKey: _nestedKey,
-      pageBuilder: (context, state, child) {
-        return MaterialPage(child: child);
-      },
-      routes: [
-        GoRoute(
-          path: Routes.splash,
-          pageBuilder: (context, state) => BottomToTopTransition(
-            child: const SplashScreen(),
+GoRouter generateRoutes(GlobalKey<NavigatorState> navigationKey) {
+  return GoRouter(
+    navigatorKey: navigationKey,
+    routes: [
+      ShellRoute(
+        navigatorKey: GlobalKey<NavigatorState>(),
+        pageBuilder: (context, state, child) {
+          return MaterialPage(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: Routes.splash,
+            pageBuilder: (context, state) => BottomToTopTransition(
+              child: const SplashScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.signIn,
-          pageBuilder: (context, state) => BottomToTopTransition(
-            child: const SignInScreen(),
+          GoRoute(
+            path: Routes.signIn,
+            pageBuilder: (context, state) => BottomToTopTransition(
+              child: const SignInScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.forgotPassword,
-          pageBuilder: (context, state) => RightToLeftTransition(
-            child: const ForgotPasswordScreen(),
+          GoRoute(
+            path: Routes.forgotPassword,
+            pageBuilder: (context, state) => RightToLeftTransition(
+              child: const ForgotPasswordScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.signUp,
-          pageBuilder: (context, state) => RightToLeftTransition(
-            child: const SignUpScreen(),
+          GoRoute(
+            path: Routes.signUp,
+            pageBuilder: (context, state) => RightToLeftTransition(
+              child: const SignUpScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.home,
-          pageBuilder: (context, state) => RightToLeftTransition(
-            child: const HomeScreen(),
+          GoRoute(
+            path: Routes.home,
+            pageBuilder: (context, state) => RightToLeftTransition(
+              child: const HomeScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.profile,
-          pageBuilder: (context, state) => BottomToTopTransition(
-            child: const ProfileScreen(),
+          GoRoute(
+            path: Routes.profile,
+            pageBuilder: (context, state) => BottomToTopTransition(
+              child: const ProfileScreen(),
+            ),
           ),
-        ),
-        GoRoute(
-          path: Routes.note,
-          pageBuilder: (context, state) {
-            return BottomToTopTransition(
-              child: const NoteScreen(),
-            );
-          },
-        ),
-      ],
-    ),
-  ],
-);
+          GoRoute(
+            path: Routes.note,
+            pageBuilder: (context, state) {
+              return BottomToTopTransition(
+                child: const NoteScreen(),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+  );
+}

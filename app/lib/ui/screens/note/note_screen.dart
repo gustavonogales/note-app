@@ -1,16 +1,13 @@
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
+import 'package:note_app/config/config.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/screens/note/note_screen_controller.dart';
 import 'package:note_app/ui/stores/root_store.dart';
 import 'package:note_app/ui/utils/utils.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
-
-import '../../../container.dart';
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({super.key});
@@ -24,11 +21,11 @@ class _NoteScreenState extends State<NoteScreen> {
   NoteScreenController get controller => store.noteStore.noteController;
   late final String heroTag;
 
-  String get formattedDate {
-    initializeDateFormatting();
-    var format = DateFormat('MMM dd, yyyy');
-    return format.format(DateTime.parse(controller.note.updatedAt));
-  }
+  // String get formattedDate {
+  //   initializeDateFormatting();
+  //   var format = DateFormat('MMM dd, yyyy');
+  //   return format.format(DateTime.parse(controller.note.updatedAt));
+  // }
 
   TextStyle? get titleTheme => context.theme.textTheme.headlineSmall?.copyWith(
         fontWeight: FontWeight.w600,
@@ -129,14 +126,21 @@ class _NoteScreenState extends State<NoteScreen> {
                                 style: titleTheme,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'Title',
+                                  hintText: context.l10n.title,
                                   hintStyle: titleTheme?.copyWith(
                                     color: titleTheme?.color?.lighten(30),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: Spacings.xxxs),
-                              Opacity(opacity: 0.5, child: Text(formattedDate)),
+                              Opacity(
+                                opacity: 0.5,
+                                child: Text(
+                                  context.l10n.updatedAt(
+                                    DateTime.parse(controller.note.updatedAt),
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: Spacings.xxs),
                               TextFormField(
                                 controller: controller.textController,
@@ -145,7 +149,7 @@ class _NoteScreenState extends State<NoteScreen> {
                                 style: bodyTheme,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'Type something...',
+                                  hintText: context.l10n.typeSomething,
                                   hintStyle: bodyTheme?.copyWith(
                                     color: bodyTheme?.color?.lighten(30),
                                   ),

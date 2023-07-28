@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:note_app/config/config.dart';
 
-import '../../../container.dart';
 import '../routes/routes.dart';
 import '../stores/user_store.dart';
 import '../stores/root_store.dart';

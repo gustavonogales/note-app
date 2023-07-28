@@ -10,6 +10,7 @@ import 'package:note_app/domain/domain.dart';
 import '../routes/routes.dart';
 import '../screens/sign_in/sign_in_screen_controller.dart';
 import '../screens/sign_up/sign_up_screen_controller.dart';
+import 'ui_store.dart';
 
 part 'user_store.g.dart';
 
@@ -17,11 +18,12 @@ part 'user_store.g.dart';
 class UserStore = _UserStoreBase with _$UserStore;
 
 abstract class _UserStoreBase with Store {
-  late final UserServicePort _userService;
   late SignInScreenController signInController;
   late SignUpScreenController signUpController;
+  final UserServicePort _userService;
+  final UiStore uiStore;
 
-  _UserStoreBase(this._userService) {
+  _UserStoreBase(this._userService, this.uiStore) {
     final signedUser = _userService.signedUser();
 
     signInController = SignInScreenController(this as UserStore);
@@ -30,8 +32,8 @@ abstract class _UserStoreBase with Store {
     if (signedUser != null) setUser(signedUser);
 
     reaction((_) => user, (user) {
-      if (user == null) {
-        GoRouter.of(navigationKey.currentState!.context).go(Routes.signIn);
+      if (user == null && uiStore.currentContext != null) {
+        GoRouter.of(uiStore.currentContext!).go(Routes.signIn);
       }
     });
   }
