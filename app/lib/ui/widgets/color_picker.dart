@@ -19,11 +19,7 @@ class ColorPicker extends StatefulWidget {
 class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
-    const labelContainerHeight = Spacings.xxs;
-    const containerHeight = 180.0;
-    var size = MediaQuery.of(context).size;
-    final itemWidth = (size.width / 5);
-    const itemHeight = (containerHeight - labelContainerHeight) / 2;
+    const containerHeight = 192.0;
 
     return Container(
       width: double.infinity,
@@ -48,7 +44,6 @@ class _ColorPickerState extends State<ColorPicker> {
               crossAxisCount: 5,
               crossAxisSpacing: Spacings.nano,
               mainAxisSpacing: Spacings.nano,
-              childAspectRatio: itemWidth / itemHeight,
               children: [
                 ...NoteColor.colors.map(
                   (color) => GestureDetector(

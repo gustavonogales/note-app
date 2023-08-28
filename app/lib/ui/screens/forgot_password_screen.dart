@@ -16,33 +16,36 @@ class ForgotPasswordScreen extends StatelessWidget {
           onTap: FocusScope.of(context).unfocus,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(Spacings.xxxs),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Heading(context.l10n.forgotPassword),
-                    const SizedBox(height: Spacings.xxs),
-                    BodyText(
-                      context.l10n.forgotPasswordDescription,
-                      textAlign: TextAlign.center,
-                      color: context.theme.colorScheme.onSecondaryContainer,
-                    ),
-                    const SizedBox(height: Spacings.xxs),
-                    TextInput(
-                      hintText: context.l10n.email,
-                      keyboardType: TextInputType.emailAddress,
-                      prefixIcon: FeatherIconsSnakeCase.mail,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    const SizedBox(height: Spacings.xxs),
-                    Button(
-                      context.l10n.send,
-                      onPressed: () {},
-                    ),
-                  ],
+            child: Center(
+              child: Container(
+                width: maxContainerWidth,
+                padding: const EdgeInsets.all(Spacings.xxxs),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Heading(context.l10n.forgotPassword),
+                      const SizedBox(height: Spacings.xxs),
+                      BodyText(
+                        context.l10n.forgotPasswordDescription,
+                        textAlign: TextAlign.center,
+                        color: context.theme.colorScheme.onSecondaryContainer,
+                      ),
+                      const SizedBox(height: Spacings.xxs),
+                      TextInput(
+                        hintText: context.l10n.email,
+                        keyboardType: TextInputType.emailAddress,
+                        prefixIcon: FeatherIconsSnakeCase.mail,
+                        textInputAction: TextInputAction.next,
+                      ),
+                      const SizedBox(height: Spacings.xxs),
+                      Button(
+                        context.l10n.send,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -22,53 +22,51 @@ GoRouter generateRoutes(GlobalKey<NavigatorState> navigationKey) {
     routes: [
       ShellRoute(
         navigatorKey: GlobalKey<NavigatorState>(),
-        pageBuilder: (context, state, child) {
+        pageBuilder: (_, __, child) {
           return MaterialPage(child: child);
         },
         routes: [
           GoRoute(
             path: Routes.splash,
-            pageBuilder: (context, state) => BottomToTopTransition(
+            pageBuilder: (_, __) => BottomToTopTransition(
               child: const SplashScreen(),
             ),
           ),
           GoRoute(
             path: Routes.signIn,
-            pageBuilder: (context, state) => BottomToTopTransition(
+            pageBuilder: (_, __) => BottomToTopTransition(
               child: const SignInScreen(),
             ),
           ),
           GoRoute(
             path: Routes.forgotPassword,
-            pageBuilder: (context, state) => RightToLeftTransition(
+            pageBuilder: (_, __) => RightToLeftTransition(
               child: const ForgotPasswordScreen(),
             ),
           ),
           GoRoute(
             path: Routes.signUp,
-            pageBuilder: (context, state) => RightToLeftTransition(
+            pageBuilder: (_, __) => RightToLeftTransition(
               child: const SignUpScreen(),
             ),
           ),
           GoRoute(
             path: Routes.home,
-            pageBuilder: (context, state) => RightToLeftTransition(
+            pageBuilder: (_, __) => RightToLeftTransition(
               child: const HomeScreen(),
             ),
           ),
           GoRoute(
             path: Routes.profile,
-            pageBuilder: (context, state) => BottomToTopTransition(
+            pageBuilder: (_, __) => BottomToTopTransition(
               child: const ProfileScreen(),
             ),
           ),
           GoRoute(
             path: Routes.note,
-            pageBuilder: (context, state) {
-              return BottomToTopTransition(
-                child: const NoteScreen(),
-              );
-            },
+            pageBuilder: (_, __) => BottomToTopTransition(
+              child: const NoteScreen(),
+            ),
           ),
         ],
       ),

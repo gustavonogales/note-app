@@ -46,6 +46,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                 bottom: Spacings.micro,
               ),
               child: ActionButton(
+                tooltip: context.l10n.back,
                 iconData: FeatherIcons.chevronLeft,
                 onPressed: context.pop,
                 color: backgroundColor,

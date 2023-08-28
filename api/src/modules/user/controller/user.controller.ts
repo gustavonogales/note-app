@@ -3,12 +3,15 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   Patch,
   Post,
   Request,
+  Response,
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  Version,
 } from '@nestjs/common';
 import { classToClass } from 'class-transformer';
 import { JwtAuthGuard } from 'src/shared/modules/auth/guard/jwt-auth.guard';
@@ -89,5 +92,18 @@ export class UserController {
     const id = request.user.sub;
 
     await this.userService.delete(id);
+  }
+
+  @Version('2')
+  @Patch('/avatar')
+  @Header('Access-Control-Allow-Credentials', 'true')
+  @UseGuards(JwtAuthGuard)
+  async updateAvatarWithBase64(@Request() request: any): Promise<User> {
+    const id = request.user.sub;
+    const { avatar } = request.body;
+
+    const user = await this.userService.updateAvatarWithBase64(id, avatar);
+
+    return user;
   }
 }

@@ -45,5 +45,5 @@ flutter:
 
   assets:
     - assets/
-    - .env.dev.yaml
-    - .env.prod.yaml
+    - env.dev.yaml
+    - env.prod.yaml

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:feather_icons/feather_icons.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -36,6 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
     context.push(Routes.note);
   }
 
+  int _calculateAxisCount(ScreenSize size) {
+    switch (size) {
+      case ScreenSize.mobile:
+        return 4;
+      case ScreenSize.tablet:
+        return 8;
+      case ScreenSize.desktop:
+        return 14;
+      default:
+        return 4;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ReactionBuilder(
@@ -53,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Observer(builder: (context) {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
+            tooltip: context.l10n.newNote,
             onPressed: _navigateToNewNote,
             enableFeedback: false,
             elevation: 3,
@@ -65,12 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: TopBar(
             titleText: 'Notes',
             actions: [
+              if (kIsWeb)
+                ActionButton(
+                  iconData: FeatherIcons.refreshCw,
+                  tooltip: context.l10n.refresh,
+                  onPressed: () => noteStore.getAllNotes(refreshing: true),
+                ),
               if (noteStore.deleteMode)
                 ActionButton(
+                  tooltip: context.l10n.deleteSelectedNotes,
                   iconData: FeatherIcons.trash,
                   onPressed: noteStore.delete,
                 ),
               ActionButton(
+                tooltip: context.l10n.switchTheme,
                 iconData: store.uiStore.useLightMode
                     ? FeatherIcons.moon
                     : FeatherIcons.sun,
@@ -106,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             : noteStore.notes.isEmpty
                                 ? const Center(child: EmptyPlaceholder())
                                 : StaggeredGrid.count(
-                                    crossAxisCount: 4,
+                                    crossAxisCount: _calculateAxisCount(
+                                      store.uiStore.screenSize(context),
+                                    ),
                                     mainAxisSpacing: Spacings.micro,
                                     crossAxisSpacing: Spacings.micro,
                                     children: noteStore.notes.mapIndexed(

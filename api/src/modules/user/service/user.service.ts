@@ -7,6 +7,7 @@ import { UserRepository } from '../repository/user.repository';
 import UserServiceInterface from './user.service.interface';
 import { StorageServiceImpl } from 'src/shared/modules/storage';
 import UpdateUserAvatarDTO from '../dto/update-user-avatar.dto';
+import { classToClass } from 'class-transformer';
 
 @Injectable()
 export class UserService implements UserServiceInterface {
@@ -23,7 +24,7 @@ export class UserService implements UserServiceInterface {
       throw new AppError('User not found', HttpStatus.NOT_FOUND);
     }
 
-    return user;
+    return classToClass(user);
   }
 
   public async create({ name, email, password, avatar }: User): Promise<User> {
@@ -44,7 +45,7 @@ export class UserService implements UserServiceInterface {
 
     const user = await this.userRepository.create(userWithPassword);
 
-    return user;
+    return classToClass(user);
   }
 
   public async update(user: UpdateUserDTO): Promise<User> {
@@ -75,7 +76,7 @@ export class UserService implements UserServiceInterface {
 
     const userSaved = await this.userRepository.save(userUpdated);
 
-    return userSaved;
+    return classToClass(userSaved);
   }
 
   public async updateAvatar({
@@ -102,7 +103,7 @@ export class UserService implements UserServiceInterface {
 
     await this.userRepository.save(userWithAvatar);
 
-    return userWithAvatar;
+    return classToClass(userWithAvatar);
   }
 
   async delete(id: string): Promise<void> {
@@ -113,5 +114,25 @@ export class UserService implements UserServiceInterface {
     }
 
     await this.userRepository.delete(user.id);
+  }
+
+  public async updateAvatarWithBase64(id: string, data: string): Promise<User> {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new AppError('Only authenticated users can change the avatar', 403);
+    }
+
+    const userWithAvatar = new User(
+      user.id,
+      user.name,
+      user.email,
+      user.password,
+      data,
+    );
+
+    await this.userRepository.save(userWithAvatar);
+
+    return classToClass(userWithAvatar);
   }
 }

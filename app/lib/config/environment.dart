@@ -22,9 +22,9 @@ final class AppEnvironment {
   static String _getFile(String variable) {
     switch (variable.toUpperCase()) {
       case 'PROD':
-        return '.env.prod.yaml';
+        return 'env.prod.yaml';
       default:
-        return '.env.dev.yaml';
+        return 'env.dev.yaml';
     }
   }
 }

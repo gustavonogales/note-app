@@ -72,10 +72,10 @@ class _SignInScreenState extends State<SignInScreen> {
               onTap: FocusScope.of(context).unfocus,
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(Spacings.xxxs),
-                  child: SizedBox(
-                    width: double.infinity,
+                child: Center(
+                  child: Container(
+                    width: maxContainerWidth,
+                    padding: const EdgeInsets.all(Spacings.xxxs),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

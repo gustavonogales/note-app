@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:note_app/domain/models/user.dart';
 import 'package:note_app/adapter/adapter.dart';
@@ -123,15 +122,11 @@ final class UserService implements UserServicePort {
   }
 
   @override
-  Future<User> updateAvatar({
-    required String filename,
-    required File file,
-  }) async {
+  Future<User> updateAvatar(String base64) async {
     final response = await _httpAdapter.send(
-      to: '/user/avatar',
+      to: '/v2/user/avatar',
       method: Method.patch,
-      contentType: ContentType.multipart,
-      files: {filename: file},
+      body: {'avatar': base64},
     );
 
     final user = UserDto.fromJson(response.body);

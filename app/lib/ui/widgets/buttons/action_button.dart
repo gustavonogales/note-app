@@ -5,10 +5,12 @@ class ActionButton extends StatelessWidget {
   final IconData iconData;
   final VoidCallback? onPressed;
   final Color? color;
+  final String tooltip;
 
   const ActionButton({
     required this.iconData,
     required this.onPressed,
+    required this.tooltip,
     this.color,
     super.key,
   });
@@ -21,6 +23,7 @@ class ActionButton extends StatelessWidget {
       child: IconButton(
         padding: const EdgeInsets.all(0),
         enableFeedback: false,
+        tooltip: tooltip,
         style: IconButton.styleFrom(
           splashFactory: NoSplash.splashFactory,
           shape: RoundedRectangleBorder(

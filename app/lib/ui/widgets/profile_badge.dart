@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
 import 'package:note_app/ui/widgets/widgets.dart';
@@ -8,7 +6,6 @@ import 'package:note_app/ui/widgets/widgets.dart';
 class ProfileBadge extends StatelessWidget {
   final String name;
   final String? avatar;
-  final File? file;
   final double size;
   final VoidCallback onPressed;
 
@@ -16,7 +13,6 @@ class ProfileBadge extends StatelessWidget {
     required this.name,
     required this.onPressed,
     this.avatar,
-    this.file,
     this.size = 40,
     super.key,
   });
@@ -26,7 +22,7 @@ class ProfileBadge extends StatelessWidget {
     return loadingProgress == null ? child : InitialsBadge(name, size: size);
   }
 
-  bool get hasProfilePic => file != null || (avatar ?? '').isNotEmpty;
+  bool get hasProfilePic => (avatar ?? '').isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +32,7 @@ class ProfileBadge extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(size)),
         child: hasProfilePic
             ? Image(
-                image: file != null
-                    ? FileImage(file!) as ImageProvider
-                    : MemoryImage(base64Decode(avatar!)),
+                image: MemoryImage(base64Decode(avatar!)),
                 frameBuilder: (_, child, frame, __) => AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child:

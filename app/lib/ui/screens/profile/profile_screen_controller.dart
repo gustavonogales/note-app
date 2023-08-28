@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:io';
+import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:note_app/ui/extensions/extensions.dart';
@@ -85,12 +86,13 @@ abstract class _ProfileScreenControllerBase with Store {
   bool successfull = false;
 
   @observable
-  File? avatar;
+  String? avatar;
 
   @action
-  setAvatar(File file) {
-    avatar = file;
-    _parentStore.updateAvatar(filename: 'avatar', file: file);
+  setAvatar(Uint8List bytes) {
+    final base64 = base64Encode(bytes);
+    avatar = base64;
+    _parentStore.updateAvatar(base64);
   }
 
   @action

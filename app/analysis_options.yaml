@@ -23,7 +23,6 @@ linter:
   # producing the lint.
   rules:
     empty_statements: true
-    avoid_web_libraries_in_flutter: true
     avoid_types_as_parameter_names: true
     avoid_print: true
     prefer_single_quotes: true

@@ -32,7 +32,9 @@ export class NoteRepository implements NoteRepositoryInterface {
   }
 
   public async findById(id: string): Promise<Note | undefined> {
-    const note = await this.repository.findOne(id);
+    const note = await this.repository.findOne({
+      where: { id },
+    });
 
     return note?.toNote();
   }

@@ -30,7 +30,8 @@ class ConfirmDialog extends Dialog {
       elevation: 0,
       shadowColor: context.theme.colorScheme.background.darken(20),
       backgroundColor: context.theme.colorScheme.background,
-      child: Padding(
+      child: Container(
+          width: maxContainerWidth,
           padding: const EdgeInsets.all(Spacings.xxxs),
           child: Column(
             mainAxisSize: MainAxisSize.min,

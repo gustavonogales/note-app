@@ -1,7 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:io';
-
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
@@ -82,14 +80,8 @@ abstract class _UserStoreBase with Store {
         password: password,
       );
 
-  Future<void> updateAvatar({
-    required String filename,
-    required File file,
-  }) async {
-    user = await _userService.updateAvatar(
-      filename: filename,
-      file: file,
-    );
+  Future<void> updateAvatar(String base64) async {
+    user = await _userService.updateAvatar(base64);
   }
 
   Future<void> delete() => _userService.delete();

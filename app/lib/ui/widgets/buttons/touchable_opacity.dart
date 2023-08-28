@@ -21,15 +21,18 @@ class _TouchableOpacityState extends State<TouchableOpacity> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => setState(() => isDown = true),
-      onTapUp: (_) => setState(() => isDown = false),
-      onTapCancel: () => setState(() => isDown = false),
-      onTap: widget.onTap,
-      child: AnimatedOpacity(
-        duration: widget._duration,
-        opacity: isDown ? widget._opacity : 1,
-        child: widget.child,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTapDown: (_) => setState(() => isDown = true),
+        onTapUp: (_) => setState(() => isDown = false),
+        onTapCancel: () => setState(() => isDown = false),
+        onTap: widget.onTap,
+        child: AnimatedOpacity(
+          duration: widget._duration,
+          opacity: isDown ? widget._opacity : 1,
+          child: widget.child,
+        ),
       ),
     );
   }

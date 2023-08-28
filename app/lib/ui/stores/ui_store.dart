@@ -7,6 +7,12 @@ import 'package:note_app/domain/domain.dart';
 
 part 'ui_store.g.dart';
 
+enum ScreenSize {
+  mobile,
+  tablet,
+  desktop;
+}
+
 @singleton
 class UiStore = _UiStoreBase with _$UiStore;
 
@@ -19,6 +25,17 @@ abstract class _UiStoreBase with Store {
   }
 
   BuildContext? get currentContext => navigationKey.currentState?.context;
+
+  ScreenSize screenSize(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if (size.width < 850) {
+      return ScreenSize.mobile;
+    } else if (size.width >= 850 && size.width < 1100) {
+      return ScreenSize.tablet;
+    } else {
+      return ScreenSize.desktop;
+    }
+  }
 
   @observable
   bool useLightMode = false;

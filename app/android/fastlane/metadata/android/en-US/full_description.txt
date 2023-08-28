@@ -1,0 +1,1 @@
+Notes is a simple app to take notes in a sticky notes style.

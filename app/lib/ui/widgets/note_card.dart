@@ -29,38 +29,41 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
-      return GestureDetector(
-        onTap: () => _onTap(context),
-        onLongPress: note.toggleSelected,
-        child: Hero(
-          tag: note.id,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            padding: const EdgeInsets.all(Spacings.xxxs),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: note.selected
-                    ? context.theme.colorScheme.primary
-                    : note.color.uiColor,
-                width: Spacings.nano,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  spreadRadius: 1,
-                  blurRadius: 2,
-                  offset: const Offset(0, 2),
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => _onTap(context),
+          onLongPress: note.toggleSelected,
+          child: Hero(
+            tag: note.id,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              padding: const EdgeInsets.all(Spacings.xxxs),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: note.selected
+                      ? context.theme.colorScheme.primary
+                      : note.color.uiColor,
+                  width: Spacings.nano,
                 ),
-              ],
-              color: note.color.uiColor,
-              borderRadius: BorderRadius.circular(Spacings.nano * 3),
-            ),
-            child: Text(
-              '${note.title}\n${note.text}',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontSize: 16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.15),
+                    spreadRadius: 1,
+                    blurRadius: 2,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+                color: note.color.uiColor,
+                borderRadius: BorderRadius.circular(Spacings.nano * 3),
+              ),
+              child: Text(
+                '${note.title}\n${note.text}',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontSize: 16),
+              ),
             ),
           ),
         ),

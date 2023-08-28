@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../domain.dart';
 
 abstract interface class UserServicePort {
@@ -26,10 +24,7 @@ abstract interface class UserServicePort {
 
   Future<void> refreshToken();
 
-  Future<User> updateAvatar({
-    required String filename,
-    required File file,
-  });
+  Future<User> updateAvatar(String base64);
 
   Future<void> delete();
 }

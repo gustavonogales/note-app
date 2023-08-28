@@ -13,7 +13,7 @@ export class UserRepository implements UserRepositoryInterface {
   ) {}
 
   public async findById(id: string): Promise<User | undefined> {
-    const userEntity = await this.repository.findOne(id);
+    const userEntity = await this.repository.findOne({ where: { id } });
 
     return userEntity?.toUser();
   }
@@ -44,7 +44,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async delete(id: string): Promise<void> {
-    const user = await this.repository.findOne(id);
+    const user = await this.repository.findOne({ where: { id } });
     await this.repository.remove(user);
   }
 }

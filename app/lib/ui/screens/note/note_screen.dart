@@ -21,12 +21,6 @@ class _NoteScreenState extends State<NoteScreen> {
   NoteScreenController get controller => store.noteStore.noteController;
   late final String heroTag;
 
-  // String get formattedDate {
-  //   initializeDateFormatting();
-  //   var format = DateFormat('MMM dd, yyyy');
-  //   return format.format(DateTime.parse(controller.note.updatedAt));
-  // }
-
   TextStyle? get titleTheme => context.theme.textTheme.headlineSmall?.copyWith(
         fontWeight: FontWeight.w600,
       );
@@ -85,24 +79,28 @@ class _NoteScreenState extends State<NoteScreen> {
                   backgroundColor: controller.note.color.uiColor,
                   actions: [
                     ActionButton(
+                      tooltip: context.l10n.changeColor,
                       iconData: FeatherIcons.penTool,
                       onPressed: _toggleColorPicker,
                       color: controller.note.color.uiColor,
                     ),
                     if (!controller.editMode)
                       ActionButton(
+                        tooltip: context.l10n.switchToEditMode,
                         iconData: FeatherIcons.edit,
                         onPressed: _edit,
                         color: controller.note.color.uiColor,
                       ),
                     if (controller.editMode)
                       ActionButton(
+                        tooltip: context.l10n.saveChanges,
                         iconData: FeatherIcons.save,
                         onPressed: controller.save,
                         color: controller.note.color.uiColor,
                       ),
                     if (controller.editMode)
                       ActionButton(
+                        tooltip: context.l10n.cancel,
                         iconData: FeatherIcons.x,
                         onPressed: controller.cancel,
                         color: controller.note.color.uiColor,
@@ -116,64 +114,76 @@ class _NoteScreenState extends State<NoteScreen> {
                         physics: const BouncingScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.all(Spacings.xxxs),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextFormField(
-                                controller: controller.titleController,
-                                enabled: controller.editMode,
-                                maxLines: null,
-                                style: titleTheme,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: context.l10n.title,
-                                  hintStyle: titleTheme?.copyWith(
-                                    color: titleTheme?.color?.lighten(30),
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    controller: controller.titleController,
+                                    enabled: controller.editMode,
+                                    maxLines: null,
+                                    style: titleTheme,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: context.l10n.title,
+                                      hintStyle: titleTheme?.copyWith(
+                                        color: titleTheme?.color?.lighten(30),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(height: Spacings.xxxs),
+                                  Opacity(
+                                    opacity: 0.5,
+                                    child: Text(
+                                      context.l10n.updatedAt(
+                                        DateTime.parse(
+                                            controller.note.updatedAt),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: Spacings.xxs),
+                                  TextFormField(
+                                    controller: controller.textController,
+                                    enabled: controller.editMode,
+                                    maxLines: null,
+                                    style: bodyTheme,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: context.l10n.typeSomething,
+                                      hintStyle: bodyTheme?.copyWith(
+                                        color: bodyTheme?.color?.lighten(30),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                              const SizedBox(height: Spacings.xxxs),
-                              Opacity(
-                                opacity: 0.5,
-                                child: Text(
-                                  context.l10n.updatedAt(
-                                    DateTime.parse(controller.note.updatedAt),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: Spacings.xxs),
-                              TextFormField(
-                                controller: controller.textController,
-                                enabled: controller.editMode,
-                                maxLines: null,
-                                style: bodyTheme,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: context.l10n.typeSomething,
-                                  hintStyle: bodyTheme?.copyWith(
-                                    color: bodyTheme?.color?.lighten(30),
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(Spacings.xxxs),
-                        child: AnimatedCrossFade(
-                          duration: const Duration(milliseconds: 200),
-                          firstChild: const SizedBox(
-                            width: double.infinity,
-                            height: 0,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: AnimatedCrossFade(
+                            duration: const Duration(milliseconds: 200),
+                            firstChild: const SizedBox(
+                              width: 400,
+                              height: 0,
+                            ),
+                            secondChild: SizedBox(
+                              width: 400,
+                              child: ColorPicker(
+                                color: controller.note.color,
+                                onChange: controller.changeColor,
+                              ),
+                            ),
+                            crossFadeState: controller.colorPickerVisible
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
                           ),
-                          secondChild: ColorPicker(
-                            color: controller.note.color,
-                            onChange: controller.changeColor,
-                          ),
-                          crossFadeState: controller.colorPickerVisible
-                              ? CrossFadeState.showSecond
-                              : CrossFadeState.showFirst,
                         ),
                       ),
                     ],

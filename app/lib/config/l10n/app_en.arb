@@ -159,5 +159,33 @@
         "isCustomDateFormat": "true"
       }
     }
+  },
+  "changeColor": "Change color",
+  "@changeColor": {
+    "description": "change color tooltip text"
+  },
+  "switchToEditMode": "Switch to edit mode",
+  "@switchToEditMode": {
+    "description": "switch to edit mode tooltip text"
+  },
+  "newNote": "New note",
+  "@newNote": {
+    "description": "new note tooltip text"
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh tooltip text"
+  },
+  "deleteSelectedNotes": "Delete selected notes",
+  "@deleteSelectedNotes": {
+    "description": "Delete selected notes tooltip text"
+  },
+  "switchTheme": "Switch theme",
+  "@switchTheme": {
+    "description": "Switch theme tooltip text"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Back button tooltip text"
   }
 }

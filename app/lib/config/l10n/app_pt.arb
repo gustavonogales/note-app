@@ -41,5 +41,12 @@
         "format": "dd MMM, yyyy"
       }
     }
-  }
+  },
+  "changeColor": "Mudar cor",
+  "switchToEditMode": "Mudar para o modo de edição",
+  "newNote": "Nova nota",
+  "refresh": "Atualizar",
+  "deleteSelectedNotes": "Deletar notas selecionadas",
+  "switchTheme": "Alternar tema",
+  "back": "Voltar"
 }
